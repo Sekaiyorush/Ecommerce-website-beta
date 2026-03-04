@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { toast } from 'sonner';
 import type { InvitationCode } from '@/data/invitations';
 import { useDatabase } from './DatabaseContext';
 import { supabase } from '@/lib/supabase';

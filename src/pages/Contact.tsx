@@ -3,17 +3,6 @@ import { Mail, MapPin, Phone, MessageSquare } from 'lucide-react';
 import { useDatabase } from '@/context/DatabaseContext';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
-const ContactSchema = z.object({
-  name: z.string().min(1, 'Full name is required'),
-  email: z.string().email('Please enter a valid email'),
-  subject: z.string().min(1, 'Subject is required'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-});
-type ContactFormData = z.infer<typeof ContactSchema>;
 
 export function Contact() {
     const { db } = useDatabase();
@@ -22,20 +11,6 @@ export function Contact() {
     const handleContactSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setSent(true);
-    };
-
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm<ContactFormData>({
-        resolver: zodResolver(ContactSchema),
-    });
-
-    const onSubmit = (_data: ContactFormData) => {
-        alert('Message sent! We will get back to you soon.');
-        reset();
     };
 
     return (
