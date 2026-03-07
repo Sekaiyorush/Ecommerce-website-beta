@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart, getItemPrice } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
@@ -13,9 +13,11 @@ import {
     Building2,
     Landmark,
     Bitcoin,
+    AlertTriangle,
 } from 'lucide-react';
 import { formatTHB } from '@/lib/formatPrice';
 import { z } from 'zod';
+import { supabase } from '@/lib/supabase';
 
 type PaymentMethod = 'bank_transfer' | 'crypto';
 
@@ -46,7 +48,7 @@ const ShippingSchema = z.object({
 type ShippingErrors = Partial<Record<keyof ShippingForm, string>>;
 
 export function CheckoutPage() {
-    const { items, cartSubtotal, discountAmount, cartTotal, clearCart } = useCart();
+    const { items, cartSubtotal, discountAmount, cartTotal, clearCart, refreshCartPrices } = useCart();
     const { user, isPartner } = useAuth();
     const { createSecureOrder } = useDatabase();
 
@@ -56,6 +58,78 @@ export function CheckoutPage() {
     const [orderError, setOrderError] = useState('');
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('bank_transfer');
     const [shippingErrors, setShippingErrors] = useState<ShippingErrors>({});
+    const [validationWarning, setValidationWarning] = useState('');
+
+    useEffect(() => {
+        let mounted = true;
+        const validateCart = async () => {
+            if (items.length === 0) return;
+            
+            // Fetch fresh products from DB for validation
+            const { data: currentProducts } = await supabase.from('products').select('*');
+            if (!currentProducts || !mounted) return;
+            
+            let stockIssue = false;
+            let priceChanged = false;
+
+            for (const item of items) {
+                const currentProduct = currentProducts.find(p => p.id === item.product.id);
+                if (!currentProduct) {
+                    stockIssue = true;
+                    continue;
+                }
+
+                if (item.selectedVariant) {
+                    const currentVariant = currentProduct.variants?.find((v: any) => v.sku === item.selectedVariant!.sku);
+                    if (!currentVariant || currentVariant.stock < item.quantity) {
+                        stockIssue = true;
+                    }
+                    if (currentVariant && currentVariant.price !== item.selectedVariant.price) {
+                        priceChanged = true;
+                    }
+                } else {
+                    if (currentProduct.in_stock === false || currentProduct.stock_quantity < item.quantity) {
+                        stockIssue = true;
+                    }
+                    if (Number(currentProduct.price) !== item.product.price) {
+                        priceChanged = true;
+                    }
+                }
+            }
+
+            if (priceChanged) {
+                // Map the raw DB products to the Product type expected by refreshCartPrices
+                const mappedProducts = currentProducts.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    description: p.description || '',
+                    fullDescription: p.full_description,
+                    price: Number(p.price),
+                    category: p.category,
+                    purity: p.purity || '',
+                    inStock: p.in_stock !== false,
+                    stockQuantity: p.stock_quantity || 0,
+                    sku: p.sku,
+                    benefits: p.benefits || [],
+                    dosage: p.dosage,
+                    imageUrl: p.image_url,
+                    createdAt: p.created_at,
+                    updatedAt: p.updated_at,
+                    lowStockThreshold: p.low_stock_threshold || 10,
+                    variants: p.variants || undefined,
+                }));
+                refreshCartPrices(mappedProducts);
+            }
+
+            if (stockIssue) {
+                setValidationWarning('Some items in your cart are no longer in stock. Please review your cart.');
+            } else if (priceChanged) {
+                setValidationWarning('Prices for some items have updated. Please review your total.');
+            }
+        };
+        validateCart();
+        return () => { mounted = false; };
+    }, [items.length, refreshCartPrices]);
     const [shipping, setShipping] = useState<ShippingForm>({
         fullName: user?.name || '',
         email: user?.email || '',
@@ -162,6 +236,16 @@ export function CheckoutPage() {
                 <Link to="/products" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-6 transition-colors">
                     <ArrowLeft className="h-4 w-4 mr-2" /> Continue Shopping
                 </Link>
+
+                {validationWarning && step !== 3 && (
+                    <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
+                        <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                            <h4 className="font-medium text-amber-900">Cart Validation Notice</h4>
+                            <p className="text-amber-700 text-sm mt-1">{validationWarning}</p>
+                        </div>
+                    </div>
+                )}
 
                 {/* Progress Steps */}
                 <div className="flex items-center justify-center mb-10 gap-2">
