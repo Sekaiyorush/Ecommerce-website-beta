@@ -149,7 +149,7 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     setDbError(null);
     try {
       const [
-        { data: products },
+        { data: products, error: productsError },
         { data: profiles },
         { data: ordersRaw },
         { data: codes },
@@ -166,8 +166,15 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
         supabase.from('site_settings').select('*').eq('id', 'default').single()
       ]);
 
+      if (productsError) {
+        console.error("Critical error loading products:", productsError);
+        setDbError('Unable to load products. Please refresh.');
+        return; // Stop loading if critical data fails
+      }
+
       if (!products) {
         setDbError('Unable to load products. Please refresh.');
+        return;
       }
 
       if (products && profiles) {
@@ -527,8 +534,65 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     }
 
     if (data && data.success) {
-      // Refresh data to get the new order from DB
-      await loadData();
+      try {
+        // Fetch only the newly created order to avoid race conditions with full reload
+        const { data: newOrderData, error: orderError } = await supabase
+          .from('orders')
+          .select('*')
+          .eq('id', data.order_id)
+          .single();
+          
+        if (!orderError && newOrderData) {
+          const { data: itemsData } = await supabase
+            .from('order_items')
+            .select('*, products(name)')
+            .eq('order_id', data.order_id);
+
+          // Get customer details from current state instead of a new fetch
+          // Wait, state might be outdated if they just registered, but they are logged in so they must be in db.users or users state if loadData ran.
+          setDbState(prev => {
+            const customerProfile = prev.users.find(u => u.id === newOrderData.customer_id);
+
+            const newOrder: Order = {
+              id: newOrderData.friendly_id || newOrderData.id,
+              dbId: newOrderData.id,
+              customerId: newOrderData.customer_id,
+              customerName: customerProfile?.name || customerProfile?.email?.split('@')[0] || 'Unknown',
+              userType: customerProfile?.role === 'partner' ? 'partner' : 'customer',
+              partnerId: newOrderData.partner_id || undefined,
+              status: newOrderData.status,
+              total: Number(newOrderData.total_amount || newOrderData.total),
+              shippingName: newOrderData.shipping_name,
+              shippingAddress: newOrderData.shipping_address,
+              shippingCity: newOrderData.shipping_city,
+              shippingState: newOrderData.shipping_state || undefined,
+              shippingZip: newOrderData.shipping_zip || undefined,
+              shippingCountry: newOrderData.shipping_country,
+              shippingPhone: newOrderData.shipping_phone,
+              shippingEmail: newOrderData.shipping_email,
+              shippingNotes: newOrderData.shipping_notes || undefined,
+              paymentMethod: newOrderData.payment_method || 'bank_transfer',
+              paymentStatus: newOrderData.payment_status || 'pending',
+              createdAt: newOrderData.created_at,
+              items: (itemsData || []).map(item => ({
+                productId: item.product_id,
+                name: item.products?.name || 'Unknown Product',
+                quantity: item.quantity,
+                price: Number(item.price_at_purchase || item.price),
+                variantSku: item.variant_sku || undefined
+              }))
+            };
+
+            return {
+              ...prev,
+              orders: [newOrder, ...prev.orders]
+            };
+          });
+        }
+      } catch (err) {
+        console.error("Failed to fetch new order:", err);
+      }
+
       logAudit('create', 'order', data.order_id, { total: data.total, method: 'secure_rpc' });
       return { success: true, order_id: data.order_id, total: data.total };
     }
@@ -756,6 +820,39 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
 
   // ─── Inventory Logs ──────────────────────────────────────────────
   const addInventoryLog = async (log: Omit<InventoryLog, 'id' | 'createdAt' | 'performedByName'>, updateVariantStock = false) => {
+    // 1. Update stock FIRST
+    if (updateVariantStock && log.variantSku) {
+      const product = db.products.find(p => p.id === log.productId);
+      if (product?.variants) {
+        const updatedVariants = product.variants.map(v => {
+          if (v.sku === log.variantSku) {
+            return { ...v, stock: Math.max(0, v.stock + log.changeQuantity) };
+          }
+          return v;
+        });
+        const { error: variantError } = await supabase.from('products').update({ variants: updatedVariants }).eq('id', log.productId);
+        if (variantError) {
+          console.error("Failed to update variant stock, aborting inventory log:", variantError);
+          return;
+        }
+      }
+    } else {
+      // Product-level stock update
+      const product = db.products.find(p => p.id === log.productId);
+      if (product) {
+        const newQty = product.stockQuantity + log.changeQuantity;
+        const { error: stockError } = await supabase.from('products').update({
+          stock_quantity: Math.max(0, newQty),
+          in_stock: newQty > 0,
+        }).eq('id', log.productId);
+        if (stockError) {
+          console.error("Failed to update product stock, aborting inventory log:", stockError);
+          return;
+        }
+      }
+    }
+
+    // 2. Only insert log if stock update succeeded
     const { error } = await supabase.from('inventory_log').insert({
       product_id: log.productId,
       change_quantity: log.changeQuantity,
@@ -768,30 +865,6 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     if (error) {
       console.error("Error adding inventory log:", error);
       return;
-    }
-
-    // Update stock — variant-level or product-level
-    if (updateVariantStock && log.variantSku) {
-      const product = db.products.find(p => p.id === log.productId);
-      if (product?.variants) {
-        const updatedVariants = product.variants.map(v => {
-          if (v.sku === log.variantSku) {
-            return { ...v, stock: Math.max(0, v.stock + log.changeQuantity) };
-          }
-          return v;
-        });
-        await supabase.from('products').update({ variants: updatedVariants }).eq('id', log.productId);
-      }
-    } else {
-      // Product-level stock update
-      const product = db.products.find(p => p.id === log.productId);
-      if (product) {
-        const newQty = product.stockQuantity + log.changeQuantity;
-        await updateProduct(log.productId, {
-          stockQuantity: Math.max(0, newQty),
-          inStock: newQty > 0,
-        });
-      }
     }
 
     // Refresh to get latest data

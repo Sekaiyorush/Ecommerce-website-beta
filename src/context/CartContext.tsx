@@ -19,6 +19,7 @@ interface CartContextType {
   addToCart: (product: Product, variant?: ProductVariant) => void;
   removeFromCart: (productId: string, variantSku?: string) => void;
   updateQuantity: (productId: string, quantity: number, variantSku?: string) => void;
+  refreshCartPrices: (products: Product[]) => void;
   clearCart: () => void;
   toggleCart: () => void;
   isOpen: boolean;
@@ -148,6 +149,40 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
+  const refreshCartPrices = useCallback((products: Product[]) => {
+    setItems((prevItems) => {
+      let changed = false;
+      const newItems = prevItems.map((item) => {
+        const currentProduct = products.find(p => p.id === item.product.id);
+        if (!currentProduct) return item; // Can't update if product missing
+
+        let newPrice = item.product.price;
+        let newVariantPrice = item.selectedVariant?.price;
+
+        if (item.selectedVariant) {
+           const currentVariant = currentProduct.variants?.find(v => v.sku === item.selectedVariant!.sku);
+           if (currentVariant && currentVariant.price !== newVariantPrice) {
+               newVariantPrice = currentVariant.price;
+               changed = true;
+           }
+        } else if (currentProduct.price !== newPrice) {
+           newPrice = currentProduct.price;
+           changed = true;
+        }
+
+        if (changed) {
+            return {
+                ...item,
+                product: { ...item.product, price: newPrice },
+                selectedVariant: item.selectedVariant ? { ...item.selectedVariant, price: newVariantPrice! } : undefined
+            };
+        }
+        return item;
+      });
+      return changed ? newItems : prevItems;
+    });
+  }, []);
+
   const clearCart = useCallback(() => {
     setItems([]);
   }, []);
@@ -183,6 +218,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addToCart,
         removeFromCart,
         updateQuantity,
+        refreshCartPrices,
         clearCart,
         toggleCart,
         isOpen,
