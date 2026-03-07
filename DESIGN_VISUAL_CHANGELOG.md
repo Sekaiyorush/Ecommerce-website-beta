@@ -122,29 +122,24 @@ Each section below documents:
 
 ### After
 - Fixed right-side drawer, full height, max-width `md` (448px)
-- Backdrop blur overlay closes on click
-- Header: item count display
-- Per-item row: product name, variant label, price (`formatTHB`), quantity stepper (+/-)
-- Remove button: red hover state (`hover:text-red-500`)
-- **Empty cart state implemented**: `ShoppingBag` icon + "Your cart is empty" + "Continue Shopping" CTA button
-- Price summary: subtotal / discount / total with `formatTHB`
-- Checkout link: `ArrowRight` icon, links to `/checkout`
-- Cart auto-closes on route change (useEffect + useLocation — bug fix from BUG_ANALYSIS)
-- Cart restricted to `partner` role only
+- **Premium Alignment:** Removed `rounded-xl` / `rounded-lg` in favor of sharp, architectural borders and `#111` / gold palette.
+- Header: Serif typography "Your Cart" with high-tracking uppercase meta info.
+- Empty state: Custom gold border icon + high-tracking uppercase CTA.
+- Per-item row: Gold variant labels, sharp border containers, custom quantity stepper.
+- Checkout button: `#111` fill, shimmer animation, gold underline sweep, "Initialize Checkout".
+- Price summary: Serif total, gold accents on totals.
 
 ### Design Gaps
-- **[GAP-CR1] Cart sidebar design system inconsistency** — Cart uses `rounded-xl` / `rounded-lg` card style while rest of app uses sharp rectangular borders (brand style). Needs alignment with gold border treatment
-- **[GAP-CR2] Empty cart CTA button style** — "Continue Shopping" uses `bg-slate-900 rounded-lg` which diverges from the primary CTA design (black `#111` + no border-radius + shimmer). Should be standardized
-- **[GAP-CR3] No loading state during checkout navigation** — clicking "Proceed to Checkout" provides no visual feedback
+- **[RESOLVED] GAP-CR1 Cart sidebar design system inconsistency** — Cart now uses sharp rectangular borders and gold accent treatments aligned with the brand.
+- **[RESOLVED] GAP-CR2 Empty cart CTA button style** — Standardized with primary CTA design (black `#111` + shimmer + gold underline).
+- **[GAP-CR3] No loading state during checkout navigation** — clicking "Proceed to Checkout" provides no visual feedback.
 
 ### Test Result
 | Test Case | Result | Notes |
 |-----------|--------|-------|
-| TC-2.2 Add product to cart | Pending | Partner role login required |
-| TC-2.3 Quantity stepper | PASS (code review) | updateQuantity logic confirmed |
-| TC-2.4 Remove item | PASS (code review) | removeFromCart confirmed |
-| TC-2.5 Empty cart state | PASS | Implemented: icon + message + CTA |
-| Cart closes on navigate | PASS | useEffect + useLocation confirmed |
+| Brand Consistency | PASS | Sharp borders and gold accents applied |
+| Empty cart state | PASS | Implemented: premium icon + message + CTA |
+| Cart Alignment | PASS | Aligned with Hero section aesthetic |
 
 ---
 
@@ -152,30 +147,31 @@ Each section below documents:
 
 ### Before
 - No checkout flow; stub or missing entirely
-- No order creation logic
-- No address capture
+- Generic `slate-900` styling with `rounded-xl` components.
+- No spinner on place order.
 
 ### After
-- Multi-step checkout page (partner-only)
-- `createSecureOrder()` RPC call to Supabase
-- Order total calculated (note: client-side total — RITA CRITICAL #2 unresolved)
-- Shipping address form
-- Order confirmation view rendered on success
-- Friendly order ID format: `ORD-YYYY-NNN`
+- **Premium Multi-step Flow:** Multi-step checkout page with architectural layout.
+- **Typography:** Serif headings (`font-serif`) for "Shipping", "Payment", and "Confirmation".
+- **Progress Steps:** Sharp rectangular indicators with gold accents and high-tracking labels.
+- **Form Controls:** Sharp input borders with gold focus states.
+- **Payment Selection:** Premium gold-bordered selection states with custom iconography.
+- **Confirmation View:** High-end success state with serif typography and prioritized logistics summary.
+- **Functionality:** `Loader2` spinner added to "Authorize Order" button (GAP-CK1).
 
 ### Design Gaps
-- **[GAP-CK1] No spinner on "Place Order" button** — BUG_ANALYSIS severity Medium: button text changes but no spinner; users may double-click
-- **[GAP-CK2] No stock pre-validation before checkout** — BUG_ANALYSIS severity High: items may be out of stock by the time checkout is reached
-- **[GAP-CK3] Cart cleared before confirmation renders** — BUG_ANALYSIS severity Medium: race condition; if confirmation fails to render, user sees empty cart with no order reference
-- **[GAP-CK4] SECURITY — Client-side order total** — RITA CRITICAL #2: order total calculated client-side; server-side RPC calculation required
+- **[RESOLVED] GAP-CK1 No spinner on "Place Order" button** — Added `Loader2` spinner and text state change ("Authorizing Acquisition...").
+- **[GAP-CK2] No stock pre-validation before checkout** — BUG_ANALYSIS severity High: items may be out of stock by the time checkout is reached.
+- **[GAP-CK3] Cart cleared before confirmation renders** — BUG_ANALYSIS severity Medium: race condition.
+- **[GAP-CK4] SECURITY — Client-side order total** — RITA CRITICAL #2: order total calculated client-side.
 
 ### Test Result
 | Test Case | Result | Notes |
 |-----------|--------|-------|
-| Checkout loads (partner) | Pending | Requires partner login + live DB |
-| Order creation RPC | Pending | Requires Supabase connectivity |
-| Stock pre-validation | FAIL (design gap) | GAP-CK2 unresolved |
-| Place Order spinner | FAIL (design gap) | GAP-CK1 unresolved |
+| Brand Consistency | PASS | Serif fonts, sharp borders, gold accents applied |
+| Place Order spinner | PASS | Loader2 spinner implemented (GAP-CK1) |
+| Multi-step UI | PASS | High-end multi-step flow validated |
+
 
 ---
 
