@@ -130,5 +130,6 @@ These items require direct Supabase dashboard access or Edge Function deployment
 - [x] **Beta** — Form validation ✅
 - [x] **Gamma** — Product & cart UX/security ✅
 - [x] **Delta** — Performance, a11y, data layer ✅
+- [ ] **QA & Design Testing Phase** — Validating core flows and design gaps (TEST_STRATEGY_AND_CHECKLIST.md)
 - [ ] **Supabase** — Backend/RLS/RPC (manual)
 - [ ] **Integrations** — Payments + Email (future sprint)
