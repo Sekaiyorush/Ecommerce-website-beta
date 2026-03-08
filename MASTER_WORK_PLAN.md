@@ -75,6 +75,19 @@
 
 ---
 
+### Stream Epsilon — UI/UX Pro Max Reimplementation
+**Files owned:** `src/components/ui/`, `src/App.tsx`, `src/index.css`, `tailwind.config.js`
+
+| # | Issue | Severity | Source |
+|---|---|---|---|
+| E1 | Implement "Premium" design tokens (gold theme, glassmorphism) in UI primitives | Medium | UI/UX Strategy |
+| E2 | Add high-fidelity skeleton loaders (shimmer) to all async components | Medium | UI/UX Strategy |
+| E3 | Standardize typography (Playfair Display for headings, Inter for body) | Medium | UI/UX Strategy |
+| E4 | Implement "Quick View" modal for Product Grid | Low | UI/UX Strategy |
+| E5 | Mobile-first optimization for Checkout flow (Single-page accordion) | High | UI/UX Strategy |
+
+---
+
 ## Requires Supabase / Backend Work (Cannot be fixed in frontend code)
 
 These items require direct Supabase dashboard access or Edge Function deployment:
@@ -130,6 +143,7 @@ These items require direct Supabase dashboard access or Edge Function deployment
 - [x] **Beta** — Form validation ✅
 - [x] **Gamma** — Product & cart UX/security ✅
 - [x] **Delta** — Performance, a11y, data layer ✅
+- [ ] **Epsilon** — UI/UX Pro Max Reimplementation (Planning phase complete 📄)
 - [ ] **QA & Design Testing Phase** — Validating core flows and design gaps (TEST_STRATEGY_AND_CHECKLIST.md)
 - [ ] **Supabase** — Backend/RLS/RPC (manual)
 - [ ] **Integrations** — Payments + Email (future sprint)
