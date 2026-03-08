@@ -308,7 +308,14 @@ export function OrdersManagement() {
                                 >
                                   <div className="flex items-center space-x-3">
                                     <Package className="h-4 w-4 text-muted-foreground" />
-                                    <span>{item.name}</span>
+                                    <div>
+                                      <p>{item.name}</p>
+                                      {item.variantSku && (
+                                        <p className="text-[10px] text-amber-600 font-bold uppercase tracking-widest mt-0.5">
+                                          Variant: {item.variantSku}
+                                        </p>
+                                      )}
+                                    </div>
                                   </div>
                                   <div className="text-sm text-muted-foreground">
                                     {item.quantity} x {formatTHB(item.price)}

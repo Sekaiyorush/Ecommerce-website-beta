@@ -393,7 +393,8 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
       stock_quantity: product.stockQuantity,
       benefits: product.benefits,
       dosage: product.dosage,
-      image_url: product.imageUrl
+      image_url: product.imageUrl,
+      variants: product.variants || []
     });
     if (error) {
       console.error(error);
@@ -421,6 +422,7 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     if (updates.dosage !== undefined) dbUpdates.dosage = updates.dosage;
     if (updates.sku !== undefined) dbUpdates.sku = updates.sku;
     if (updates.imageUrl !== undefined) dbUpdates.image_url = updates.imageUrl;
+    if (updates.variants !== undefined) (dbUpdates as any).variants = updates.variants;
 
     await supabase.from('products').update(dbUpdates).eq('id', id);
     logAudit('update', 'product', id, { fields: Object.keys(dbUpdates) });

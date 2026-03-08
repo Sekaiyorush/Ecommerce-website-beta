@@ -7,7 +7,6 @@ import {
   Users,
   Network,
   Percent,
-  TrendingUp,
   User
 } from 'lucide-react';
 
@@ -42,11 +41,10 @@ export function PartnerNetwork() {
   const totalPartners = partners.length;
   const activePartners = partners.filter(p => p.status === 'active').length;
   const totalNetworkPurchases = partners.reduce((sum, p) => sum + p.totalPurchases, 0);
-  const totalNetworkResold = partners.reduce((sum, p) => sum + p.totalResold, 0);
 
-  // Find top performers
+  // Find top performers by purchase volume
   const topPerformers = [...partners]
-    .sort((a, b) => b.totalResold - a.totalResold)
+    .sort((a, b) => b.totalPurchases - a.totalPurchases)
     .slice(0, 5);
 
   const getStatusColor = (status: string) => {
@@ -119,7 +117,7 @@ export function PartnerNetwork() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div className="bg-white p-4 rounded-xl border border-slate-200">
           <div className="flex items-center space-x-2 mb-2">
             <Users className="h-4 w-4 text-slate-400" />
@@ -137,16 +135,9 @@ export function PartnerNetwork() {
         <div className="bg-white p-4 rounded-xl border border-slate-200">
           <div className="flex items-center space-x-2 mb-2">
             <Percent className="h-4 w-4 text-indigo-500" />
-            <span className="text-sm text-slate-500">Total Purchases</span>
+            <span className="text-sm text-slate-500">Total Purchase Volume</span>
           </div>
           <p className="text-2xl font-semibold text-slate-900">{formatTHB(totalNetworkPurchases)}</p>
-        </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <div className="flex items-center space-x-2 mb-2">
-            <TrendingUp className="h-4 w-4 text-amber-500" />
-            <span className="text-sm text-slate-500">Total Resold</span>
-          </div>
-          <p className="text-2xl font-semibold text-slate-900">{formatTHB(totalNetworkResold)}</p>
         </div>
       </div>
 
@@ -219,17 +210,7 @@ export function PartnerNetwork() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">Total Purchases</span>
-                    <span className="text-slate-900">{formatTHB(selectedPartner.totalPurchases)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Total Resold</span>
-                    <span className="text-slate-900">{formatTHB(selectedPartner.totalResold)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Est. Profit</span>
-                    <span className="font-medium text-emerald-600">
-                      {formatTHB(selectedPartner.totalResold - selectedPartner.totalPurchases)}
-                    </span>
+                    <span className="text-slate-900 font-medium">{formatTHB(selectedPartner.totalPurchases)}</span>
                   </div>
                 </div>
 
@@ -250,7 +231,7 @@ export function PartnerNetwork() {
 
           {/* Top Performers */}
           <div className="bg-white rounded-xl border border-slate-200 p-5">
-            <h3 className="font-semibold text-slate-900 mb-4">Top Performers</h3>
+            <h3 className="font-semibold text-slate-900 mb-4">Top Volume Partners</h3>
             <div className="space-y-3">
               {topPerformers.map((partner, idx) => (
                 <div key={partner.id} className="flex items-center space-x-3">
@@ -262,8 +243,7 @@ export function PartnerNetwork() {
                     <p className="text-xs text-slate-500">{partner.company}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-slate-900">{formatTHB(partner.totalResold)}</p>
-                    <p className="text-xs text-emerald-600">resold</p>
+                    <p className="font-medium text-slate-900">{formatTHB(partner.totalPurchases)}</p>
                   </div>
                 </div>
               ))}
