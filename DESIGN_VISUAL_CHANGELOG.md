@@ -369,3 +369,32 @@ Each section below documents:
 5. **Engineering:** Fix `alert()` → toast for rate limit errors (GAP-AU1)
 6. **Engineering:** Disable "Add to Cart" for out-of-stock variants (GAP-PD1)
 7. **QA:** Execute TC-1.x through TC-3.x against live Supabase environment and update "Pending" results
+
+---
+
+## Section 11: Route Protection & Build Stability
+
+### Before
+- Critical JSX error in `src/App.tsx` around line 174 due to malformed closing tag: `</PartnerDashboard>` instead of `</ProtectedRoute>`.
+- Application unbootable; build failing with `[plugin:vite:react-babel]` error.
+- Inconsistent route protection audit state across visual components (CartSidebar, Checkout).
+
+### After
+- **Build Restored:** `src/App.tsx` JSX syntax corrected.
+- **Route Audit Complete:** All visually-sensitive routes (`/admin`, `/partner`, `/dashboard`, `/checkout`) verified for correct `ProtectedRoute` wrapping.
+- **Role-Based Visibility:** Confirmed `isPartner` logic correctly gates `CartSidebar`, `ShoppingCart` header icon, and `Add to Cart` product buttons.
+- **Design Alignment:** Procurement flow is now consistently "Partner-Exclusive" across both route access and component visibility.
+
+### Design Gaps
+- **[GAP-R1] Admin "God-Mode" Gaps** — Admins currently cannot access partner-specific UI elements (Cart, Checkout) for testing unless specifically assigned the `partner` role.
+- **[GAP-R2] User Dashboard Context** — Regular users see "Total Orders" metric even though procurement is restricted to partners, which may cause UX confusion.
+
+### Test Result
+| Test Case | Result | Notes |
+|-----------|--------|-------|
+| App Build / Boot | PASS | JSX fix at line 174 unblocked Vite dev server |
+| Route Gating: Admin | PASS | Protected by `requireAdmin={true}` |
+| Route Gating: Partner | PASS | Protected by `requirePartner={true}` |
+| Route Gating: Checkout | PASS | Consistently requires `partner` role |
+| Component Visibility: Cart | PASS | Restricted to `isPartner` |
+

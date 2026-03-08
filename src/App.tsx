@@ -171,7 +171,7 @@ function AppContent() {
                             element={
                               <ProtectedRoute requirePartner={true}>
                                 <PartnerDashboard />
-                              </PartnerDashboard>
+                              </ProtectedRoute>
                             }
                           />
 
