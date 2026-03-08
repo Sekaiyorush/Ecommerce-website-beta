@@ -24,8 +24,8 @@ interface Notification {
 }
 
 interface PartnerStats {
-  totalEarnings: number;
-  earningsChange: number;
+  purchaseVolume: number;
+  purchaseChange: number;
   networkSize: number;
   networkGrowth: number;
   monthlyOrders: number;
@@ -55,17 +55,13 @@ export function PartnerAnalytics() {
       new Date(o.createdAt) >= sixtyDaysAgo && new Date(o.createdAt) < thirtyDaysAgo
     );
 
-    // Earnings calculation (estimated profit)
+    // Purchase volume calculation
     const totalPurchases = partnerOrders.reduce((sum, o) => sum + o.total, 0);
-    const currentEarnings = partnerDetails?.totalResold 
-      ? partnerDetails.totalResold - totalPurchases 
-      : 0;
     
-    // Previous month earnings (simplified estimate)
+    // Previous month purchases
     const prevPurchases = previousMonthOrders.reduce((sum, o) => sum + o.total, 0);
-    const previousEarnings = prevPurchases * 0.2; // Estimate 20% margin
-    const earningsChange = previousEarnings > 0 
-      ? ((currentEarnings - previousEarnings) / previousEarnings) * 100 
+    const purchaseChange = prevPurchases > 0 
+      ? ((totalPurchases - prevPurchases) / prevPurchases) * 100 
       : 0;
 
     // Network growth
@@ -86,8 +82,8 @@ export function PartnerAnalytics() {
       : 0;
 
     return {
-      totalEarnings: currentEarnings,
-      earningsChange,
+      purchaseVolume: totalPurchases,
+      purchaseChange,
       networkSize: currentNetwork,
       networkGrowth,
       monthlyOrders: currentMonthOrders.length,
@@ -160,7 +156,7 @@ export function PartnerAnalytics() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold text-slate-900">Performance Analytics</h2>
-          <p className="text-slate-500">Track your growth and earnings</p>
+          <p className="text-slate-500">Track your growth and purchases</p>
         </div>
         <div className="flex items-center space-x-3">
           <button className="relative p-2 text-slate-600 hover:text-gold-600 hover:bg-gold-50 rounded-xl transition-colors">
@@ -182,20 +178,20 @@ export function PartnerAnalytics() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Total Earnings */}
+        {/* Total Purchases */}
         <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Total Earnings</p>
-              <p className="text-3xl font-serif text-slate-900">{formatTHB(stats.totalEarnings)}</p>
+              <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Total Purchases</p>
+              <p className="text-3xl font-serif text-slate-900">{formatTHB(stats.purchaseVolume)}</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
-              <DollarSign className="h-6 w-6 text-white" />
+              <ShoppingBag className="h-6 w-6 text-white" />
             </div>
           </div>
-          <div className={`flex items-center text-sm ${stats.earningsChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-            <TrendingUp className={`h-4 w-4 mr-1 ${stats.earningsChange < 0 && 'rotate-180'}`} />
-            <span className="font-medium">{Math.abs(stats.earningsChange).toFixed(1)}%</span>
+          <div className={`flex items-center text-sm ${stats.purchaseChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+            <TrendingUp className={`h-4 w-4 mr-1 ${stats.purchaseChange < 0 && 'rotate-180'}`} />
+            <span className="font-medium">{Math.abs(stats.purchaseChange).toFixed(1)}%</span>
             <span className="text-slate-400 ml-1">vs last month</span>
           </div>
         </div>

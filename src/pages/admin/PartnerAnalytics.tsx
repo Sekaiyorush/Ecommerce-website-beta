@@ -22,8 +22,6 @@ interface PartnerPerformance {
   company: string;
   discountRate: number;
   totalPurchases: number;
-  totalResold: number;
-  estimatedProfit: number;
   networkSize: number;
   customerSignups: number;
   conversionRate: number;
@@ -42,7 +40,6 @@ export function PartnerAnalytics() {
     return partners.map(partner => {
       const partnerOrders = orders.filter(o => o.partnerId === partner.id);
       const totalPurchases = partnerOrders.reduce((sum, o) => sum + o.total, 0);
-      const estimatedProfit = partner.totalResold ? partner.totalResold - totalPurchases : 0;
 
       // Get network size (direct referrals)
       const networkSize = partners.filter(p => p.referredBy === partner.id).length;
@@ -88,8 +85,6 @@ export function PartnerAnalytics() {
         company: partner.company,
         discountRate: partner.discountRate,
         totalPurchases,
-        totalResold: partner.totalResold || 0,
-        estimatedProfit,
         networkSize,
         customerSignups,
         conversionRate,
@@ -301,7 +296,6 @@ export function PartnerAnalytics() {
                 <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Partner</th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Discount</th>
                 <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Purchases</th>
-                <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Est. Profit</th>
                 <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Network</th>
                 <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Signups</th>
                 <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Conversion</th>
@@ -329,11 +323,6 @@ export function PartnerAnalytics() {
                   </td>
                   <td className="px-4 py-4 text-right font-medium">
                     {formatTHB(partner.totalPurchases)}
-                  </td>
-                  <td className="px-4 py-4 text-right">
-                    <span className={partner.estimatedProfit >= 0 ? 'text-emerald-600' : 'text-red-600'}>
-                      {formatTHB(partner.estimatedProfit)}
-                    </span>
                   </td>
                   <td className="px-4 py-4 text-right">
                     {partner.networkSize}

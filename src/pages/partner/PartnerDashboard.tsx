@@ -9,14 +9,11 @@ import {
   Package,
   ShoppingBag,
   Users,
-  TrendingUp,
   ChevronRight,
   Clock,
   CheckCircle2,
   Truck,
   Box,
-  CreditCard,
-  Landmark,
   ArrowUpRight,
   UserPlus,
   Eye,
@@ -28,11 +25,8 @@ export function PartnerDashboard() {
   const { user } = useAuth();
   const { db } = useDatabase();
   const { orders, partners, products } = db;
-  const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'network' | 'shop' | 'payouts'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'network' | 'shop'>('overview');
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
-  const [payoutAmount, setPayoutAmount] = useState('');
-  const [payoutMethod, setPayoutMethod] = useState('bank');
-  const [payoutMessage, setPayoutMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null);
 
   // Get partner details
   const partnerDetails = partners.find(p => p.id === user?.partnerId);
@@ -50,9 +44,6 @@ export function PartnerDashboard() {
 
   // Calculate stats
   const totalPurchases = partnerOrders.reduce((sum, o) => sum + o.total, 0);
-  const estimatedProfit = partnerDetails?.totalResold
-    ? partnerDetails.totalResold - totalPurchases
-    : 0;
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -94,11 +85,10 @@ export function PartnerDashboard() {
             { id: 'shop', label: 'PARTNER SHOP', icon: ShoppingBag },
             { id: 'orders', label: 'ORDERS', icon: Box },
             { id: 'network', label: 'MY NETWORK', icon: Users },
-            { id: 'payouts', label: 'PAYOUTS', icon: Landmark },
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as 'overview' | 'orders' | 'network' | 'shop' | 'payouts')}
+              onClick={() => setActiveTab(tab.id as 'overview' | 'orders' | 'network' | 'shop')}
               className={`flex items-center space-x-2 pb-2 text-[10px] font-bold tracking-[0.2em] transition-all relative ${activeTab === tab.id
                 ? 'text-[#D4AF37]'
                 : 'text-slate-400 hover:text-[#AA771C]'
@@ -117,7 +107,7 @@ export function PartnerDashboard() {
         {activeTab === 'overview' && (
           <div className="space-y-12">
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-white p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
                 <div className="flex items-center justify-between">
                   <div>
@@ -138,18 +128,6 @@ export function PartnerDashboard() {
                   </div>
                   <div className="w-12 h-12 bg-white border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
                     <ShoppingBag className="h-5 w-5 text-[#D4AF37]" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] mb-3">Est. Profit</p>
-                    <p className="text-4xl font-serif text-emerald-700">{formatTHB(estimatedProfit)}</p>
-                  </div>
-                  <div className="w-12 h-12 bg-emerald-50 border border-emerald-100 flex items-center justify-center shadow-sm">
-                    <TrendingUp className="h-5 w-5 text-emerald-600" />
                   </div>
                 </div>
               </div>
@@ -390,97 +368,6 @@ export function PartnerDashboard() {
         {/* Network Tab */}
         {activeTab === 'network' && (
           <PartnerNetwork />
-        )}
-
-        {/* Payouts Tab */}
-        {activeTab === 'payouts' && (
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Balances */}
-              <div className="col-span-1 md:col-span-2 bg-white border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)] p-10">
-                <h3 className="text-3xl font-serif text-slate-900 mb-10 tracking-tight">Earnings Overview</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                  <div className="p-8 bg-slate-50 border border-[#D4AF37]/10 shadow-inner">
-                    <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] mb-4">Available to Withdraw</p>
-                    <p className="text-5xl font-serif text-slate-900 tracking-tight">{formatTHB(estimatedProfit)}</p>
-                  </div>
-                  <div className="p-8 bg-slate-50 border border-[#D4AF37]/10 shadow-inner">
-                    <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-4">Total Lifetime Earnings</p>
-                    <p className="text-4xl font-serif text-slate-400 tracking-tight">{formatTHB(estimatedProfit)}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Request form */}
-              <div className="col-span-1 bg-white border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)] p-10">
-                <h3 className="text-2xl font-serif text-slate-900 mb-8 tracking-tight">Request Payout</h3>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (Number(payoutAmount) > estimatedProfit) {
-                      setPayoutMessage({ type: 'error', text: 'You cannot withdraw more than your available balance.' });
-                    } else if (Number(payoutAmount) < 50) {
-                      setPayoutMessage({ type: 'error', text: 'Minimum withdrawal amount is ฿50 THB' });
-                    } else {
-                      setPayoutMessage({ type: 'success', text: 'Payout request submitted successfully. Processing takes 2-3 business days.' });
-                      setPayoutAmount('');
-                    }
-                  }}
-                  className="space-y-6"
-                >
-                  {payoutMessage && (
-                    <div className={`p-4 text-sm ${payoutMessage.type === 'error' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-emerald-50 text-emerald-700 border border-emerald-100'}`}>
-                      {payoutMessage.text}
-                    </div>
-                  )}
-                  <div>
-                    <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-slate-900 mb-3">Amount (THB)</label>
-                    <input
-                      type="number"
-                      min="50"
-                      step="0.01"
-                      required
-                      value={payoutAmount}
-                      onChange={(e) => setPayoutAmount(e.target.value)}
-                      className="w-full px-4 py-3 bg-white border border-[#D4AF37]/30 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]/50 transition-all font-serif text-lg"
-                      placeholder="Min ฿50 THB"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-slate-900 mb-3">Payout Method</label>
-                    <select
-                      value={payoutMethod}
-                      onChange={(e) => setPayoutMethod(e.target.value)}
-                      className="w-full px-4 py-3 bg-white border border-[#D4AF37]/30 text-slate-900 focus:outline-none focus:border-[#D4AF37] transition-all tracking-wide text-sm"
-                    >
-                      <option value="bank">Bank Transfer (ACH)</option>
-                      <option value="crypto">Cryptocurrency (USDC/USDT)</option>
-                    </select>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full h-14 flex items-center justify-center bg-[#111] text-white text-[10px] font-bold tracking-[0.2em] uppercase transition-all hover:bg-black border border-[#111] shadow-md group relative overflow-hidden mt-8"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent -translate-x-[150%] animate-[shimmer_3s_infinite]" />
-                    <span className="relative z-10 transition-colors group-hover:text-[#D4AF37]">SUBMIT REQUEST</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] transition-all duration-500 ease-out group-hover:w-full" />
-                  </button>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-widest text-center mt-4">Minimum withdrawal: ฿50 THB</p>
-                </form>
-              </div>
-            </div>
-
-            {/* Payout History */}
-            <div className="bg-white border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
-              <div className="p-8 border-b border-[#D4AF37]/10">
-                <h3 className="text-2xl font-serif text-slate-900 tracking-tight">Payout History</h3>
-              </div>
-              <div className="p-20 text-center">
-                <CreditCard className="h-12 w-12 text-[#D4AF37]/30 mx-auto mb-6" />
-                <p className="text-slate-500 text-sm tracking-wide">No payout history available yet.</p>
-              </div>
-            </div>
-          </div>
         )}
       </div>
 
