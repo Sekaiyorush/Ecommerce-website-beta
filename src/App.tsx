@@ -10,6 +10,7 @@ import { BackToTop } from '@/components/ui/BackToTop';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { CartSidebar } from '@/components/CartSidebar';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Hero } from '@/sections/Hero';
 import { FeaturedProducts } from '@/sections/FeaturedProducts';
 import { TrustFeatures } from '@/sections/TrustFeatures';
@@ -115,103 +116,107 @@ function AppContent() {
 
   return (
     <Router>
-      <Suspense fallback={<PageLoader />}>
-        {dbError && (
-          <div className="bg-red-600 text-white text-center py-3 px-4 shadow-md sticky top-0 z-[100] text-sm font-medium tracking-wide relative">
-            <span className="absolute inset-0 bg-black/10 mix-blend-multiply" />
-            <span className="relative">System Notice: {dbError}. Some features may be unavailable.</span>
-          </div>
-        )}
-        <Routes>
-          {/* Auth pages — always accessible */}
-          <Route path="/login" element={isAuthenticated && !isRecoveryFlow ? <Navigate to="/" replace /> : <Login />} />
-          <Route path="/register" element={isAuthenticated && !isRecoveryFlow ? <Navigate to="/" replace /> : <Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+      <ErrorBoundary>
+        <Suspense fallback={<PageLoader />}>
+          {dbError && (
+            <div className="bg-red-600 text-white text-center py-3 px-4 shadow-md sticky top-0 z-[100] text-sm font-medium tracking-wide relative">
+              <span className="absolute inset-0 bg-black/10 mix-blend-multiply" />
+              <span className="relative">System Notice: {dbError}. Some features may be unavailable.</span>
+            </div>
+          )}
+          <Routes>
+            {/* Auth pages — always accessible */}
+            <Route path="/login" element={isAuthenticated && !isRecoveryFlow ? <Navigate to="/" replace /> : <Login />} />
+            <Route path="/register" element={isAuthenticated && !isRecoveryFlow ? <Navigate to="/" replace /> : <Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
-          {/* Everything else — requires auth or shows landing page */}
-          <Route
-            path="/*"
-            element={
-              isRecoveryFlow ? (
-                // Show reset password page during recovery flow, even if authenticated
-                <ResetPassword />
-              ) : !isAuthenticated ? (
-                // Visitors see ONLY the landing page
-                <Routes>
-                  <Route path="*" element={<LandingPage />} />
-                </Routes>
-              ) : (
-                // Authenticated users see the full site
-                <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-amber-200 flex flex-col relative overflow-hidden">
-                  <PremiumEffects />
-                  {/* Dynamic Background Elements */}
-                  <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-50/50 via-white to-white pointer-events-none -z-10" />
+            {/* Everything else — requires auth or shows landing page */}
+            <Route
+              path="/*"
+              element={
+                isRecoveryFlow ? (
+                  // Show reset password page during recovery flow, even if authenticated
+                  <ResetPassword />
+                ) : !isAuthenticated ? (
+                  // Visitors see ONLY the landing page
+                  <Routes>
+                    <Route path="*" element={<LandingPage />} />
+                  </Routes>
+                ) : (
+                  // Authenticated users see the full site
+                  <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-amber-200 flex flex-col relative overflow-hidden">
+                    <PremiumEffects />
+                    {/* Dynamic Background Elements */}
+                    <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-50/50 via-white to-white pointer-events-none -z-10" />
 
-                  <Header />
-                  {isPartner && <CartSidebar />}
-                  <main className="flex-1 relative z-10">
-                    <Routes>
-                      {/* Admin Routes */}
-                      <Route
-                        path="/admin/*"
-                        element={
-                          <ProtectedRoute requireAdmin={true}>
-                            <AdminDashboard />
-                          </ProtectedRoute>
-                        }
-                      />
+                    <Header />
+                    {isPartner && <CartSidebar />}
+                    <main className="flex-1 relative z-10">
+                      <ErrorBoundary>
+                        <Routes>
+                          {/* Admin Routes */}
+                          <Route
+                            path="/admin/*"
+                            element={
+                              <ProtectedRoute requireAdmin={true}>
+                                <AdminDashboard />
+                              </ProtectedRoute>
+                            }
+                          />
 
-                      {/* Partner Routes */}
-                      <Route
-                        path="/partner/*"
-                        element={
-                          <ProtectedRoute requirePartner={true}>
-                            <PartnerDashboard />
-                          </ProtectedRoute>
-                        }
-                      />
+                          {/* Partner Routes */}
+                          <Route
+                            path="/partner/*"
+                            element={
+                              <ProtectedRoute requirePartner={true}>
+                                <PartnerDashboard />
+                              </PartnerDashboard>
+                            }
+                          />
 
-                      {/* User Dashboard Routes */}
-                      <Route
-                        path="/dashboard/*"
-                        element={
-                          <ProtectedRoute>
-                            <UserDashboard />
-                          </ProtectedRoute>
-                        }
-                      />
+                          {/* User Dashboard Routes */}
+                          <Route
+                            path="/dashboard/*"
+                            element={
+                              <ProtectedRoute>
+                                <UserDashboard />
+                              </ProtectedRoute>
+                            }
+                          />
 
-                      {/* Authenticated user routes */}
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/products" element={<Products />} />
-                      <Route path="/product/:sku" element={<ProductDetails />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/contact" element={<Contact />} />
-                      <Route path="/faq" element={<FAQ />} />
-                      <Route path="/research" element={<Research />} />
-                      <Route path="/terms" element={<Terms />} />
-                      <Route path="/privacy" element={<Privacy />} />
-                      <Route path="/shipping" element={<Shipping />} />
-                      <Route
-                        path="/checkout"
-                        element={
-                          <ProtectedRoute requirePartner={true}>
-                            <CheckoutPage />
-                          </ProtectedRoute>
-                        }
-                      />
-                      <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                  </main>
-                  <Footer />
-                  <BackToTop />
-                </div>
-              )
-            }
-          />
-        </Routes>
-      </Suspense>
+                          {/* Authenticated user routes */}
+                          <Route path="/" element={<HomePage />} />
+                          <Route path="/products" element={<Products />} />
+                          <Route path="/product/:sku" element={<ProductDetails />} />
+                          <Route path="/about" element={<About />} />
+                          <Route path="/contact" element={<Contact />} />
+                          <Route path="/faq" element={<FAQ />} />
+                          <Route path="/research" element={<Research />} />
+                          <Route path="/terms" element={<Terms />} />
+                          <Route path="/privacy" element={<Privacy />} />
+                          <Route path="/shipping" element={<Shipping />} />
+                          <Route
+                            path="/checkout"
+                            element={
+                              <ProtectedRoute requirePartner={true}>
+                                <CheckoutPage />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route path="*" element={<NotFoundPage />} />
+                        </Routes>
+                      </ErrorBoundary>
+                    </main>
+                    <Footer />
+                    <BackToTop />
+                  </div>
+                )
+              }
+            />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </Router>
   );
 }

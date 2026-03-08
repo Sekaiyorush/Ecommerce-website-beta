@@ -439,12 +439,25 @@ const validTransitions = {
 
 ## Error Handling
 
-### Issue: `loadData()` failure doesn't set user-visible error state
-**File**: `src/context/DatabaseContext.tsx:145-357`
+### Issue: Silent data load failures — resolved with Error Boundary
+**File**: `src/context/DatabaseContext.tsx:145-357`, `src/App.tsx`
 **Severity**: High
-**Description**: `Promise.all()` failures in data load are caught and only logged to console. App state never reflects the error.
-**Impact**: Blank/empty product list with no user guidance.
-**Suggested Fix**: Separate critical queries (products) from optional ones (settings). Show error banner if products fail.
+**Description**: Previously, Supabase query failures or runtime rendering errors (like missing imports in lazy-loaded components) would lead to a blank white screen.
+**Impact**: App crashes with no user guidance; "blank pure white" report from CEO.
+**Resolution**: 
+1. Fixed missing `ProductCard` import in `src/sections/FeaturedProducts.tsx`.
+2. Implemented `ErrorBoundary` in `App.tsx` at root and content levels with branded "Golden Tier" fallback UI.
+3. Added `dbError` banner for database-level failures.
+
+---
+
+### Issue: Missing Error Boundary on lazy-loaded routes — resolved
+**File**: `src/App.tsx`
+**Severity**: High
+**Description**: Lazy-loaded routes (Admin, Partner, User dashboards) lacked a catch-all for runtime failures.
+**Impact**: A single component failure in a dashboard would crash the entire authenticated session.
+**Resolution**: Wrapped `<main>` and the entire `AppContent` router with `ErrorBoundary`.
+
 
 ---
 

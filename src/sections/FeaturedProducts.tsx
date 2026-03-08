@@ -3,6 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useDatabase } from '@/context/DatabaseContext';
 import { ShoppingCart, ArrowRight, Check } from 'lucide-react';
 import { ProductRating } from '@/components/reviews/ProductRating';
+import { ProductCard } from '@/components/ProductCard';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { formatTHB } from '@/lib/formatPrice';
