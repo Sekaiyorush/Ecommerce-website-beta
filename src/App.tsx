@@ -171,7 +171,7 @@ function AppContent() {
                             element={
                               <ProtectedRoute requirePartner={true}>
                                 <PartnerDashboard />
-                              </PartnerDashboard>
+                              </ProtectedRoute>
                             }
                           />
 
@@ -199,7 +199,7 @@ function AppContent() {
                           <Route
                             path="/checkout"
                             element={
-                              <ProtectedRoute requirePartner={true}>
+                              <ProtectedRoute>
                                 <CheckoutPage />
                               </ProtectedRoute>
                             }
