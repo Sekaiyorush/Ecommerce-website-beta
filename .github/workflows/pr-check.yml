@@ -1,0 +1,27 @@
+name: PR Check Gate
+
+on:
+  pull_request:
+    branches: [ "main", "fix/*", "feat/*", "perf/*", "climpire/*" ]
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Pre-merge type gate (tsc --noEmit + ESLint)
+      run: npm run validate
+      
+    - name: Shared test harness (Vitest baseline)
+      run: npm run test:run
