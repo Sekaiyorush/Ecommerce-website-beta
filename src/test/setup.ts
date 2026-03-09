@@ -24,6 +24,7 @@ vi.mock('@/lib/supabase', () => ({
       resetPasswordForEmail: mockResetPasswordForEmail,
       updateUser: mockUpdateUser
     },
+    rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
     from: vi.fn(() => ({
       select: vi.fn().mockReturnThis(),
       insert: vi.fn().mockReturnThis(),
