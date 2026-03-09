@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
+import { SecurityAlert } from '@/components/ui/security-alert';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -62,9 +63,12 @@ export function Login() {
 
           <div className="bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
             {serverError && (
-              <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm mb-4">
-                {serverError}
-              </div>
+              <SecurityAlert
+                variant="error"
+                message={serverError}
+                onDismiss={() => setServerError('')}
+                className="mb-6"
+              />
             )}
 
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>

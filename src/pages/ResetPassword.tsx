@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Lock, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { SecurityAlert } from '@/components/ui/security-alert';
+import { PasswordStrengthMeter } from '@/components/auth/PasswordStrengthMeter';
 
 export function ResetPassword() {
     const [password, setPassword] = useState('');
@@ -20,8 +22,7 @@ export function ResetPassword() {
             // Supabase automatically logs the user in when they click the recovery link,
             // so session should exist here.
             if (!session) {
-                // Option: handle if they landed here without session
-                // setError('Invalid or expired password reset session.');
+                setError('Your password reset link has expired or is invalid. Please request a new one.');
             }
         };
         checkSession();
@@ -97,9 +98,12 @@ export function ResetPassword() {
 
                     <div className="bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
                         {error && (
-                            <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm mb-4">
-                                {error}
-                            </div>
+                            <SecurityAlert
+                              variant="error"
+                              message={error}
+                              onDismiss={() => setError('')}
+                              className="mb-6"
+                            />
                         )}
 
                         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -116,6 +120,7 @@ export function ResetPassword() {
                                         required
                                     />
                                 </div>
+                                <PasswordStrengthMeter password={password} />
                             </div>
 
                             <div>

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Eye, EyeOff, Mail, Lock, User, Ticket, Check, X, ArrowRight } from 'lucide-react';
+import { SecurityAlert } from '@/components/ui/security-alert';
+import { PasswordStrengthMeter } from '@/components/auth/PasswordStrengthMeter';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -21,6 +23,7 @@ type RegisterFormData = z.infer<typeof RegisterSchema>;
 
 export function Register() {
   const [name, setName] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -115,9 +118,12 @@ export function Register() {
 
           <div className="bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
             {serverError && (
-              <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm mb-4">
-                {serverError}
-              </div>
+              <SecurityAlert
+                variant="error"
+                message={serverError}
+                onDismiss={() => setServerError('')}
+                className="mb-6"
+              />
             )}
 
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -207,7 +213,9 @@ export function Register() {
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    {...register('password')}
+                    {...register('password', {
+                      onChange: (e) => setPasswordValue(e.target.value),
+                    })}
                     className="w-full h-12 pl-12 pr-12 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-slate-800 placeholder-slate-300"
                     placeholder="CREATE PASSWORD"
                   />
@@ -222,6 +230,7 @@ export function Register() {
                 {errors.password && (
                   <p className="text-xs text-red-600 mt-1.5">{errors.password.message}</p>
                 )}
+                <PasswordStrengthMeter password={passwordValue} />
               </div>
 
               <div>
