@@ -44,7 +44,16 @@ This document represents the "single pass" consolidated requirements from all de
 | OPS-02  | Search Latency Audit | Verify search debounce effectively keeps API/Filtering latency under 200ms. |
 | OPS-03  | Supabase Key Rotation | Confirm anon key rotation if legacy `.env` exposure is suspected. |
 
+## 5. Final Round 1 Review Blockers (Immediate Remediation)
+
+| Task ID | Item | Specification |
+|---------|------|---------------|
+| R1-1    | Checkout Role-Gate | Implement `isPartner` check in `CheckoutPage.tsx` with redirect to `/products`. |
+| R1-2    | Catalog Skeletons | Replace inline `animate-pulse` in `Products.tsx` with `ProductCardSkeleton`. |
+| R1-3    | Branded Alerts | Add `gold` variant to `Alert` component in `src/components/ui/alert.tsx`. |
+| R1-4    | Auth RPC Verification | Ensure `AuthReliability.test.tsx` passes in CI/CD. |
+
 ---
 
 ## Execution Strategy
-All teams are to proceed in **parallel**. The review cycle will not restart until all P0 items (marked as blockers in `REMEDIATION_PLAN.md`) are verified by Planning.
+All teams are to proceed in **parallel**. The review cycle will not restart until all P0 items (marked as blockers in `REMEDIATION_PLAN.md` and `MASTER_WORK_PLAN.md`) are verified by Planning.

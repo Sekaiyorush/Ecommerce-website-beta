@@ -163,9 +163,19 @@ These items require direct Supabase dashboard access or Edge Function deployment
 - [x] **Beta** — Form validation ✅
 - [x] **Gamma** — Product & cart UX/security ✅
 - [x] **Delta** — Performance, a11y, data layer ✅
-- [x] **Planning Deliverable** — Finalized Execution Plan ([FINALIZED_EXECUTION_PLAN_ROUND_1.md](./FINALIZED_EXECUTION_PLAN_ROUND_1.md)) 📄 ✅
-- [ ] **Epsilon** — UI/UX Pro Max Reimplementation (Planning phase complete 📄)
-- [ ] **Zeta** — Quality, Reliability & Automation (Strategy defined 📄)
-- [ ] **QA & Design Testing Phase** — Validating core flows and design gaps (TEST_STRATEGY_AND_CHECKLIST.md)
-- [ ] **Supabase** — Backend/RLS/RPC (manual)
-- [ ] **Integrations** — Payments + Email (future sprint)
+- [x] **Planning Deliverable** — Finalized Execution Plan ✅
+- [x] **Performance Optimization** — `useMemo` & Debounce verified ✅
+- [ ] **Round 1 Final Remediation** — Address Review Blockers (P1) 🛑
+
+---
+
+## Round 1 Final Remediation (Review Blockers)
+
+These items must be resolved BEFORE Round 1 final merge and deployment:
+
+| # | Issue | Severity | Owner | Source |
+|---|---|---|---|---|
+| R1-1 | Add `isPartner` role-gate redirect to `CheckoutPage.tsx` | **Critical** | Dev (Beta) | Security Audit |
+| R1-2 | Replace inline animate-pulse with `ProductCardSkeleton` in `Products.tsx` | Medium | Dev (Delta) | Design Audit |
+| R1-3 | Add "Premium/Gold" variant to `Alert` component for branded error states | Medium | Design (Epsilon) | Design Audit |
+| R1-4 | Verify `Invitation RPC` (QA-01) and `Auth Trigger` (QA-02) tests passing | High | QA (Zeta) | QA Checklist |
