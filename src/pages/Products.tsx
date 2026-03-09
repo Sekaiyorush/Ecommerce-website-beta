@@ -4,6 +4,7 @@ import { useDatabase } from '@/context/DatabaseContext';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ProductCard } from '@/components/ProductCard';
+import { ProductCardSkeleton } from '@/components/skeletons/ProductCardSkeleton';
 import { Search, Filter, ChevronDown, Lock, Tag, Zap, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -204,18 +205,7 @@ export function Products() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="bg-white border border-[#D4AF37]/10 overflow-hidden animate-pulse">
-                <div className="aspect-square bg-slate-100" />
-                <div className="p-8 space-y-4">
-                  <div className="h-3 bg-slate-100 w-1/4" />
-                  <div className="h-6 bg-slate-100 w-3/4" />
-                  <div className="h-3 bg-slate-100 w-full" />
-                  <div className="flex justify-between pt-6">
-                    <div className="h-6 bg-slate-100 w-20" />
-                    <div className="h-10 bg-slate-100 w-24" />
-                  </div>
-                </div>
-              </div>
+              <ProductCardSkeleton key={i} />
             ))}
           </div>
         ) : filteredProducts.length > 0 ? (
