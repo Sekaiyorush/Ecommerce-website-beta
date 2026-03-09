@@ -4,7 +4,8 @@ import { useDatabase } from '@/context/DatabaseContext';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ProductCard } from '@/components/ProductCard';
-import { Search, Filter, ChevronDown } from 'lucide-react';
+import { Search, Filter, ChevronDown, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 
 export function Products() {
@@ -147,6 +148,22 @@ export function Products() {
             )}
           </div>
         </div>
+
+        {/* Non-partner access notice */}
+        {!isPartner && (
+          <div className="mb-10 flex items-start gap-4 px-8 py-5 border border-[#D4AF37]/30 bg-[#D4AF37]/5 relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#AA771C] to-[#D4AF37]" />
+            <Lock className="h-5 w-5 text-[#AA771C] shrink-0 mt-0.5" />
+            <div>
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-900 mb-1">Partner Access Required</p>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Browse freely — pricing, cart, and checkout are reserved for verified partners.{' '}
+                <Link to="/contact" className="text-[#D4AF37] hover:text-[#AA771C] font-semibold underline transition-colors">Request partner access</Link>{' '}
+                to unlock full purchasing capabilities.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Products Grid */}
         {isLoading ? (

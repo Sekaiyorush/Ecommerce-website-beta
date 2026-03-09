@@ -1,7 +1,7 @@
 import { useState, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Eye, Heart, Sparkles } from 'lucide-react';
+import { ShoppingCart, Eye, Heart, Sparkles, Lock } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import type { Product } from '@/data/products';
 import { ProductRating } from '@/components/reviews/ProductRating';
@@ -155,9 +155,12 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 </Link>
               </>
             ) : (
-              <div className="w-full flex justify-between items-center py-2">
-                <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-300">Partner Exclusive</span>
-                <Link to="/contact" className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4AF37] hover:underline">Request Access</Link>
+              <div className="w-full py-3 px-4 bg-slate-50 border border-[#D4AF37]/20 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <Lock className="h-3.5 w-3.5 text-[#AA771C] shrink-0" />
+                  <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-slate-500">Partner Exclusive</span>
+                </div>
+                <Link to="/contact" className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4AF37] hover:text-[#AA771C] transition-colors underline">Request Access</Link>
               </div>
             )}
           </div>
