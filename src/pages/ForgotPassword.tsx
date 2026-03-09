@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Mail, ArrowRight, ArrowLeft } from 'lucide-react';
+import { SecurityAlert } from '@/components/ui/security-alert';
 
 export function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -78,9 +79,12 @@ export function ForgotPassword() {
 
                     <div className="bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
                         {error && (
-                            <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm mb-4">
-                                {error}
-                            </div>
+                            <SecurityAlert
+                              variant="error"
+                              message={error}
+                              onDismiss={() => setError('')}
+                              className="mb-6"
+                            />
                         )}
 
                         <form className="space-y-6" onSubmit={handleSubmit}>
