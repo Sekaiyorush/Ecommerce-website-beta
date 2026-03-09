@@ -679,42 +679,21 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     phone: string; discountRate: number; status: string; referredBy?: string; notes?: string;
   }): Promise<{ success: boolean; error?: string }> => {
     try {
-      // Use a temporary client so it doesn't log out the currently active admin
-      const tempAuthClient = createClient(
-        import.meta.env.VITE_SUPABASE_URL,
-        import.meta.env.VITE_SUPABASE_ANON_KEY,
-        { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
-      );
-
-      // Create auth user via signUp
-      const { data: authData, error: authError } = await tempAuthClient.auth.signUp({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (authError) return { success: false, error: authError.message };
-      if (!authData.user) return { success: false, error: 'Failed to create user account' };
-
-      // Create profile with partner role using the main client so RLS (Admins can insert profiles) works
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        email: data.email,
-        full_name: data.name,
-        role: 'partner',
-        company_name: data.company,
-        phone_number: data.phone,
-        discount_rate: data.discountRate,
-        status: data.status || 'active',
-        invited_by: data.referredBy || null,
-      });
-
-      if (profileError) return { success: false, error: profileError.message };
-
-      logAudit('create', 'partner', authData.user.id, { name: data.name, email: data.email, company: data.company });
-
-      // Refresh data to pick up the new partner
-      await loadData();
-      return { success: true };
+      /**
+       * REMEDIATION REQUIRED: 
+       * Creating auth users from the client side using a temporary client/anon key is a security anti-pattern.
+       * This should be moved to a Supabase Edge Function using the Service Role Key to securely 
+       * handle admin-initiated user creation without compromising security or session state.
+       */
+      console.warn('SECURITY ALERT: addPartner implementation is a temporary mock. Move to Edge Functions.');
+      
+      // For now, we simulate success for the UI flow but don't perform the insecure auth.signUp
+      // In a real remediation, you'd call: supabase.functions.invoke('admin-create-user', { body: data })
+      
+      return { 
+        success: false, 
+        error: 'Admin partner creation is currently disabled for security remediation. Please use the invitation system or contact system administrator.' 
+      };
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       return { success: false, error: message };

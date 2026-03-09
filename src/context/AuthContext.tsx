@@ -178,24 +178,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     if (authData.user) {
-      // Create profile with the correct role from invitation code
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        email: email,
-        full_name: name,
-        role: role,
-        discount_rate: invCode.defaultDiscountRate || (role === 'partner' ? 20 : 0),
-        invited_by: invCode.partnerId || null,
-        status: 'active',
+      // Create profile and consume invitation in a single atomic transaction via RPC
+      const { data: profileData, error: profileError } = await supabase.rpc('create_profile_with_invitation', {
+        p_id: authData.user.id,
+        p_full_name: name,
+        p_email: email,
+        p_code: invitationCode,
       });
 
-      if (profileError) {
-        console.error('Registration profile error:', profileError.message);
-        return { success: false, error: 'Registration failed. Please try again.' };
+      if (profileError || (profileData && !profileData.success)) {
+        console.error('Registration profile error:', profileError?.message || profileData?.error);
+        return { success: false, error: 'Registration failed during profile creation. Please contact support.' };
       }
-
-      // Consume the invitation code server-side (atomic increment)
-      await supabase.rpc('use_invitation_code', { code_input: invitationCode });
 
       // Refresh data
       await refreshData();

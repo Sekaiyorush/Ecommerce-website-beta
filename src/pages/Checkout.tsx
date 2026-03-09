@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useCart, getItemPrice } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useDatabase } from '@/context/DatabaseContext';
@@ -51,6 +51,10 @@ export function CheckoutPage() {
     const { items, cartSubtotal, discountAmount, cartTotal, clearCart, refreshCartPrices } = useCart();
     const { user, isPartner } = useAuth();
     const { createSecureOrder } = useDatabase();
+
+    if (!isPartner) {
+        return <Navigate to="/products" replace />;
+    }
 
     const [step, setStep] = useState<1 | 2 | 3>(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
