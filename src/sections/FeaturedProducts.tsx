@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useDatabase } from '@/context/DatabaseContext';
-import { ShoppingCart, ArrowRight, Check } from 'lucide-react';
-import { ProductRating } from '@/components/reviews/ProductRating';
+import { ArrowRight } from 'lucide-react';
 import { ProductCard } from '@/components/ProductCard';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { formatTHB } from '@/lib/formatPrice';
 
 export function FeaturedProducts() {
   const { isPartner, user } = useAuth();
@@ -23,14 +21,6 @@ export function FeaturedProducts() {
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "150%"]);
 
   const featuredProducts = db.products.slice(0, 3);
-
-  // Calculate partner price if applicable
-  const getPrice = (price: number) => {
-    if (isPartner && user?.discountRate) {
-      return price * (1 - user.discountRate / 100);
-    }
-    return price;
-  };
 
   return (
     <section ref={sectionRef} className="py-32 md:py-48 relative overflow-hidden bg-white">

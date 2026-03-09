@@ -16,7 +16,7 @@ export function getItemPrice(item: CartItem): number {
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (product: Product, variant?: ProductVariant) => void;
+  addToCart: (product: Product, variant?: ProductVariant, quantityToAdd?: number) => void;
   removeFromCart: (productId: string, variantSku?: string) => void;
   updateQuantity: (productId: string, quantity: number, variantSku?: string) => void;
   refreshCartPrices: (products: Product[]) => void;
@@ -119,17 +119,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
   }, [items, user?.id, isLoaded]);
 
-  const addToCart = useCallback((product: Product, variant?: ProductVariant) => {
+  const addToCart = useCallback((product: Product, variant?: ProductVariant, quantityToAdd: number = 1) => {
     setItems((prev) => {
       const existing = prev.find((item) => matchesItem(item, product.id, variant?.sku));
+      const stockLimit = variant?.stock ?? product.stockQuantity ?? 0;
       if (existing) {
-        return prev.map((item) =>
-          matchesItem(item, product.id, variant?.sku)
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
+        return prev.map((item) => {
+          if (matchesItem(item, product.id, variant?.sku)) {
+            const newQuantity = Math.min(item.quantity + quantityToAdd, stockLimit);
+            return { ...item, quantity: newQuantity };
+          }
+          return item;
+        });
       }
-      return [...prev, { product, quantity: 1, selectedVariant: variant }];
+      return [...prev, { product, quantity: Math.min(quantityToAdd, stockLimit), selectedVariant: variant }];
     });
   }, []);
 
@@ -143,9 +146,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
     setItems((prev) =>
-      prev.map((item) =>
-        matchesItem(item, productId, variantSku) ? { ...item, quantity } : item
-      )
+      prev.map((item) => {
+        if (matchesItem(item, productId, variantSku)) {
+          const stockLimit = item.selectedVariant?.stock ?? item.product.stockQuantity ?? 0;
+          return { ...item, quantity: Math.min(quantity, stockLimit) };
+        }
+        return item;
+      })
     );
   }, []);
 

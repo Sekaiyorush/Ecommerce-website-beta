@@ -84,14 +84,16 @@ export function CartSidebar() {
                     <div className="flex items-center border border-slate-200 bg-white rounded-sm overflow-hidden">
                       <button
                         onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.selectedVariant?.sku)}
-                        className="w-8 h-8 flex items-center justify-center hover:bg-gold-500/5 hover:text-gold-600 transition-all border-r border-slate-100"
+                        className="w-8 h-8 flex items-center justify-center hover:bg-gold-500/5 hover:text-gold-600 transition-all border-r border-slate-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                        disabled={item.quantity <= 1}
                       >
                         <Minus className="h-3 w-3" />
                       </button>
                       <span className="w-10 text-center text-[11px] font-bold font-serif">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.selectedVariant?.sku)}
-                        className="w-8 h-8 flex items-center justify-center hover:bg-gold-500/5 hover:text-gold-600 transition-all border-l border-slate-100"
+                        className="w-8 h-8 flex items-center justify-center hover:bg-gold-500/5 hover:text-gold-600 transition-all border-l border-slate-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                        disabled={item.quantity >= (item.selectedVariant?.stock ?? item.product.stockQuantity ?? 0)}
                       >
                         <Plus className="h-3 w-3" />
                       </button>

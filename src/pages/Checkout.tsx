@@ -9,7 +9,6 @@ import {
     Truck,
     CreditCard,
     ShoppingBag,
-    MapPin,
     Building2,
     Landmark,
     Bitcoin,

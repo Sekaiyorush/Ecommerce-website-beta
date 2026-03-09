@@ -14,12 +14,9 @@ import {
   CheckCircle2,
   AlertCircle,
   XCircle,
-  ChevronRight,
-  Filter,
   ArrowUpDown,
   History,
   X,
-  ChevronLeft
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import {

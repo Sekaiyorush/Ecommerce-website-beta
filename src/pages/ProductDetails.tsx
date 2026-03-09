@@ -6,7 +6,7 @@ import { useDatabase } from '@/context/DatabaseContext';
 import { useToast } from '@/components/ui/useToast';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { ShoppingCart, Check, ShieldCheck, ArrowLeft, Plus, Minus, FileText, Package } from 'lucide-react';
+import { ShoppingCart, Check, ShieldCheck, ArrowLeft, Plus, Minus, FileText } from 'lucide-react';
 import { ReviewList } from '@/components/reviews/ReviewList';
 import type { ProductVariant } from '@/data/products';
 import { formatTHB } from '@/lib/formatPrice';
@@ -69,9 +69,7 @@ export function ProductDetails() {
     const currentPrice = getDiscountedPrice(activePrice);
 
     const handleAddToCart = () => {
-        for (let i = 0; i < quantity; i++) {
-            addToCart(product, selectedVariant);
-        }
+        addToCart(product, selectedVariant, quantity);
         const variantLabel = selectedVariant ? ` (${selectedVariant.label})` : '';
         addToast({ message: `Added ${quantity}x ${product.name}${variantLabel} to your cart.`, type: 'success' });
     };
@@ -205,14 +203,16 @@ export function ProductDetails() {
                                             <div className="flex items-center bg-white p-1 border border-gold-300/20 shadow-premium justify-between min-h-[60px] min-w-[160px]">
                                                 <button
                                                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                                    className="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-gold-600 hover:bg-gold-500/5 transition-all"
+                                                    disabled={quantity <= 1}
+                                                    className="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-gold-600 hover:bg-gold-500/5 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                                 >
                                                     <Minus className="h-4 w-4" />
                                                 </button>
                                                 <span className="text-xl font-bold text-slate-900 font-serif">{quantity}</span>
                                                 <button
-                                                    onClick={() => setQuantity(quantity + 1)}
-                                                    className="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-gold-600 hover:bg-gold-500/5 transition-all"
+                                                    onClick={() => setQuantity(Math.min(variantStock, quantity + 1))}
+                                                    disabled={quantity >= variantStock}
+                                                    className="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-gold-600 hover:bg-gold-500/5 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                                 >
                                                     <Plus className="h-4 w-4" />
                                                 </button>
