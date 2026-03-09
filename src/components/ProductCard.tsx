@@ -155,12 +155,33 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 </Link>
               </>
             ) : (
-              <div className="w-full py-3 px-4 bg-slate-50 border border-[#D4AF37]/20 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <Lock className="h-3.5 w-3.5 text-[#AA771C] shrink-0" />
-                  <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-slate-500">Partner Exclusive</span>
+              <div className="w-full relative overflow-hidden">
+                {/* Blurred price ghost */}
+                <div className="flex items-end justify-between mb-3 select-none pointer-events-none" aria-hidden="true">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-slate-300 blur-[5px]">฿ — — —</span>
+                    <span className="text-3xl font-serif text-slate-300 blur-[7px]">฿ ——</span>
+                  </div>
+                  <div className="w-14 h-14 bg-slate-100 blur-[4px]" />
                 </div>
-                <Link to="/contact" className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4AF37] hover:text-[#AA771C] transition-colors underline">Request Access</Link>
+
+                {/* Lock overlay */}
+                <div className="relative border border-[#D4AF37]/25 bg-gradient-to-r from-[#111] to-[#191919] px-4 py-3 flex items-center justify-between gap-2 overflow-hidden group/lock">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/8 to-transparent -translate-x-[150%] group-hover/lock:translate-x-[150%] transition-transform duration-700 ease-in-out" />
+                  <div className="flex items-center gap-2 relative z-10">
+                    <div className="w-6 h-6 border border-[#D4AF37]/40 bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
+                      <Lock className="h-3 w-3 text-[#D4AF37]" />
+                    </div>
+                    <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-slate-300">Unlock Partner Pricing</span>
+                  </div>
+                  <Link
+                    to="/contact"
+                    className="relative z-10 text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4AF37] hover:text-white transition-colors shrink-0"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Apply →
+                  </Link>
+                </div>
               </div>
             )}
           </div>

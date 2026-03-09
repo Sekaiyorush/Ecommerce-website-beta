@@ -4,7 +4,7 @@ import { useDatabase } from '@/context/DatabaseContext';
 import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ProductCard } from '@/components/ProductCard';
-import { Search, Filter, ChevronDown, Lock } from 'lucide-react';
+import { Search, Filter, ChevronDown, Lock, Tag, Zap, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 
@@ -149,18 +149,53 @@ export function Products() {
           </div>
         </div>
 
-        {/* Non-partner access notice */}
+        {/* Non-partner upgrade banner */}
         {!isPartner && (
-          <div className="mb-10 flex items-start gap-4 px-8 py-5 border border-[#D4AF37]/30 bg-[#D4AF37]/5 relative overflow-hidden">
+          <div className="mb-10 relative overflow-hidden border border-[#D4AF37]/30 bg-gradient-to-r from-[#111] to-[#1a1a1a]">
+            {/* Shimmer sweep */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent -translate-x-[150%] animate-[shimmer_4s_infinite]" />
+            {/* Gold left accent bar */}
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#AA771C] to-[#D4AF37]" />
-            <Lock className="h-5 w-5 text-[#AA771C] shrink-0 mt-0.5" />
-            <div>
-              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-900 mb-1">Partner Access Required</p>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Browse freely — pricing, cart, and checkout are reserved for verified partners.{' '}
-                <Link to="/contact" className="text-[#D4AF37] hover:text-[#AA771C] font-semibold underline transition-colors">Request partner access</Link>{' '}
-                to unlock full purchasing capabilities.
-              </p>
+
+            <div className="pl-8 pr-6 py-6 flex flex-col md:flex-row items-start md:items-center gap-6">
+              {/* Lock badge */}
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="w-10 h-10 border border-[#D4AF37]/30 bg-[#D4AF37]/10 flex items-center justify-center">
+                  <Lock className="h-4 w-4 text-[#D4AF37]" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4AF37]">Partner Exclusive</p>
+                  <p className="text-[10px] tracking-[0.15em] text-slate-400 uppercase mt-0.5">Pricing &amp; purchasing locked</p>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="hidden md:block w-[1px] self-stretch bg-[#D4AF37]/15" />
+
+              {/* Benefits */}
+              <div className="flex flex-wrap gap-x-8 gap-y-3 flex-1">
+                <div className="flex items-center gap-2">
+                  <Tag className="h-3.5 w-3.5 text-[#D4AF37]/70 shrink-0" />
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-300">Exclusive Partner Pricing</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="h-3.5 w-3.5 text-[#D4AF37]/70 shrink-0" />
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-300">Priority Order Processing</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-3.5 w-3.5 text-[#D4AF37]/70 shrink-0" />
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-300">Verified Research Access</span>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <Link
+                to="/contact"
+                className="shrink-0 relative inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-[#AA771C] to-[#D4AF37] text-white text-[10px] font-bold tracking-[0.25em] uppercase overflow-hidden group/cta transition-all duration-300 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+              >
+                <span className="relative z-10">Request Partner Access</span>
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-white/40 transition-all duration-500 ease-out group-hover/cta:w-full" />
+              </Link>
             </div>
           </div>
         )}
