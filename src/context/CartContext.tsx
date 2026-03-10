@@ -104,17 +104,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (saveTimerRef.current !== null) {
       clearTimeout(saveTimerRef.current);
     }
-    saveTimerRef.current = setTimeout(() => {
+    
+    const saveCart = () => {
       const key = user?.id ? `goldentier_cart_${user.id}` : 'goldentier_cart_guest';
       try {
         localStorage.setItem(key, JSON.stringify(items));
       } catch {
         // Storage full or unavailable — ignore
       }
-    }, 500);
+    };
+
+    saveTimerRef.current = setTimeout(saveCart, 500);
+
+    // Cleanup function: clear timeout and flush final state on unmount
     return () => {
       if (saveTimerRef.current !== null) {
         clearTimeout(saveTimerRef.current);
+        saveCart(); // Flush on unmount to ensure final state is saved
       }
     };
   }, [items, user?.id, isLoaded]);
