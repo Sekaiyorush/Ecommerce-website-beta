@@ -52,10 +52,6 @@ export function CheckoutPage() {
     const { user, isPartner } = useAuth();
     const { createSecureOrder } = useDatabase();
 
-    if (!isPartner) {
-        return <Navigate to="/products" replace />;
-    }
-
     const [step, setStep] = useState<1 | 2 | 3>(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [orderId, setOrderId] = useState('');
@@ -210,6 +206,11 @@ export function CheckoutPage() {
             setIsSubmitting(false);
         }
     };
+
+    // ──── Partner check ────
+    if (!isPartner) {
+        return <Navigate to="/products" replace />;
+    }
 
     // ──── Empty cart ────
     if (items.length === 0 && step !== 3) {
