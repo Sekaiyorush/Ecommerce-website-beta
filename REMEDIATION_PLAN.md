@@ -63,6 +63,7 @@ These items block the review gate. All must be resolved in the current round.
 6. **[D-2]** Add non-partner access banner to `Products.tsx`
 7. **[P-1]** Implement `useMemo` and debounce optimizations (Master Plan G8, G9, D1, D2)
 8. **[O-1]** Establish and monitor performance thresholds post-optimization
+9. **[THEME]** Implement Dark/Light/System theme with analytics and rollback procedures (CEO Request)
 
 ### P1 — Critical Security (next round, pre-launch)
 

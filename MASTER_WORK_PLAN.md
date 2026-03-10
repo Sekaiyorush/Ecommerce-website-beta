@@ -91,6 +91,7 @@
 | E3 | Standardize typography (Playfair Display for headings, Inter for body) | Medium | UI/UX Strategy |
 | E4 | Implement "Quick View" modal for Product Grid | Low | UI/UX Strategy |
 | E5 | Mobile-first optimization for Checkout flow (Single-page accordion) | High | UI/UX Strategy |
+| E6 | Implement Dark/Light/System theme selection with analytics & rollback procedures | High | [THEME_IMPLEMENTATION_SPEC.md](./THEME_IMPLEMENTATION_SPEC.md) |
 
 ---
 

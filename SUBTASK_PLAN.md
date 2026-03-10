@@ -40,3 +40,21 @@ This plan outlines the steps for the Dev team to implement the redesigned Admin 
 - [ ] Bulk actions are functional and intuitive.
 - [ ] Inline editing works as expected without full page reloads or modal pops.
 - [ ] UI is consistent with the Golden Tier brand guidelines.
+
+## Phase 5: Theme Selection Implementation
+1. **Infrastructure**:
+    - Implement `ThemeProvider` in `src/context/ThemeContext.tsx`.
+    - Configure `tailwind.config.js` for `darkMode: 'class'`.
+2. **UI Components**:
+    - Implement `ThemeToggle.tsx` in `src/components/`.
+    - Integrate `ThemeToggle` into the `Header`.
+3. **Operations & Security**:
+    - Implement analytics tracking for theme selection.
+    - Document and verify rollback procedures (storageKey versioning).
+    - Ensure CSP compliance (avoiding inline styles).
+
+## Success Criteria (Theme)
+- [ ] Users can switch between Light, Dark, and System themes.
+- [ ] Theme preference persists across sessions.
+- [ ] Analytics events are fired on theme change.
+- [ ] Dark mode maintains WCAG AA contrast for brand tokens.

@@ -303,6 +303,34 @@ Branch: feat/checkout-loading-spinner
 
 ---
 
+### Task H7: Dark/Light/System Theme Implementation
+**$ Directive for:** Bolt (Dev) + Pixel (UX) + Turbo (Operations)
+**Files:** `src/context/ThemeContext.tsx`, `src/components/ThemeToggle.tsx`, `tailwind.config.js`
+**Severity:** High
+
+```
+$ Create task for Bolt, Pixel, and Turbo:
+Title: "Implement Dark/Light/System theme with operations guardrails"
+Priority: HIGH
+Files: src/context/ThemeContext.tsx, src/components/ThemeToggle.tsx
+
+Issue: CEO request for dark/light theme option.
+
+Acceptance Criteria:
+- [ ] Implement ThemeProvider with 'light', 'dark', 'system' modes
+- [ ] Create ThemeToggle dropdown in Header
+- [ ] Persist theme in LocalStorage ('vite-ui-theme')
+- [ ] Use Tailwind 'selector' or 'class' strategy for CSP compliance
+- [ ] Analytics: Track 'theme_change' and 'theme_initial_load' events
+- [ ] Operations: Verify rollback procedure (storageKey versioning)
+- [ ] Design: Ensure WCAG AA contrast for gold tokens in dark mode
+
+Reference: THEME_IMPLEMENTATION_SPEC.md
+Branch: feat/theme-mode-selection
+```
+
+---
+
 ## 🟡 MEDIUM PRIORITY (Fix Next Sprint)
 
 ### Task M1: Add Zod Validation to Forms
