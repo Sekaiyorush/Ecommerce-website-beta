@@ -104,14 +104,14 @@ export function LandingPage() {
     const particles = PARTICLES;
 
     return (
-        <div className="min-h-screen bg-white flex flex-col relative overflow-hidden font-sans">
+        <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
 
             {/* Dynamic Gold Particles Background */}
             <div className="absolute inset-0 pointer-events-none z-0">
                 {particles.map((p) => (
                     <motion.div
                         key={p.id}
-                        className="absolute rounded-full bg-gradient-to-br from-[#D4AF37] to-[#AA771C] opacity-30 shadow-[0_0_8px_rgba(212,175,55,0.6)]"
+                        className="absolute rounded-full bg-gradient-to-br from-[#D4AF37] to-[#AA771C] opacity-30 dark:opacity-40 shadow-[0_0_8px_rgba(212,175,55,0.6)] dark:shadow-[0_0_12px_rgba(212,175,55,0.5)]"
                         style={{
                             width: p.size,
                             height: p.size,
@@ -133,8 +133,8 @@ export function LandingPage() {
                 ))}
             </div>
 
-            {/* Subtle background glow */}
-            <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_60%)]" />
+            {/* Subtle background glow - theme aware */}
+            <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_60%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.08)_0%,_transparent_60%)]" />
 
             {/* King and Queen Animations */}
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex justify-between items-center px-[5%] md:px-[10%] lg:px-[15%]">
@@ -160,7 +160,7 @@ export function LandingPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="text-sm font-bold tracking-[0.3em] uppercase text-[#AA771C]"
+                    className="text-sm font-bold tracking-[0.3em] uppercase text-gold-primary"
                 >
                     {companyName}
                 </motion.div>
@@ -172,18 +172,18 @@ export function LandingPage() {
                 >
                     <Link
                         to="/login"
-                        className="text-xs font-semibold tracking-widest uppercase text-slate-400 hover:text-[#D4AF37] transition-colors duration-500"
+                        className="text-xs font-semibold tracking-widest uppercase text-muted-foreground hover:text-gold-500 transition-colors duration-500"
                     >
                         Sign In
                     </Link>
                     <Link
                         to="/register"
-                        className="relative px-6 py-2 text-xs font-semibold tracking-widest uppercase text-white bg-[#111] overflow-hidden group"
+                        className="relative px-6 py-2 text-xs font-semibold tracking-widest uppercase text-white bg-[#111] dark:bg-gold-500 dark:text-slate-900 overflow-hidden group"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent -translate-x-[150%] animate-[shimmer_3s_infinite]" />
                         <span className="relative z-10">Register</span>
                         {/* Animated Gold Bottom Border on Hover */}
-                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] transition-all duration-500 ease-out group-hover:w-full" />
+                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] dark:from-slate-900 dark:to-slate-800 transition-all duration-500 ease-out group-hover:w-full" />
                     </Link>
                 </motion.div>
             </header>
@@ -222,7 +222,7 @@ export function LandingPage() {
                         className="mt-16 relative"
                     >
                         <div className="absolute left-1/2 -translate-x-1/2 -top-8 w-12 h-[1px] bg-gold-gradient opacity-50" />
-                        <p className="text-sm md:text-lg font-light tracking-[0.4em] text-slate-400 max-w-2xl mx-auto leading-relaxed uppercase">
+                        <p className="text-sm md:text-lg font-light tracking-[0.4em] text-muted-foreground max-w-2xl mx-auto leading-relaxed uppercase">
                             {companyDescription}
                         </p>
                     </motion.div>
@@ -236,11 +236,11 @@ export function LandingPage() {
                     >
                         <Link
                             to="/login"
-                            className="group relative flex flex-col items-center justify-center w-40 h-40 rounded-full border border-gold-300/20 hover:border-gold-500 transition-all duration-1000 mx-auto"
+                            className="group relative flex flex-col items-center justify-center w-40 h-40 rounded-full border border-gold-300/20 dark:border-gold-400/30 hover:border-gold-500 transition-all duration-1000 mx-auto"
                         >
                             {/* Rotating glowing arc */}
                             <div className="absolute inset-[-2px] rounded-full bg-gold-gradient opacity-0 group-hover:opacity-100 animate-spin-slow transition-opacity duration-1000" />
-                            <div className="absolute inset-[1px] rounded-full bg-white z-0" />
+                            <div className="absolute inset-[1px] rounded-full bg-background z-0" />
 
                             <span className="relative z-10 text-[10px] font-bold tracking-[0.4em] uppercase text-gold-gradient group-hover:scale-110 transition-transform duration-700 text-center">
                                 ENTER <br /><span className="mt-2 block opacity-50 group-hover:opacity-100 transition-opacity">DOMAIN</span>
@@ -258,8 +258,8 @@ export function LandingPage() {
                     transition={{ duration: 2, delay: 1.5 }}
                     className="flex flex-col items-center justify-center space-y-4"
                 >
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-[#D4AF37]/50 to-transparent" />
-                    <p className="text-[10px] font-medium tracking-widest text-[#D4AF37]/60 uppercase">
+                    <div className="w-[1px] h-12 bg-gradient-to-b from-gold-500/50 to-transparent" />
+                    <p className="text-[10px] font-medium tracking-widest text-gold-muted uppercase">
                         © {new Date().getFullYear()} {companyName}
                     </p>
                 </motion.div>

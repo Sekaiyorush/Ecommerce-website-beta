@@ -71,6 +71,7 @@
 }
 
 @layer components {
+  /* Gold gradient - works in both modes */
   .text-gold-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37] animate-gradient-x bg-[length:200%_auto];
   }
@@ -83,10 +84,16 @@
     @apply border-[#D4AF37]/30 hover:border-[#D4AF37] transition-colors duration-500;
   }
 
+  /* Premium card - theme aware */
   .premium-card {
-    @apply bg-white border border-gold-300/20 shadow-premium hover:shadow-premium-hover transition-all duration-500;
+    @apply bg-card border border-gold-300/20 dark:border-gold-400/20 shadow-premium hover:shadow-premium-hover transition-all duration-500;
   }
 
+  .premium-card-dark {
+    @apply bg-slate-900/80 border border-gold-400/20 shadow-[0_4px_20px_-2px_rgba(212,175,55,0.1)] hover:shadow-[0_20px_40px_-10px_rgba(212,175,55,0.15)] transition-all duration-500;
+  }
+
+  /* Button styles - theme aware */
   .btn-premium {
     @apply relative overflow-hidden bg-[#111] text-white font-bold tracking-[0.2em] uppercase px-8 py-4 border border-[#111] transition-all duration-500 hover:text-[#D4AF37] active:scale-[0.98] disabled:opacity-50;
   }
@@ -99,9 +106,71 @@
   .btn-premium:hover::after {
     @apply w-full;
   }
+
+  /* Dark mode button variant */
+  .btn-premium-dark {
+    @apply relative overflow-hidden bg-gold-500 text-slate-900 font-bold tracking-[0.2em] uppercase px-8 py-4 border border-gold-500 transition-all duration-500 hover:bg-gold-400 active:scale-[0.98] disabled:opacity-50;
+  }
+
+  .btn-premium-dark::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-[2px] bg-slate-900 transition-all duration-500 ease-out;
+  }
+
+  .btn-premium-dark:hover::after {
+    @apply w-full;
+  }
+
+  /* Theme-aware backgrounds */
+  .bg-page {
+    @apply bg-white dark:bg-slate-950;
+  }
+
+  .bg-surface {
+    @apply bg-slate-50 dark:bg-slate-900/80;
+  }
+
+  .bg-elevated {
+    @apply bg-white dark:bg-slate-800;
+  }
+
+  /* Theme-aware text */
+  .text-body {
+    @apply text-slate-600 dark:text-slate-300;
+  }
+
+  .text-heading {
+    @apply text-slate-900 dark:text-slate-100;
+  }
+
+  .text-subtle {
+    @apply text-slate-400 dark:text-slate-500;
+  }
+
+  /* Gold text variants for dark mode */
+  .text-gold-primary {
+    @apply text-[#AA771C] dark:text-[#E8C547];
+  }
+
+  .text-gold-muted {
+    @apply text-[#D4AF37] dark:text-[#AA771C];
+  }
+
+  .text-gold-bright {
+    @apply text-[#F3E5AB] dark:text-[#F9F4E0];
+  }
+
+  /* Gold glow effects */
+  .gold-glow {
+    @apply shadow-[0_0_15px_rgba(212,175,55,0.3)] dark:shadow-[0_0_20px_rgba(212,175,55,0.2)];
+  }
+
+  .gold-glow-hover:hover {
+    @apply shadow-[0_0_25px_rgba(212,175,55,0.4)] dark:shadow-[0_0_30px_rgba(212,175,55,0.3)];
+  }
 }
 
-/* Custom scrollbar - minimal */
+/* Custom scrollbar - theme aware */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -112,17 +181,17 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #F3E5AB;
+  background: #D4AF37;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4AF37;
+  background: #AA771C;
 }
 
-/* Focus styles */
+/* Focus styles - theme aware */
 *:focus-visible {
-  outline: 2px solid #1e293b;
+  outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
 }
 

@@ -49,23 +49,23 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Card Container */}
-      <div className="relative bg-white border border-[#D4AF37]/10 overflow-hidden shadow-premium hover:shadow-premium-hover transition-all duration-700 hover:-translate-y-3 group/card rounded-sm flex flex-col h-full">
+      <div className="relative bg-card border border-[#D4AF37]/10 overflow-hidden shadow-premium hover:shadow-premium-hover transition-all duration-700 hover:-translate-y-3 group/card rounded-sm flex flex-col h-full">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-16 h-16 bg-gold-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         <div className="absolute bottom-0 left-0 w-16 h-16 bg-gold-500/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
         {/* Badge - Featured/New */}
         {product.isNew && (
-          <div className="absolute top-6 left-6 z-20 flex items-center space-x-2 px-3 py-1.5 bg-white border border-[#D4AF37]/20 text-[#D4AF37] text-[9px] font-bold tracking-[0.3em] uppercase shadow-sm">
+          <div className="absolute top-6 left-6 z-20 flex items-center space-x-2 px-3 py-1.5 bg-card border border-[#D4AF37]/20 text-[#D4AF37] text-[9px] font-bold tracking-[0.3em] uppercase shadow-sm">
             <Sparkles className="h-3 w-3 animate-pulse" />
             <span>New Arrival</span>
           </div>
         )}
 
         {/* Image Container */}
-        <div className="relative aspect-[4/5] overflow-hidden bg-slate-50/50 border-b border-[#D4AF37]/5">
+        <div className="relative aspect-[4/5] overflow-hidden bg-slate-50/50 dark:bg-slate-800/50 border-b border-[#D4AF37]/5">
           {!imageLoaded && (
-            <div className="absolute inset-0 bg-slate-100 animate-pulse" />
+            <div className="absolute inset-0 bg-slate-100 dark:bg-slate-800 animate-pulse" />
           )}
 
           {product.imageUrl ? (
@@ -76,7 +76,7 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
               onLoad={() => setImageLoaded(true)}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-white">
+            <div className="w-full h-full flex items-center justify-center bg-card">
               <div className="w-32 h-32 border border-[#D4AF37]/10 flex items-center justify-center relative group-hover:border-[#D4AF37]/30 transition-colors duration-700">
                 <span className="text-4xl font-serif text-gold-gradient">{product.name.charAt(0)}</span>
                 <div className="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-[#D4AF37]" />
@@ -85,17 +85,17 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
             </div>
           )}
 
-          <div className={`absolute inset-0 bg-white/20 backdrop-blur-[2px] transition-all duration-500 flex items-center justify-center gap-4 ${isHovered ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <div className={`absolute inset-0 bg-background/60 dark:bg-slate-950/60 backdrop-blur-[2px] transition-all duration-500 flex items-center justify-center gap-4 ${isHovered ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
               <Link
                 to={`/product/${product.sku}`}
-                className="flex items-center justify-center w-14 h-14 bg-[#111] text-white hover:text-[#D4AF37] border border-[#111] transition-all duration-500 shadow-xl"
+                className="flex items-center justify-center w-14 h-14 bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 hover:text-[#D4AF37] dark:hover:text-slate-800 border border-[#111] dark:border-gold-500 transition-all duration-500 shadow-xl"
               >
                 <Eye className="h-5 w-5" />
               </Link>
 
               <button
                 onClick={() => setIsWishlisted(!isWishlisted)}
-                className={`flex items-center justify-center w-14 h-14 transition-all duration-500 border shadow-xl ${isWishlisted ? 'bg-[#D4AF37] border-[#D4AF37] text-white' : 'bg-white border-[#D4AF37]/20 text-[#AA771C] hover:text-[#D4AF37] hover:border-[#D4AF37]'}`}
+                className={`flex items-center justify-center w-14 h-14 transition-all duration-500 border shadow-xl ${isWishlisted ? 'bg-[#D4AF37] border-[#D4AF37] text-white' : 'bg-card border-[#D4AF37]/20 text-[#AA771C] hover:text-[#D4AF37] hover:border-[#D4AF37]'}`}
               >
                 <Heart className={`h-5 w-5 ${isWishlisted && 'fill-current'}`} />
               </button>
@@ -106,14 +106,14 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
         <div className="p-8 md:p-10 flex-1 flex flex-col">
           <div className="flex items-center space-x-2 mb-4">
             <div className="h-[1px] w-4 bg-[#D4AF37]/40" />
-            <p className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#AA771C]">{product.category}</p>
+            <p className="text-[9px] font-bold tracking-[0.4em] uppercase text-gold-primary">{product.category}</p>
           </div>
 
           <Link to={`/product/${product.sku}`}>
-            <h3 className="font-serif text-2xl tracking-tight text-slate-900 mb-2 group-hover/card:text-gold-gradient transition-all duration-500 line-clamp-1">{product.name}</h3>
+            <h3 className="font-serif text-2xl tracking-tight text-foreground mb-2 group-hover/card:text-gold-gradient transition-all duration-500 line-clamp-1">{product.name}</h3>
           </Link>
 
-          <p className="text-xs text-slate-400 mb-4 line-clamp-2 leading-relaxed tracking-wide h-8">{product.description}</p>
+          <p className="text-xs text-muted-foreground mb-4 line-clamp-2 leading-relaxed tracking-wide h-8">{product.description}</p>
 
           <div className="mb-6">
             <ProductRating productId={product.id} size="sm" showCount />
@@ -125,18 +125,18 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 <div className="flex flex-col">
                   {hasDiscount ? (
                     <>
-                      <span className="text-[10px] font-bold text-slate-300 line-through mb-1 tracking-widest uppercase">
+                      <span className="text-[10px] font-bold text-slate-300 dark:text-slate-500 line-through mb-1 tracking-widest uppercase">
                         {hasVariants ? 'from ' : ''}{formatTHB(displayPrice)}
                       </span>
                       <div className="flex items-center space-x-2">
-                        {hasVariants && <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-1">from</span>}
+                        {hasVariants && <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mr-1">from</span>}
                         <span className="text-3xl font-serif text-gold-gradient">{formatTHB(discountedPrice)}</span>
                       </div>
                     </>
                   ) : (
                     <div className="flex items-center space-x-2">
-                      {hasVariants && <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-1">from</span>}
-                      <span className="text-3xl font-serif text-slate-900">{formatTHB(displayPrice)}</span>
+                      {hasVariants && <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mr-1">from</span>}
+                      <span className="text-3xl font-serif text-foreground">{formatTHB(displayPrice)}</span>
                     </div>
                   )}
                 </div>
@@ -144,8 +144,8 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 <Link
                   to={`/product/${product.sku}`}
                   className={`relative flex items-center justify-center w-14 h-14 overflow-hidden transition-all duration-500 ${allOutOfStock
-                    ? 'bg-slate-50 border border-slate-100 text-slate-300 cursor-not-allowed pointer-events-none'
-                    : 'bg-[#111] text-white hover:text-[#D4AF37] group/btn border border-[#111] shadow-lg'
+                    ? 'bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-300 cursor-not-allowed pointer-events-none'
+                    : 'bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 hover:text-[#D4AF37] dark:hover:text-slate-800 group/btn border border-[#111] dark:border-gold-500 shadow-lg'
                     }`}
                 >
                   <ShoppingCart className="relative z-10 h-5 w-5" />
@@ -159,10 +159,10 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 {/* Blurred price ghost */}
                 <div className="flex items-end justify-between mb-3 select-none pointer-events-none" aria-hidden="true">
                   <div className="flex flex-col gap-1">
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-slate-300 blur-[5px]">฿ — — —</span>
-                    <span className="text-3xl font-serif text-slate-300 blur-[7px]">฿ ——</span>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-slate-300 dark:text-slate-600 blur-[5px]">฿ — — —</span>
+                    <span className="text-3xl font-serif text-slate-300 dark:text-slate-600 blur-[7px]">฿ ——</span>
                   </div>
-                  <div className="w-14 h-14 bg-slate-100 blur-[4px]" />
+                  <div className="w-14 h-14 bg-slate-100 dark:bg-slate-700 blur-[4px]" />
                 </div>
 
                 {/* Lock overlay */}
@@ -191,7 +191,7 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
               lowStock ? 'bg-amber-400' :
                 'bg-[#D4AF37]'
               }`} />
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
               {allOutOfStock ? 'OUT OF STOCK' :
                 lowStock ? 'LOW STOCK' :
                   'IN STOCK'}

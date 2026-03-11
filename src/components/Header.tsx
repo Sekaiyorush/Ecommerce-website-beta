@@ -100,31 +100,31 @@ export function Header() {
                   aria-label="User account menu"
                   aria-expanded={isUserMenuOpen}
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center space-x-3 p-1.5 border border-[#D4AF37]/20 hover:border-[#D4AF37] rounded-full transition-all duration-700 group bg-slate-50/50"
+                  className="flex items-center space-x-3 p-1.5 border border-[#D4AF37]/20 hover:border-[#D4AF37] rounded-full transition-all duration-700 group bg-surface"
                 >
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center border border-[#D4AF37]/10 shadow-sm transition-colors group-hover:border-[#D4AF37]/40">
+                  <div className="w-8 h-8 rounded-full bg-elevated flex items-center justify-center border border-[#D4AF37]/10 shadow-sm transition-colors group-hover:border-[#D4AF37]/40">
                     <User className="h-4 w-4 text-[#AA771C] group-hover:text-[#D4AF37] transition-colors" />
                   </div>
                 </button>
 
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-4 w-64 bg-white dark:bg-slate-800 border border-[#D4AF37]/10 p-2 shadow-2xl animate-reveal overflow-hidden">
+                  <div className="absolute right-0 mt-4 w-64 bg-elevated border border-[#D4AF37]/10 p-2 shadow-2xl animate-reveal overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-[2px] bg-gold-gradient" />
                     <Link
                       to={getDashboardLink()}
-                      className="flex items-center space-x-3 px-4 py-4 text-[10px] font-bold tracking-widest text-slate-600 hover:text-[#D4AF37] hover:bg-slate-50 transition-all uppercase"
+                      className="flex items-center space-x-3 px-4 py-4 text-[10px] font-bold tracking-widest text-slate-600 dark:text-slate-300 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all uppercase"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <LayoutDashboard className="h-4 w-4 opacity-70" />
                       <span>{getDashboardLabel()}</span>
                     </Link>
-                    <div className="h-[1px] bg-slate-100 mx-2" />
+                    <div className="h-[1px] bg-slate-100 dark:bg-slate-700 mx-2" />
                     <button
                       onClick={() => {
                         logout();
                         setIsUserMenuOpen(false);
                       }}
-                      className="flex items-center space-x-3 w-full px-4 py-4 text-[10px] font-bold tracking-widest text-[#111] hover:text-[#D4AF37] hover:bg-slate-50 transition-all uppercase group relative"
+                      className="flex items-center space-x-3 w-full px-4 py-4 text-[10px] font-bold tracking-widest text-[#111] dark:text-slate-200 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all uppercase group relative"
                     >
                       <LogOut className="h-4 w-4 opacity-70" />
                       <span>Logout</span>
@@ -156,35 +156,35 @@ export function Header() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-[#D4AF37]/20 bg-white dark:bg-slate-900 absolute w-full shadow-2xl">
+        <div className="md:hidden border-t border-[#D4AF37]/20 bg-background absolute w-full shadow-2xl">
           <div className="p-6 border-b border-[#D4AF37]/10">
             <SearchBar />
           </div>
           <nav aria-label="Mobile Navigation" className="flex flex-col py-4">
             <Link
               to="/products"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 hover:text-[#D4AF37] hover:bg-slate-50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               Catalog
             </Link>
             <Link
               to="/about"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 hover:text-[#D4AF37] hover:bg-slate-50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               About
             </Link>
             <Link
               to="/research"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 hover:text-[#D4AF37] hover:bg-slate-50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               Research
             </Link>
             <Link
               to="/contact"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 hover:text-[#D4AF37] hover:bg-slate-50 transition-colors"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
@@ -195,7 +195,7 @@ export function Header() {
                 <div className="mx-6 my-4 border-t border-[#D4AF37]/20" />
                 <Link
                   to={getDashboardLink()}
-                  className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C] bg-[#D4AF37]/5"
+                  className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C] bg-[#D4AF37]/5 dark:bg-[#D4AF37]/10"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {getDashboardLabel()}
@@ -205,7 +205,7 @@ export function Header() {
                     logout();
                     setIsMenuOpen(false);
                   }}
-                  className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.3em] uppercase text-slate-900 border-t border-[#D4AF37]/5"
+                  className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.3em] uppercase text-slate-900 dark:text-slate-200 border-t border-[#D4AF37]/5"
                 >
                   Sign Out
                 </button>
@@ -214,7 +214,7 @@ export function Header() {
               <div className="p-6">
                 <Link
                   to="/login"
-                  className="block w-full py-4 bg-[#111] text-white text-center text-[10px] font-bold tracking-[0.3em] uppercase"
+                  className="block w-full py-4 bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 text-center text-[10px] font-bold tracking-[0.3em] uppercase"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Sign In

@@ -75,6 +75,17 @@ module.exports = {
           700: '#8A5D13',
           800: '#64420A',
           900: '#432B06',
+          // Dark mode optimized variants
+          dark: {
+            100: '#F9F4E0', // brightest for dark bg
+            200: '#F3E5AB',
+            300: '#E8C547', // lighter gold for dark visibility
+            400: '#D4AF37', // main gold
+            500: '#B8941F', // muted gold
+            600: '#AA771C', // deep
+            glow: 'rgba(212,175,55,0.15)',
+            glowStrong: 'rgba(212,175,55,0.3)',
+          }
         },
         platinum: {
           50: '#f8f9fa',

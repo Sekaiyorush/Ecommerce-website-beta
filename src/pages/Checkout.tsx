@@ -215,9 +215,9 @@ export function CheckoutPage() {
     // ──── Empty cart ────
     if (items.length === 0 && step !== 3) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 relative overflow-hidden">
+            <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 relative overflow-hidden">
                 {/* Subtle Glow */}
-                <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_70%)]" />
+                <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.06)_0%,_transparent_70%)]" />
                 
                 <div className="text-center relative z-10">
                     <div className="w-24 h-24 border border-[#D4AF37]/20 flex items-center justify-center mx-auto mb-8 relative">
@@ -226,17 +226,17 @@ export function CheckoutPage() {
                         <div className="absolute -bottom-px -right-px w-2 h-2 border-b border-r border-[#D4AF37]" />
                         <ShoppingBag className="h-10 w-10 text-[#D4AF37]/40" />
                     </div>
-                    <h2 className="text-3xl font-serif text-slate-900 mb-3">Your cart is empty</h2>
-                    <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-10">Add premium compounds before checking out</p>
+                    <h2 className="text-3xl font-serif text-foreground mb-3">Your cart is empty</h2>
+                    <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-10">Add premium compounds before checking out</p>
                     
                     <Link
                         to="/products"
-                        className="relative inline-flex h-14 items-center justify-center bg-[#111] px-10 text-[11px] font-bold tracking-[0.2em] text-white uppercase overflow-hidden group border border-[#111] focus:ring-2 focus:ring-[#D4AF37] outline-none"
+                        className="relative inline-flex h-14 items-center justify-center bg-[#111] dark:bg-gold-500 px-10 text-[11px] font-bold tracking-[0.2em] text-white dark:text-slate-900 uppercase overflow-hidden group border border-[#111] dark:border-gold-500 focus:ring-2 focus:ring-[#D4AF37] outline-none"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent -translate-x-[150%] animate-[shimmer_3s_infinite]" />
-                        <span className="relative z-10 transition-colors group-hover:text-[#D4AF37]">Browse Products</span>
-                        <ArrowLeft className="relative z-10 ml-3 h-4 w-4 rotate-180 transition-transform group-hover:translate-x-1 group-hover:text-[#D4AF37]" />
-                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#AA771C] transition-all duration-500 ease-out group-hover:w-full" />
+                        <span className="relative z-10 transition-colors group-hover:text-[#D4AF37] dark:group-hover:text-slate-800">Browse Products</span>
+                        <ArrowLeft className="relative z-10 ml-3 h-4 w-4 rotate-180 transition-transform group-hover:translate-x-1 group-hover:text-[#D4AF37] dark:group-hover:text-slate-800" />
+                        <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#D4AF37] to-[#AA771C] dark:from-slate-900 dark:to-slate-800 transition-all duration-500 ease-out group-hover:w-full" />
                     </Link>
                 </div>
             </div>
@@ -244,23 +244,23 @@ export function CheckoutPage() {
     }
 
     return (
-        <div className="min-h-screen bg-white py-8 md:py-16 font-sans">
+        <div className="min-h-screen bg-background py-8 md:py-16 font-sans">
             {/* Subtle Glow Background */}
-            <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.02)_0%,_rgba(255,255,255,1)_70%)]" />
+            <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.02)_0%,_transparent_70%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.04)_0%,_transparent_70%)]" />
 
             <div className="container relative z-10 mx-auto px-4 md:px-6 max-w-6xl">
 
                 {/* Back link */}
-                <Link to="/products" className="inline-flex items-center text-[10px] font-bold tracking-[0.2em] text-slate-400 hover:text-[#D4AF37] mb-10 transition-colors uppercase group">
+                <Link to="/products" className="inline-flex items-center text-[10px] font-bold tracking-[0.2em] text-muted-foreground hover:text-[#D4AF37] mb-10 transition-colors uppercase group">
                     <ArrowLeft className="h-3 w-3 mr-2 transition-transform group-hover:-translate-x-1" /> Back to Research Catalog
                 </Link>
 
                 {validationWarning && step !== 3 && (
-                    <div className="mb-10 p-6 border border-amber-200 bg-amber-50/30 flex items-start gap-4">
-                        <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                    <div className="mb-10 p-6 border border-amber-200 dark:border-amber-800 bg-amber-50/30 dark:bg-amber-900/20 flex items-start gap-4">
+                        <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
                         <div>
-                            <h4 className="text-xs font-bold tracking-widest text-amber-900 uppercase">Cart Validation Notice</h4>
-                            <p className="text-amber-800/80 text-[11px] font-medium mt-1 leading-relaxed">
+                            <h4 className="text-xs font-bold tracking-widest text-amber-900 dark:text-amber-200 uppercase">Cart Validation Notice</h4>
+                            <p className="text-amber-800/80 dark:text-amber-300/80 text-[11px] font-medium mt-1 leading-relaxed">
                                 {validationWarning}
                             </p>
                         </div>
@@ -277,17 +277,17 @@ export function CheckoutPage() {
                         <div key={s.num} className="flex items-center">
                             <div className="relative">
                                 <div className={`flex items-center justify-center w-8 h-8 border text-[10px] font-bold tracking-widest transition-all
-                                    ${step >= s.num ? 'border-[#D4AF37] bg-white text-[#AA771C]' : 'border-slate-200 text-slate-400'}`}>
+                                    ${step >= s.num ? 'border-[#D4AF37] bg-card text-gold-primary' : 'border-slate-200 dark:border-slate-700 text-slate-400'}`}>
                                     {step > s.num ? <CheckCircle2 className="h-3 w-3" /> : s.num}
                                 </div>
                                 {step === s.num && (
                                     <div className="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-[#AA771C]" />
                                 )}
                             </div>
-                            <span className={`ml-3 text-[10px] font-bold tracking-[0.2em] hidden sm:inline transition-colors ${step >= s.num ? 'text-slate-900' : 'text-slate-400'}`}>
+                            <span className={`ml-3 text-[10px] font-bold tracking-[0.2em] hidden sm:inline transition-colors ${step >= s.num ? 'text-foreground' : 'text-muted-foreground'}`}>
                                 {s.label}
                             </span>
-                            {i < 2 && <div className={`w-8 sm:w-16 h-[1px] mx-4 transition-colors ${step > s.num ? 'bg-[#D4AF37]' : 'bg-slate-200'}`} />}
+                            {i < 2 && <div className={`w-8 sm:w-16 h-[1px] mx-4 transition-colors ${step > s.num ? 'bg-[#D4AF37]' : 'bg-slate-200 dark:bg-slate-700'}`} />}
                         </div>
                     ))}
                 </div>
@@ -299,35 +299,35 @@ export function CheckoutPage() {
 
                         {/* Step 1: Shipping */}
                         {step === 1 && (
-                            <div className="bg-white border border-slate-200 p-8 md:p-10 relative">
+                            <div className="bg-card border border-slate-200 dark:border-slate-700 p-8 md:p-10 relative">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#AA771C] to-[#D4AF37] opacity-20" />
                                 
                                 <div className="flex items-center gap-4 mb-10">
                                     <div className="w-12 h-12 border border-[#D4AF37]/20 flex items-center justify-center">
-                                        <Truck className="h-5 w-5 text-[#AA771C]" />
+                                        <Truck className="h-5 w-5 text-gold-primary" />
                                     </div>
                                     <div>
-                                        <h2 className="text-2xl font-serif text-slate-900 leading-none">Shipping Information</h2>
-                                        <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase mt-2">Delivery logistics for premium compounds</p>
+                                        <h2 className="text-2xl font-serif text-foreground leading-none">Shipping Information</h2>
+                                        <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase mt-2">Delivery logistics for premium compounds</p>
                                     </div>
                                 </div>
 
                                 <div className="space-y-6">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">Full Name *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Full Name *</label>
                                             <input type="text" value={shipping.fullName}
                                                 onChange={e => updateShipping('fullName', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.fullName && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.fullName}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">Email *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Email *</label>
                                             <input type="email" value={shipping.email}
                                                 onChange={e => updateShipping('email', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.email && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.email}</p>
                                             )}
@@ -335,10 +335,10 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">Phone Number *</label>
+                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Phone Number *</label>
                                         <input type="tel" value={shipping.phone}
                                             onChange={e => updateShipping('phone', e.target.value)}
-                                            className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors"
+                                            className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                             placeholder="+1 (555) 000-0000" />
                                         {shippingErrors.phone && (
                                             <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.phone}</p>
@@ -346,10 +346,10 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">Street Address *</label>
+                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Street Address *</label>
                                         <input type="text" value={shipping.address}
                                             onChange={e => updateShipping('address', e.target.value)}
-                                            className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors"
+                                            className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                             placeholder="123 Main St, Apt 4" />
                                         {shippingErrors.address && (
                                             <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.address}</p>
@@ -358,34 +358,34 @@ export function CheckoutPage() {
 
                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                                         <div className="col-span-2 sm:col-span-1 space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">City *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">City *</label>
                                             <input type="text" value={shipping.city}
                                                 onChange={e => updateShipping('city', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.city && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.city}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">State</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">State</label>
                                             <input type="text" value={shipping.state}
                                                 onChange={e => updateShipping('state', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">ZIP</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">ZIP</label>
                                             <input type="text" value={shipping.zip}
                                                 onChange={e => updateShipping('zip', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.zip && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.zip}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">Country *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Country *</label>
                                             <input type="text" value={shipping.country}
                                                 onChange={e => updateShipping('country', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors"
+                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                                 placeholder="US" />
                                             {shippingErrors.country && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.country}</p>
@@ -394,21 +394,21 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase">Order Notes (optional)</label>
+                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Order Notes (optional)</label>
                                         <textarea rows={3} value={shipping.notes}
                                             onChange={e => updateShipping('notes', e.target.value)}
-                                            className="w-full px-4 py-4 border border-slate-200 focus:border-[#D4AF37] outline-none transition-colors resize-none"
+                                            className="w-full px-4 py-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors resize-none"
                                             placeholder="Special delivery instructions..." />
                                     </div>
                                 </div>
 
                                 <button
                                     onClick={handleContinueToPayment}
-                                    className="w-full mt-10 h-14 bg-[#111] text-white text-[11px] font-bold tracking-[0.2em] uppercase overflow-hidden relative group border border-[#111] transition-all"
+                                    className="w-full mt-10 h-14 bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 text-[11px] font-bold tracking-[0.2em] uppercase overflow-hidden relative group border border-[#111] dark:border-gold-500 transition-all"
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent -translate-x-[150%] group-hover:animate-[shimmer_3s_infinite]" />
-                                    <span className="relative z-10 group-hover:text-[#D4AF37]">Continue to Payment</span>
-                                    <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#D4AF37] transition-all duration-500 group-hover:w-full" />
+                                    <span className="relative z-10 group-hover:text-[#D4AF37] dark:group-hover:text-slate-800">Continue to Payment</span>
+                                    <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#D4AF37] dark:bg-slate-800 transition-all duration-500 group-hover:w-full" />
                                 </button>
                             </div>
                         )}
