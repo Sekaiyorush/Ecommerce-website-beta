@@ -222,8 +222,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     if (error) {
-      // Error handled silently
-      return { success: false, error: 'Registration failed. Please try again.' };
+      return { success: false, error: 'Password reset failed. Please try again.' };
     }
     return { success: true };
   };
@@ -231,8 +230,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const updatePassword = async (password: string) => {
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
-      // Error handled silently
-      return { success: false, error: 'Registration failed. Please try again.' };
+      return { success: false, error: 'Password update failed. Please try again.' };
     }
     return { success: true };
   };
@@ -244,7 +242,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-12 h-12 border-[1px] border-[#D4AF37]/20 border-t-[#D4AF37] rounded-full animate-spin"></div>
       </div>
     );

@@ -80,22 +80,22 @@ function HomePage() {
 function NotFoundPage() {
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center py-12">
-      <div className="w-20 h-20 bg-slate-100 rounded-2xl flex items-center justify-center mb-6">
-        <Search className="h-10 w-10 text-slate-400" />
+      <div className="w-20 h-20 bg-elevated rounded-2xl flex items-center justify-center mb-6 border border-[#D4AF37]/10">
+        <Search className="h-10 w-10 text-muted-foreground" />
       </div>
-      <h1 className="text-5xl font-bold text-slate-900 mb-3">404</h1>
-      <p className="text-slate-500 text-lg mb-8">The page you're looking for doesn't exist.</p>
+      <h1 className="text-5xl font-bold text-foreground mb-3">404</h1>
+      <p className="text-muted-foreground text-lg mb-8">The page you're looking for doesn't exist.</p>
       <div className="flex items-center space-x-3">
         <Link
           to="/"
-          className="flex items-center space-x-2 px-6 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+          className="flex items-center space-x-2 px-6 py-3 bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 hover:bg-black dark:hover:bg-gold-400 transition-colors"
         >
           <Home className="h-4 w-4" />
           <span>Return Home</span>
         </Link>
         <Link
           to="/products"
-          className="px-6 py-3 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
+          className="px-6 py-3 border border-[#D4AF37]/20 text-foreground hover:bg-[#D4AF37]/5 transition-colors"
         >
           Browse Products
         </Link>
@@ -200,7 +200,7 @@ function AppContent() {
                           <Route
                             path="/checkout"
                             element={
-                              <ProtectedRoute>
+                              <ProtectedRoute requirePartner={true}>
                                 <CheckoutPage />
                               </ProtectedRoute>
                             }

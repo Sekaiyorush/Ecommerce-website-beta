@@ -5,6 +5,7 @@ import { Lock, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { SecurityAlert } from '@/components/ui/security-alert';
 import { PasswordStrengthMeter } from '@/components/auth/PasswordStrengthMeter';
+import { SEO } from '@/components/SEO';
 
 export function ResetPassword() {
     const [password, setPassword] = useState('');
@@ -63,16 +64,16 @@ export function ResetPassword() {
 
     if (isSuccess) {
         return (
-            <div className="min-h-screen bg-white flex flex-col relative overflow-hidden font-sans">
-                <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_60%)]" />
+            <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
+                <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_60%)]" />
 
                 <div className="flex-1 flex items-center justify-center py-12 px-6 relative z-10 w-full">
-                    <div className="w-full max-w-md text-center bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
+                    <div className="w-full max-w-md text-center bg-background/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
                         <div className="w-16 h-16 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
                             <CheckCircle2 className="h-6 w-6 text-[#D4AF37]" />
                         </div>
                         <h2 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37] mb-3 tracking-tight">Password Reset Successful</h2>
-                        <p className="text-slate-400 mb-6 text-sm leading-relaxed">
+                        <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
                             Your password has been securely updated. You will be redirected to the login page shortly.
                         </p>
                     </div>
@@ -82,8 +83,9 @@ export function ResetPassword() {
     }
 
     return (
-        <div className="min-h-screen bg-white flex flex-col relative overflow-hidden font-sans">
-            <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_60%)]" />
+        <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
+            <SEO title="Reset Password" description="Set a new password for your Golden Tier Peptide account. Secure your access with updated credentials." />
+            <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_60%)]" />
 
             <div className="flex-1 flex items-center justify-center py-12 px-6 relative z-10 w-full">
                 <div className="w-full max-w-md">
@@ -96,7 +98,7 @@ export function ResetPassword() {
                         <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C]">Enter your new credentials</p>
                     </div>
 
-                    <div className="bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
+                    <div className="bg-background/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
                         {error && (
                             <SecurityAlert
                               variant="error"
@@ -108,14 +110,14 @@ export function ResetPassword() {
 
                         <form className="space-y-6" onSubmit={handleSubmit}>
                             <div>
-                                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-2">New Password</label>
+                                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">New Password</label>
                                 <div className="relative">
                                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-slate-800 placeholder-slate-300"
+                                        className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground/50"
                                         placeholder="YOUR NEW PASSWORD"
                                         required
                                     />
@@ -124,14 +126,14 @@ export function ResetPassword() {
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-2">Confirm Password</label>
+                                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Confirm Password</label>
                                 <div className="relative">
                                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                                     <input
                                         type="password"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
-                                        className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-slate-800 placeholder-slate-300"
+                                        className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground/50"
                                         placeholder="CONFIRM NEW PASSWORD"
                                         required
                                     />

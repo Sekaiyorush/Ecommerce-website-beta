@@ -31,12 +31,12 @@ export function ReviewCard({ review, onHelpful }: ReviewCardProps) {
           <div className="flex items-center gap-3 mb-2">
             <StarRating rating={review.rating} size="sm" />
             {review.title && (
-              <h4 className="font-serif text-lg text-slate-900 truncate">{review.title}</h4>
+              <h4 className="font-serif text-lg text-foreground truncate">{review.title}</h4>
             )}
           </div>
 
           {/* Author + Date */}
-          <div className="flex items-center gap-3 text-xs text-slate-400 mb-3">
+          <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
             <div className="flex items-center gap-1.5">
               <User className="h-3 w-3" />
               <span>{review.user_name || 'Anonymous'}</span>
@@ -56,7 +56,7 @@ export function ReviewCard({ review, onHelpful }: ReviewCardProps) {
 
           {/* Body */}
           {review.body && (
-            <p className="text-sm text-slate-600 leading-relaxed tracking-wide whitespace-pre-wrap">
+            <p className="text-sm text-muted-foreground leading-relaxed tracking-wide whitespace-pre-wrap">
               {review.body}
             </p>
           )}
@@ -65,7 +65,7 @@ export function ReviewCard({ review, onHelpful }: ReviewCardProps) {
           <div className="mt-4 flex items-center gap-4">
             <button
               onClick={() => onHelpful?.(review.id)}
-              className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#AA771C] transition-colors"
+              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[#AA771C] transition-colors"
             >
               <ThumbsUp className="h-3.5 w-3.5" />
               <span>Helpful{review.helpful_count > 0 ? ` (${review.helpful_count})` : ''}</span>

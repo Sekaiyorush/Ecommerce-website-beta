@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { logger } from '@/lib/logger';
 
 interface Props {
     children?: ReactNode;
@@ -21,7 +22,7 @@ export class ErrorBoundary extends Component<Props, State> {
     }
 
     public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        console.error('Uncaught error in 3D Canvas:', error, errorInfo);
+        logger.error('Uncaught error in 3D Canvas:', error, errorInfo);
     }
 
     public render() {
@@ -42,7 +43,7 @@ export class ErrorBoundary extends Component<Props, State> {
                         </div>
                     </div>
                     <p className="relative text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C] mb-1">Golden Tier</p>
-                    <p className="relative text-xs text-slate-400 text-center tracking-wide">Premium Research Compounds</p>
+                    <p className="relative text-xs text-muted-foreground text-center tracking-wide">Premium Research Compounds</p>
                 </div>
             );
         }

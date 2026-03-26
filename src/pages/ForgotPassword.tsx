@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { SecurityAlert } from '@/components/ui/security-alert';
+import { SEO } from '@/components/SEO';
 
 export function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -32,16 +33,16 @@ export function ForgotPassword() {
 
     if (isSuccess) {
         return (
-            <div className="min-h-screen bg-white flex flex-col relative overflow-hidden font-sans">
-                <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_60%)]" />
+            <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
+                <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_60%)]" />
 
                 <div className="flex-1 flex items-center justify-center py-12 px-6 relative z-10 w-full">
-                    <div className="w-full max-w-md text-center bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
+                    <div className="w-full max-w-md text-center bg-background/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
                         <div className="w-16 h-16 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
                             <Mail className="h-6 w-6 text-[#AA771C]" />
                         </div>
                         <h2 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37] mb-3 tracking-tight">Check your email</h2>
-                        <p className="text-slate-400 mb-8 text-sm leading-relaxed">
+                        <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
                             We've sent a password reset link to <strong className="text-[#D4AF37]">{email}</strong>.
                         </p>
                         <Link
@@ -59,12 +60,13 @@ export function ForgotPassword() {
     }
 
     return (
-        <div className="min-h-screen bg-white flex flex-col relative overflow-hidden font-sans">
-            <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_60%)]" />
+        <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
+            <SEO title="Forgot Password" description="Reset your Golden Tier Peptide account password. Enter your email to receive a secure reset link." />
+            <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_60%)]" />
 
             <div className="flex-1 flex items-center justify-center py-12 px-6 relative z-10 w-full">
                 <div className="w-full max-w-md">
-                    <Link to="/login" className="inline-flex items-center text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-[#D4AF37] mb-8 transition-colors group">
+                    <Link to="/login" className="inline-flex items-center text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground hover:text-[#D4AF37] mb-8 transition-colors group">
                         <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
                         Back to login
                     </Link>
@@ -77,7 +79,7 @@ export function ForgotPassword() {
                         <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C]">Enter email to receive link</p>
                     </div>
 
-                    <div className="bg-white/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
+                    <div className="bg-background/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
                         {error && (
                             <SecurityAlert
                               variant="error"
@@ -89,14 +91,14 @@ export function ForgotPassword() {
 
                         <form className="space-y-6" onSubmit={handleSubmit}>
                             <div>
-                                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-2">Email Address</label>
+                                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Email Address</label>
                                 <div className="relative">
                                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                                     <input
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-slate-800 placeholder-slate-300"
+                                        className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground/50"
                                         placeholder="ENTER EMAIL ADDRESS"
                                         required
                                     />

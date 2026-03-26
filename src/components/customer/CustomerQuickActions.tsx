@@ -159,7 +159,7 @@ export function CustomerQuickActions() {
       case 'shipping': return <Package className="h-4 w-4 text-blue-500" />;
       case 'promo': return <Star className="h-4 w-4 text-gold-500" />;
       case 'system': return <AlertCircle className="h-4 w-4 text-amber-500" />;
-      default: return <Clock className="h-4 w-4 text-slate-400" />;
+      default: return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
@@ -179,10 +179,10 @@ export function CustomerQuickActions() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">Quick Actions</h2>
-          <p className="text-slate-500">Reorder favorites and check updates</p>
+          <h2 className="text-xl font-semibold text-foreground">Quick Actions</h2>
+          <p className="text-muted-foreground">Reorder favorites and check updates</p>
         </div>
-        <button className="relative p-2 text-slate-600 hover:text-gold-600 hover:bg-gold-50 rounded-xl transition-colors">
+        <button className="relative p-2 text-muted-foreground hover:text-gold-600 hover:bg-gold-50 rounded-xl transition-colors">
           <Bell className="h-6 w-6" />
           {unreadCount > 0 && (
             <span className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
@@ -196,7 +196,7 @@ export function CustomerQuickActions() {
       {quickReorderItems.length > 0 && (
         <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-gold-200/50 p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-serif text-xl tracking-tight text-slate-900">Quick Reorder</h3>
+            <h3 className="font-serif text-xl tracking-tight text-foreground">Quick Reorder</h3>
             <Link to="/products" className="text-sm text-gold-600 hover:text-gold-700 font-medium">
               Browse Catalog →
             </Link>
@@ -206,15 +206,15 @@ export function CustomerQuickActions() {
             {quickReorderItems.map((item) => (
               <div 
                 key={item.productId} 
-                className="flex items-center justify-between p-4 bg-slate-50 rounded-xl hover:bg-gold-50/50 transition-colors"
+                className="flex items-center justify-between p-4 bg-muted rounded-xl hover:bg-gold-50/50 transition-colors"
               >
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
                     <RotateCcw className="h-5 w-5 text-gold-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-slate-900">{item.name}</p>
-                    <div className="flex items-center space-x-3 text-sm text-slate-500">
+                    <p className="font-medium text-foreground">{item.name}</p>
+                    <div className="flex items-center space-x-3 text-sm text-muted-foreground">
                       <span>{formatTHB(item.price)}</span>
                       <span>•</span>
                       <span>Ordered {item.timesOrdered} time{item.timesOrdered > 1 ? 's' : ''}</span>
@@ -225,7 +225,7 @@ export function CustomerQuickActions() {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleWishlist(item.productId)}
-                    className={`p-2 rounded-xl transition-colors ${wishlist.includes(item.productId) ? 'text-red-500 bg-red-50' : 'text-slate-400 hover:text-red-500 hover:bg-red-50'}`}
+                    className={`p-2 rounded-xl transition-colors ${wishlist.includes(item.productId) ? 'text-red-500 bg-red-50' : 'text-muted-foreground hover:text-red-500 hover:bg-red-50'}`}
                   >
                     <Heart className={`h-5 w-5 ${wishlist.includes(item.productId) && 'fill-current'}`} />
                   </button>
@@ -261,7 +261,7 @@ export function CustomerQuickActions() {
       {/* Recent Notifications */}
       <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-gold-200/50 p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-serif text-xl tracking-tight text-slate-900">Updates</h3>
+          <h3 className="font-serif text-xl tracking-tight text-foreground">Updates</h3>
           <button className="text-sm text-gold-600 hover:text-gold-700 font-medium">
             Mark all read
           </button>
@@ -271,15 +271,15 @@ export function CustomerQuickActions() {
           {notifications.length > 0 ? notifications.map((notification) => (
             <div 
               key={notification.id} 
-              className={`flex items-center justify-between p-4 rounded-xl transition-colors ${notification.read ? 'bg-slate-50' : 'bg-gold-50/50 border border-gold-100/50'}`}
+              className={`flex items-center justify-between p-4 rounded-xl transition-colors ${notification.read ? 'bg-muted' : 'bg-gold-50/50 border border-gold-100/50'}`}
             >
               <div className="flex items-center space-x-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${notification.read ? 'bg-white' : 'bg-white shadow-sm'}`}>
                   {getNotificationIcon(notification.type)}
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900">{notification.message}</p>
-                  <p className="text-sm text-slate-500">{formatTimeAgo(notification.timestamp)}</p>
+                  <p className="font-medium text-foreground">{notification.message}</p>
+                  <p className="text-sm text-muted-foreground">{formatTimeAgo(notification.timestamp)}</p>
                 </div>
               </div>
               {!notification.read && (
@@ -287,7 +287,7 @@ export function CustomerQuickActions() {
               )}
             </div>
           )) : (
-            <p className="text-slate-500 text-center py-8">No new updates</p>
+            <p className="text-muted-foreground text-center py-8">No new updates</p>
           )}
         </div>
       </div>
@@ -296,8 +296,8 @@ export function CustomerQuickActions() {
       {wishlist.length > 0 && (
         <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-gold-200/50 p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-serif text-xl tracking-tight text-slate-900">Your Wishlist</h3>
-            <span className="text-sm text-slate-500">{wishlist.length} item{wishlist.length !== 1 ? 's' : ''}</span>
+            <h3 className="font-serif text-xl tracking-tight text-foreground">Your Wishlist</h3>
+            <span className="text-sm text-muted-foreground">{wishlist.length} item{wishlist.length !== 1 ? 's' : ''}</span>
           </div>
           
           <div className="flex flex-wrap gap-3">
@@ -308,7 +308,7 @@ export function CustomerQuickActions() {
               return (
                 <div key={productId} className="flex items-center space-x-2 px-4 py-2 bg-gold-50 rounded-xl border border-gold-100">
                   <Heart className="h-4 w-4 text-red-500 fill-current" />
-                  <span className="text-sm font-medium text-slate-700">{product.name}</span>
+                  <span className="text-sm font-medium text-foreground">{product.name}</span>
                   <button
                     onClick={() => addToCart(product)}
                     className="ml-2 text-gold-600 hover:text-gold-700"

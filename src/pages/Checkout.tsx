@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useCart, getItemPrice } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useDatabase } from '@/context/DatabaseContext';
+import { logger } from '@/lib/logger';
 import {
     ArrowLeft,
     CheckCircle2,
@@ -16,6 +17,7 @@ import {
     Loader2,
 } from 'lucide-react';
 import { formatTHB } from '@/lib/formatPrice';
+import { SEO } from '@/components/SEO';
 import { z } from 'zod';
 import { supabase } from '@/lib/supabase';
 
@@ -36,7 +38,7 @@ interface ShippingForm {
 const ShippingSchema = z.object({
     fullName: z.string().min(1, 'Full name is required').max(200, 'Full name is too long'),
     email: z.string().email('Please enter a valid email'),
-    phone: z.string().regex(/\d{7,}/, 'Please enter a valid phone number (at least 7 digits)'),
+    phone: z.string().regex(/^\+?\d[\d\s\-()]{6,19}$/, 'Please enter a valid phone number (7-20 characters)'),
     address: z.string().min(1, 'Street address is required').max(200, 'Address is too long'),
     city: z.string().min(1, 'City is required').max(200, 'City name is too long'),
     state: z.string().max(200, 'State name is too long').optional(),
@@ -80,7 +82,7 @@ export function CheckoutPage() {
                 }
 
                 if (item.selectedVariant) {
-                    const currentVariant = currentProduct.variants?.find((v: any) => v.sku === item.selectedVariant!.sku);
+                    const currentVariant = currentProduct.variants?.find((v: { sku: string; stock: number; price: number }) => v.sku === item.selectedVariant!.sku);
                     if (!currentVariant || currentVariant.stock < item.quantity) {
                         stockIssue = true;
                     }
@@ -200,7 +202,7 @@ export function CheckoutPage() {
                 setOrderError(result.error || 'Failed to place order. Please try again.');
             }
         } catch (err) {
-            console.error('Order placement failed:', err);
+            logger.error('Order placement failed:', err);
             setOrderError('An unexpected error occurred. Please try again.');
         } finally {
             setIsSubmitting(false);
@@ -231,7 +233,7 @@ export function CheckoutPage() {
                     
                     <Link
                         to="/products"
-                        className="relative inline-flex h-14 items-center justify-center bg-[#111] dark:bg-gold-500 px-10 text-[11px] font-bold tracking-[0.2em] text-white dark:text-slate-900 uppercase overflow-hidden group border border-[#111] dark:border-gold-500 focus:ring-2 focus:ring-[#D4AF37] outline-none"
+                        className="relative inline-flex h-14 items-center justify-center bg-[#111] dark:bg-gold-500 px-10 text-[11px] font-bold tracking-[0.2em] text-white dark:text-foreground uppercase overflow-hidden group border border-[#111] dark:border-gold-500 focus:ring-2 focus:ring-[#D4AF37] outline-none"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent -translate-x-[150%] animate-[shimmer_3s_infinite]" />
                         <span className="relative z-10 transition-colors group-hover:text-[#D4AF37] dark:group-hover:text-slate-800">Browse Products</span>
@@ -245,6 +247,7 @@ export function CheckoutPage() {
 
     return (
         <div className="min-h-screen bg-background py-8 md:py-16 font-sans">
+            <SEO title="Checkout | Golden Tier" description="Complete your order for premium research compounds. Secure checkout with partner pricing." />
             {/* Subtle Glow Background */}
             <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.02)_0%,_transparent_70%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.04)_0%,_transparent_70%)]" />
 
@@ -277,7 +280,7 @@ export function CheckoutPage() {
                         <div key={s.num} className="flex items-center">
                             <div className="relative">
                                 <div className={`flex items-center justify-center w-8 h-8 border text-[10px] font-bold tracking-widest transition-all
-                                    ${step >= s.num ? 'border-[#D4AF37] bg-card text-gold-primary' : 'border-slate-200 dark:border-slate-700 text-slate-400'}`}>
+                                    ${step >= s.num ? 'border-[#D4AF37] bg-card text-gold-primary' : 'border-border dark:border-slate-700 text-muted-foreground'}`}>
                                     {step > s.num ? <CheckCircle2 className="h-3 w-3" /> : s.num}
                                 </div>
                                 {step === s.num && (
@@ -299,7 +302,7 @@ export function CheckoutPage() {
 
                         {/* Step 1: Shipping */}
                         {step === 1 && (
-                            <div className="bg-card border border-slate-200 dark:border-slate-700 p-8 md:p-10 relative">
+                            <div className="bg-card border border-border dark:border-slate-700 p-8 md:p-10 relative">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#AA771C] to-[#D4AF37] opacity-20" />
                                 
                                 <div className="flex items-center gap-4 mb-10">
@@ -315,19 +318,19 @@ export function CheckoutPage() {
                                 <div className="space-y-6">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Full Name *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Full Name *</label>
                                             <input type="text" value={shipping.fullName}
                                                 onChange={e => updateShipping('fullName', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.fullName && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.fullName}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Email *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Email *</label>
                                             <input type="email" value={shipping.email}
                                                 onChange={e => updateShipping('email', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.email && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.email}</p>
                                             )}
@@ -335,10 +338,10 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Phone Number *</label>
+                                        <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Phone Number *</label>
                                         <input type="tel" value={shipping.phone}
                                             onChange={e => updateShipping('phone', e.target.value)}
-                                            className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
+                                            className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                             placeholder="+1 (555) 000-0000" />
                                         {shippingErrors.phone && (
                                             <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.phone}</p>
@@ -346,10 +349,10 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Street Address *</label>
+                                        <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Street Address *</label>
                                         <input type="text" value={shipping.address}
                                             onChange={e => updateShipping('address', e.target.value)}
-                                            className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
+                                            className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                             placeholder="123 Main St, Apt 4" />
                                         {shippingErrors.address && (
                                             <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.address}</p>
@@ -358,34 +361,34 @@ export function CheckoutPage() {
 
                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                                         <div className="col-span-2 sm:col-span-1 space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">City *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">City *</label>
                                             <input type="text" value={shipping.city}
                                                 onChange={e => updateShipping('city', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.city && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.city}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">State</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">State</label>
                                             <input type="text" value={shipping.state}
                                                 onChange={e => updateShipping('state', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">ZIP</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">ZIP</label>
                                             <input type="text" value={shipping.zip}
                                                 onChange={e => updateShipping('zip', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.zip && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.zip}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Country *</label>
+                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Country *</label>
                                             <input type="text" value={shipping.country}
                                                 onChange={e => updateShipping('country', e.target.value)}
-                                                className="w-full h-12 px-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
+                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                                 placeholder="US" />
                                             {shippingErrors.country && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.country}</p>
@@ -394,17 +397,17 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">Order Notes (optional)</label>
+                                        <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Order Notes (optional)</label>
                                         <textarea rows={3} value={shipping.notes}
                                             onChange={e => updateShipping('notes', e.target.value)}
-                                            className="w-full px-4 py-4 border border-slate-200 dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors resize-none"
+                                            className="w-full px-4 py-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors resize-none"
                                             placeholder="Special delivery instructions..." />
                                     </div>
                                 </div>
 
                                 <button
                                     onClick={handleContinueToPayment}
-                                    className="w-full mt-10 h-14 bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 text-[11px] font-bold tracking-[0.2em] uppercase overflow-hidden relative group border border-[#111] dark:border-gold-500 transition-all"
+                                    className="w-full mt-10 h-14 bg-[#111] dark:bg-gold-500 text-white dark:text-foreground text-[11px] font-bold tracking-[0.2em] uppercase overflow-hidden relative group border border-[#111] dark:border-gold-500 transition-all"
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent -translate-x-[150%] group-hover:animate-[shimmer_3s_infinite]" />
                                     <span className="relative z-10 group-hover:text-[#D4AF37] dark:group-hover:text-slate-800">Continue to Payment</span>
@@ -415,7 +418,7 @@ export function CheckoutPage() {
 
                         {/* Step 2: Payment Method */}
                         {step === 2 && (
-                            <div className="bg-white border border-slate-200 p-8 md:p-10 relative">
+                            <div className="bg-card border border-border p-8 md:p-10 relative">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#AA771C] to-[#D4AF37] opacity-20" />
                                 
                                 <div className="flex items-center gap-4 mb-10">
@@ -423,8 +426,8 @@ export function CheckoutPage() {
                                         <CreditCard className="h-5 w-5 text-[#AA771C]" />
                                     </div>
                                     <div>
-                                        <h2 className="text-2xl font-serif text-slate-900 leading-none">Payment Method</h2>
-                                        <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase mt-2">Secure settlement for research acquisition</p>
+                                        <h2 className="text-2xl font-serif text-foreground leading-none">Payment Method</h2>
+                                        <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase mt-2">Secure settlement for research acquisition</p>
                                     </div>
                                 </div>
 
@@ -433,7 +436,7 @@ export function CheckoutPage() {
                                     <button
                                         onClick={() => setPaymentMethod('bank_transfer')}
                                         className={`w-full p-6 border transition-all flex items-start gap-5 relative group
-                                            ${paymentMethod === 'bank_transfer' ? 'border-[#D4AF37] bg-[#D4AF37]/5' : 'border-slate-100 hover:border-slate-200'}`}
+                                            ${paymentMethod === 'bank_transfer' ? 'border-[#D4AF37] bg-[#D4AF37]/5' : 'border-border hover:border-border'}`}
                                     >
                                         {paymentMethod === 'bank_transfer' && (
                                             <>
@@ -442,12 +445,12 @@ export function CheckoutPage() {
                                             </>
                                         )}
                                         <div className={`w-12 h-12 border flex items-center justify-center shrink-0 transition-colors
-                                            ${paymentMethod === 'bank_transfer' ? 'border-[#D4AF37] text-[#AA771C]' : 'border-slate-100 text-slate-300'}`}>
+                                            ${paymentMethod === 'bank_transfer' ? 'border-[#D4AF37] text-[#AA771C]' : 'border-border text-muted-foreground/50'}`}>
                                             <Landmark className="h-5 w-5" />
                                         </div>
                                         <div className="text-left">
-                                            <p className={`text-xs font-bold tracking-widest uppercase transition-colors ${paymentMethod === 'bank_transfer' ? 'text-slate-900' : 'text-slate-400'}`}>Bank Transfer</p>
-                                            <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">Direct settlement via secure wire. Order ships after internal verification.</p>
+                                            <p className={`text-xs font-bold tracking-widest uppercase transition-colors ${paymentMethod === 'bank_transfer' ? 'text-foreground' : 'text-muted-foreground'}`}>Bank Transfer</p>
+                                            <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">Direct settlement via secure wire. Order ships after internal verification.</p>
                                         </div>
                                     </button>
 
@@ -455,7 +458,7 @@ export function CheckoutPage() {
                                     <button
                                         onClick={() => setPaymentMethod('crypto')}
                                         className={`w-full p-6 border transition-all flex items-start gap-5 relative group
-                                            ${paymentMethod === 'crypto' ? 'border-[#D4AF37] bg-[#D4AF37]/5' : 'border-slate-100 hover:border-slate-200'}`}
+                                            ${paymentMethod === 'crypto' ? 'border-[#D4AF37] bg-[#D4AF37]/5' : 'border-border hover:border-border'}`}
                                     >
                                         {paymentMethod === 'crypto' && (
                                             <>
@@ -464,20 +467,20 @@ export function CheckoutPage() {
                                             </>
                                         )}
                                         <div className={`w-12 h-12 border flex items-center justify-center shrink-0 transition-colors
-                                            ${paymentMethod === 'crypto' ? 'border-[#D4AF37] text-[#AA771C]' : 'border-slate-100 text-slate-300'}`}>
+                                            ${paymentMethod === 'crypto' ? 'border-[#D4AF37] text-[#AA771C]' : 'border-border text-muted-foreground/50'}`}>
                                             <Bitcoin className="h-5 w-5" />
                                         </div>
                                         <div className="text-left">
-                                            <p className={`text-xs font-bold tracking-widest uppercase transition-colors ${paymentMethod === 'crypto' ? 'text-slate-900' : 'text-slate-400'}`}>Cryptocurrency</p>
-                                            <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">Fast-track settlement with BTC, ETH, or USDT. Payment details issued post-order.</p>
+                                            <p className={`text-xs font-bold tracking-widest uppercase transition-colors ${paymentMethod === 'crypto' ? 'text-foreground' : 'text-muted-foreground'}`}>Cryptocurrency</p>
+                                            <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">Fast-track settlement with BTC, ETH, or USDT. Payment details issued post-order.</p>
                                         </div>
                                     </button>
                                 </div>
 
                                 {/* Payment Instructions Preview */}
-                                <div className="bg-slate-50 border-l-2 border-[#D4AF37] p-6 mb-10">
+                                <div className="bg-muted border-l-2 border-[#D4AF37] p-6 mb-10">
                                     <p className="text-[10px] font-bold tracking-[0.2em] text-[#AA771C] uppercase mb-4">Acquisition Protocol:</p>
-                                    <ol className="text-[11px] text-slate-600 space-y-3">
+                                    <ol className="text-[11px] text-muted-foreground space-y-3">
                                         <li className="flex gap-3"><span className="text-[#D4AF37] font-bold">01</span> Execute order placement below</li>
                                         <li className="flex gap-3"><span className="text-[#D4AF37] font-bold">02</span> Secure payment details will be displayed</li>
                                         <li className="flex gap-3"><span className="text-[#D4AF37] font-bold">03</span> Remit within 48 hours to maintain research priority</li>
@@ -495,7 +498,7 @@ export function CheckoutPage() {
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     <button
                                         onClick={() => setStep(1)}
-                                        className="h-14 px-8 border border-slate-200 text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase hover:bg-slate-50 transition-colors"
+                                        className="h-14 px-8 border border-border text-[10px] font-bold tracking-[0.2em] text-muted-foreground uppercase hover:bg-muted transition-colors"
                                     >
                                         Return to Shipping
                                     </button>
@@ -523,7 +526,7 @@ export function CheckoutPage() {
 
                         {/* Step 3: Confirmation */}
                         {step === 3 && (
-                            <div className="bg-white border border-slate-200 p-8 md:p-12 relative overflow-hidden text-center">
+                            <div className="bg-card border border-border p-8 md:p-12 relative overflow-hidden text-center">
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37]" />
                                 
                                 <div className="w-20 h-20 border border-[#D4AF37] flex items-center justify-center mx-auto mb-8 relative">
@@ -532,73 +535,73 @@ export function CheckoutPage() {
                                     <CheckCircle2 className="h-10 w-10 text-[#AA771C]" />
                                 </div>
 
-                                <h2 className="text-4xl font-serif text-slate-900 mb-4">Acquisition Successful</h2>
-                                <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-10">Order Reference: <span className="text-[#AA771C] font-mono tracking-normal ml-2">{orderId}</span></p>
+                                <h2 className="text-4xl font-serif text-foreground mb-4">Acquisition Successful</h2>
+                                <p className="text-[11px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-10">Order Reference: <span className="text-[#AA771C] font-mono tracking-normal ml-2">{orderId}</span></p>
 
                                 {/* Payment Instructions */}
-                                <div className="bg-slate-50 border border-slate-100 p-8 mb-10 text-left relative">
+                                <div className="bg-muted border border-border p-8 mb-10 text-left relative">
                                     <div className="absolute top-0 right-0 p-3 opacity-10">
                                         {paymentMethod === 'bank_transfer' ? <Landmark className="h-12 w-12" /> : <Bitcoin className="h-12 w-12" />}
                                     </div>
                                     
-                                    <h3 className="text-xs font-bold tracking-[0.2em] text-slate-900 uppercase mb-6 flex items-center gap-3">
+                                    <h3 className="text-xs font-bold tracking-[0.2em] text-foreground uppercase mb-6 flex items-center gap-3">
                                         <div className="w-1 h-4 bg-[#D4AF37]" />
                                         Payment Instructions
                                     </h3>
 
                                     {paymentMethod === 'bank_transfer' ? (
                                         <div className="space-y-4">
-                                            <div className="flex justify-between items-center py-3 border-b border-slate-200">
-                                                <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Settlement Bank</span>
-                                                <span className="text-xs font-bold text-slate-900 uppercase">Contact Support for Details</span>
+                                            <div className="flex justify-between items-center py-3 border-b border-border">
+                                                <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Settlement Bank</span>
+                                                <span className="text-xs font-bold text-foreground uppercase">Contact Support for Details</span>
                                             </div>
-                                            <div className="flex justify-between items-center py-3 border-b border-slate-200">
-                                                <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Reference Code</span>
+                                            <div className="flex justify-between items-center py-3 border-b border-border">
+                                                <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Reference Code</span>
                                                 <span className="text-xs font-mono font-bold text-[#AA771C]">{orderId}</span>
                                             </div>
-                                            <div className="flex justify-between items-center py-3 border-b border-slate-200">
-                                                <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Exact Amount</span>
-                                                <span className="text-lg font-serif text-slate-900">{formatTHB(cartTotal)}</span>
+                                            <div className="flex justify-between items-center py-3 border-b border-border">
+                                                <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Exact Amount</span>
+                                                <span className="text-lg font-serif text-foreground">{formatTHB(cartTotal)}</span>
                                             </div>
-                                            <p className="text-[11px] text-slate-500 leading-relaxed mt-4">
-                                                Please specify the <span className="font-bold text-slate-900">Reference Code</span> in your transfer memo. Fulfillment commences upon bank verification (est. 24-48h).
+                                            <p className="text-[11px] text-muted-foreground leading-relaxed mt-4">
+                                                Please specify the <span className="font-bold text-foreground">Reference Code</span> in your transfer memo. Fulfillment commences upon bank verification (est. 24-48h).
                                             </p>
                                         </div>
                                     ) : (
                                         <div className="space-y-4">
-                                            <div className="flex justify-between items-center py-3 border-b border-slate-200">
-                                                <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Settlement Amount</span>
-                                                <span className="text-lg font-serif text-slate-900">{formatTHB(cartTotal)} <span className="text-[10px] font-sans font-bold text-slate-400 uppercase">Equiv</span></span>
+                                            <div className="flex justify-between items-center py-3 border-b border-border">
+                                                <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Settlement Amount</span>
+                                                <span className="text-lg font-serif text-foreground">{formatTHB(cartTotal)} <span className="text-[10px] font-sans font-bold text-muted-foreground uppercase">Equiv</span></span>
                                             </div>
-                                            <div className="flex justify-between items-center py-3 border-b border-slate-200">
-                                                <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Protocol Reference</span>
+                                            <div className="flex justify-between items-center py-3 border-b border-border">
+                                                <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Protocol Reference</span>
                                                 <span className="text-xs font-mono font-bold text-[#AA771C]">{orderId}</span>
                                             </div>
-                                            <p className="text-[11px] text-slate-500 leading-relaxed mt-4">
-                                                Contact <span className="font-bold text-slate-900 italic">logistics@goldentier.com</span> with your Reference Code to obtain the encrypted wallet address for BTC, ETH, or USDT settlement.
+                                            <p className="text-[11px] text-muted-foreground leading-relaxed mt-4">
+                                                Contact <span className="font-bold text-foreground italic">logistics@goldentier.com</span> with your Reference Code to obtain the encrypted wallet address for BTC, ETH, or USDT settlement.
                                             </p>
                                         </div>
                                     )}
                                 </div>
 
                                 {/* Shipping Summary */}
-                                <div className="border border-slate-100 p-8 mb-12 text-left bg-white">
-                                    <h3 className="text-xs font-bold tracking-[0.2em] text-slate-900 uppercase mb-6 flex items-center gap-3">
+                                <div className="border border-border p-8 mb-12 text-left bg-card">
+                                    <h3 className="text-xs font-bold tracking-[0.2em] text-foreground uppercase mb-6 flex items-center gap-3">
                                         <div className="w-1 h-4 bg-[#D4AF37]" />
                                         Logistics Destination
                                     </h3>
                                     <div className="grid grid-cols-2 gap-8">
                                         <div className="space-y-1">
-                                            <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Consignee</p>
-                                            <p className="text-xs font-bold text-slate-900 uppercase">{shipping.fullName}</p>
+                                            <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Consignee</p>
+                                            <p className="text-xs font-bold text-foreground uppercase">{shipping.fullName}</p>
                                         </div>
                                         <div className="space-y-1">
-                                            <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Contact</p>
-                                            <p className="text-xs font-bold text-slate-900 uppercase">{shipping.phone}</p>
+                                            <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Contact</p>
+                                            <p className="text-xs font-bold text-foreground uppercase">{shipping.phone}</p>
                                         </div>
                                         <div className="col-span-2 space-y-1">
-                                            <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Address</p>
-                                            <p className="text-xs font-bold text-slate-900 uppercase leading-relaxed">
+                                            <p className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Address</p>
+                                            <p className="text-xs font-bold text-foreground uppercase leading-relaxed">
                                                 {shipping.address}, {shipping.city}<br />
                                                 {shipping.state ? `${shipping.state}, ` : ''}{shipping.zip} {shipping.country}
                                             </p>
@@ -615,7 +618,7 @@ export function CheckoutPage() {
                                     </Link>
                                     <Link
                                         to="/products"
-                                        className="flex-1 h-14 border border-slate-200 text-[11px] font-bold tracking-[0.2em] text-slate-500 uppercase flex items-center justify-center hover:bg-slate-50 transition-colors"
+                                        className="flex-1 h-14 border border-border text-[11px] font-bold tracking-[0.2em] text-muted-foreground uppercase flex items-center justify-center hover:bg-muted transition-colors"
                                     >
                                         Continue Research
                                     </Link>
@@ -627,10 +630,10 @@ export function CheckoutPage() {
                     {/* ──── Right: Order Summary Sidebar ──── */}
                     {step !== 3 && (
                         <div className="lg:col-span-4">
-                            <div className="bg-white border border-slate-200 p-8 sticky top-24 relative overflow-hidden">
+                            <div className="bg-card border border-border p-8 sticky top-24 relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-[radial-gradient(circle_at_top_right,_rgba(212,175,55,0.05)_0%,_transparent_70%)]" />
                                 
-                                <h3 className="text-xs font-bold tracking-[0.2em] text-slate-900 uppercase mb-8 flex items-center gap-3">
+                                <h3 className="text-xs font-bold tracking-[0.2em] text-foreground uppercase mb-8 flex items-center gap-3">
                                     <ShoppingBag className="h-4 w-4 text-[#AA771C]" />
                                     Order Summary
                                 </h3>
@@ -639,23 +642,23 @@ export function CheckoutPage() {
                                     {items.map(item => (
                                         <li key={`${item.product.id}-${item.selectedVariant?.sku || 'base'}`} className="flex justify-between items-start">
                                             <div className="flex-1 min-w-0 pr-4">
-                                                <p className="text-xs font-bold text-slate-900 uppercase truncate">{item.product.name}</p>
+                                                <p className="text-xs font-bold text-foreground uppercase truncate">{item.product.name}</p>
                                                 {item.selectedVariant && (
                                                     <p className="text-[10px] font-bold text-[#AA771C] uppercase mt-1">{item.selectedVariant.label}</p>
                                                 )}
-                                                <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">Quantity: {item.quantity}</p>
+                                                <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-wider">Quantity: {item.quantity}</p>
                                             </div>
-                                            <span className="text-xs font-bold text-slate-700 whitespace-nowrap">
+                                            <span className="text-xs font-bold text-foreground whitespace-nowrap">
                                                 {formatTHB(getItemPrice(item) * item.quantity)}
                                             </span>
                                         </li>
                                     ))}
                                 </ul>
 
-                                <div className="border-t border-slate-100 pt-6 space-y-3">
-                                    <div className="flex justify-between items-center text-[11px] font-bold tracking-widest text-slate-400 uppercase">
+                                <div className="border-t border-border pt-6 space-y-3">
+                                    <div className="flex justify-between items-center text-[11px] font-bold tracking-widest text-muted-foreground uppercase">
                                         <span>Subtotal</span>
-                                        <span className="text-slate-900">{formatTHB(cartSubtotal)}</span>
+                                        <span className="text-foreground">{formatTHB(cartSubtotal)}</span>
                                     </div>
                                     {isPartner && discountAmount > 0 && (
                                         <div className="flex justify-between items-center text-[11px] font-bold tracking-widest text-emerald-600 uppercase">
@@ -663,29 +666,29 @@ export function CheckoutPage() {
                                             <span>-{formatTHB(discountAmount)}</span>
                                         </div>
                                     )}
-                                    <div className="flex justify-between items-center text-[11px] font-bold tracking-widest text-slate-400 uppercase">
+                                    <div className="flex justify-between items-center text-[11px] font-bold tracking-widest text-muted-foreground uppercase">
                                         <span>Logistics</span>
-                                        <span className="text-slate-900">Post-Settlement</span>
+                                        <span className="text-foreground">Post-Settlement</span>
                                     </div>
-                                    <div className="flex justify-between items-center pt-6 border-t border-slate-100">
-                                        <span className="text-xs font-bold tracking-[0.2em] text-slate-900 uppercase">Total Acquisition</span>
+                                    <div className="flex justify-between items-center pt-6 border-t border-border">
+                                        <span className="text-xs font-bold tracking-[0.2em] text-foreground uppercase">Total Acquisition</span>
                                         <span className="text-xl font-serif text-[#AA771C]">{formatTHB(cartTotal)}</span>
                                     </div>
                                 </div>
 
                                 {/* Trust signals */}
-                                <div className="mt-10 pt-8 border-t border-slate-100 space-y-4">
+                                <div className="mt-10 pt-8 border-t border-border space-y-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 border border-slate-100 flex items-center justify-center">
-                                            <Building2 className="h-3.5 w-3.5 text-slate-400" />
+                                        <div className="w-8 h-8 border border-border flex items-center justify-center">
+                                            <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
                                         </div>
-                                        <span className="text-[9px] font-bold tracking-[0.15em] text-slate-400 uppercase">Encrypted Transaction Protocol</span>
+                                        <span className="text-[9px] font-bold tracking-[0.15em] text-muted-foreground uppercase">Encrypted Transaction Protocol</span>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 border border-slate-100 flex items-center justify-center">
-                                            <Truck className="h-3.5 w-3.5 text-slate-400" />
+                                        <div className="w-8 h-8 border border-border flex items-center justify-center">
+                                            <Truck className="h-3.5 w-3.5 text-muted-foreground" />
                                         </div>
-                                        <span className="text-[9px] font-bold tracking-[0.15em] text-slate-400 uppercase">Prioritized Logistics (1-3 Days)</span>
+                                        <span className="text-[9px] font-bold tracking-[0.15em] text-muted-foreground uppercase">Prioritized Logistics (1-3 Days)</span>
                                     </div>
                                 </div>
                             </div>

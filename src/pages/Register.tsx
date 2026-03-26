@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Eye, EyeOff, Mail, Lock, User, Ticket, Check, X, ArrowRight } from 'lucide-react';
 import { SecurityAlert } from '@/components/ui/security-alert';
+import { SEO } from '@/components/SEO';
 import { PasswordStrengthMeter } from '@/components/auth/PasswordStrengthMeter';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -104,6 +105,7 @@ export function Register() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
+      <SEO title="Create Account" description="Register for a Golden Tier Peptide account with an invitation code to access premium research compounds." />
       <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_60%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.06)_0%,_transparent_60%)]" />
 
       <div className="flex-1 flex items-center justify-center py-12 px-6 relative z-10 w-full">
@@ -138,6 +140,8 @@ export function Register() {
                     type="text"
                     {...register('invitationCode')}
                     onChange={(e) => handleCodeChange(e.target.value)}
+                    aria-invalid={!!errors.invitationCode}
+                    aria-describedby={errors.invitationCode ? 'error-invitationCode' : undefined}
                     className={`w-full h-12 pl-12 pr-12 bg-transparent border focus:ring-0 transition-all uppercase text-sm text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600 ${codeValidation?.valid
                       ? 'border-[#D4AF37] bg-[#D4AF37]/5'
                       : codeValidation && !codeValidation.valid
@@ -167,7 +171,7 @@ export function Register() {
                   </p>
                 )}
                 {errors.invitationCode && !codeValidation && (
-                  <p className="text-xs text-red-600 mt-1.5">{errors.invitationCode.message}</p>
+                  <p id="error-invitationCode" className="text-xs text-red-600 mt-1.5">{errors.invitationCode.message}</p>
                 )}
                 <p className="text-[10px] tracking-wide uppercase text-muted-foreground mt-2">
                   Need a code? Contact an admin
@@ -198,12 +202,14 @@ export function Register() {
                   <input
                     type="email"
                     {...register('email')}
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? 'error-email' : undefined}
                     className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
                     placeholder="ENTER YOUR EMAIL"
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-xs text-red-600 mt-1.5">{errors.email.message}</p>
+                  <p id="error-email" className="text-xs text-red-600 mt-1.5">{errors.email.message}</p>
                 )}
               </div>
 
@@ -216,19 +222,22 @@ export function Register() {
                     {...register('password', {
                       onChange: (e) => setPasswordValue(e.target.value),
                     })}
+                    aria-invalid={!!errors.password}
+                    aria-describedby={errors.password ? 'error-password' : undefined}
                     className="w-full h-12 pl-12 pr-12 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
                     placeholder="CREATE PASSWORD"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-[#D4AF37] transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-xs text-red-600 mt-1.5">{errors.password.message}</p>
+                  <p id="error-password" className="text-xs text-red-600 mt-1.5">{errors.password.message}</p>
                 )}
                 <PasswordStrengthMeter password={passwordValue} />
               </div>
@@ -240,12 +249,14 @@ export function Register() {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     {...register('confirmPassword')}
+                    aria-invalid={!!errors.confirmPassword}
+                    aria-describedby={errors.confirmPassword ? 'error-confirmPassword' : undefined}
                     className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
                     placeholder="CONFIRM PASSWORD"
                   />
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-xs text-red-600 mt-1.5">{errors.confirmPassword.message}</p>
+                  <p id="error-confirmPassword" className="text-xs text-red-600 mt-1.5">{errors.confirmPassword.message}</p>
                 )}
               </div>
 

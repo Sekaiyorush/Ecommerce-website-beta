@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDatabase } from '@/context/DatabaseContext';
+import { SEO } from '@/components/SEO';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const drawVariants = {
@@ -105,6 +106,7 @@ export function LandingPage() {
 
     return (
         <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
+            <SEO title="Golden Tier Peptide | Premium Research Compounds" description="Premium research-grade peptides with supreme purity. Invitation-only platform for verified researchers and partners." />
 
             {/* Dynamic Gold Particles Background */}
             <div className="absolute inset-0 pointer-events-none z-0">

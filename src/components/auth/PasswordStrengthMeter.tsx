@@ -25,7 +25,7 @@ function evaluateStrength(password: string): StrengthResult {
   const metCount = checks.filter(c => c.met).length as 0 | 1 | 2 | 3 | 4;
 
   const levels: Array<{ label: string; color: string; barColor: string }> = [
-    { label: '', color: 'text-slate-400', barColor: 'bg-slate-200' },
+    { label: '', color: 'text-muted-foreground', barColor: 'bg-muted' },
     { label: 'Weak', color: 'text-red-500', barColor: 'bg-red-400' },
     { label: 'Fair', color: 'text-amber-500', barColor: 'bg-amber-400' },
     { label: 'Good', color: 'text-blue-500', barColor: 'bg-blue-400' },
@@ -50,7 +50,7 @@ export function PasswordStrengthMeter({ password, className }: PasswordStrengthM
               key={level}
               className={cn(
                 'h-1 flex-1 transition-all duration-300',
-                strength.score >= level ? strength.barColor : 'bg-slate-100 border border-slate-200'
+                strength.score >= level ? strength.barColor : 'bg-muted border border-border'
               )}
             />
           ))}
@@ -69,10 +69,10 @@ export function PasswordStrengthMeter({ password, className }: PasswordStrengthM
             <div
               className={cn(
                 'h-1.5 w-1.5 rounded-full flex-shrink-0 transition-colors',
-                check.met ? 'bg-emerald-500' : 'bg-slate-200'
+                check.met ? 'bg-emerald-500' : 'bg-muted'
               )}
             />
-            <span className={cn('text-[10px] tracking-wide', check.met ? 'text-slate-600' : 'text-slate-400')}>
+            <span className={cn('text-[10px] tracking-wide', check.met ? 'text-muted-foreground' : 'text-muted-foreground')}>
               {check.label}
             </span>
           </div>

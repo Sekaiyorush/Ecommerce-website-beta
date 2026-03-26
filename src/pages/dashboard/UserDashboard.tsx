@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useDatabase } from '@/context/DatabaseContext';
+import { SEO } from '@/components/SEO';
+import { logger } from '@/lib/logger';
 import { formatTHB } from '@/lib/formatPrice';
 import {
   Package,
@@ -73,7 +75,7 @@ export function UserDashboard() {
       });
       setIsEditingProfile(false);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       setSaveError('Failed to save profile. Please try again.');
     } finally {
       setIsSaving(false);
@@ -85,20 +87,21 @@ export function UserDashboard() {
       case 'delivered': return <CheckCircle2 className="h-4 w-4 text-emerald-500" />;
       case 'shipped': return <Truck className="h-4 w-4 text-blue-500" />;
       case 'processing': return <Clock className="h-4 w-4 text-amber-500" />;
-      default: return <Clock className="h-4 w-4 text-slate-400" />;
+      default: return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-white py-12 md:py-24 relative overflow-hidden">
+    <div className="min-h-screen bg-card py-12 md:py-24 relative overflow-hidden">
+      <SEO title="My Account" description="Manage your Golden Tier Peptide account, view order history, update shipping addresses, and edit your profile." />
       {/* Luxury Background Hint */}
       <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_60%)]" />
 
       <div className="container px-6 max-w-5xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-12 border-b border-[#D4AF37]/20 pb-8">
-          <h1 className="text-4xl md:text-5xl font-serif text-slate-900 mb-2 tracking-tight">My Account</h1>
-          <p className="text-sm text-slate-400 tracking-wide">Welcome back, {user?.name}</p>
+          <h1 className="text-4xl md:text-5xl font-serif text-foreground mb-2 tracking-tight">My Account</h1>
+          <p className="text-sm text-muted-foreground tracking-wide">Welcome back, {user?.name}</p>
         </div>
 
         {/* Tabs */}
@@ -114,7 +117,7 @@ export function UserDashboard() {
               onClick={() => setActiveTab(tab.id as 'overview' | 'orders' | 'addresses' | 'profile')}
               className={`flex items-center space-x-2 pb-2 text-[10px] font-bold tracking-[0.2em] uppercase transition-all relative ${activeTab === tab.id
                 ? 'text-[#D4AF37]'
-                : 'text-slate-400 hover:text-[#AA771C]'
+                : 'text-muted-foreground hover:text-[#AA771C]'
                 }`}
             >
               <tab.icon className="h-4 w-4" />
@@ -131,37 +134,37 @@ export function UserDashboard() {
           <div className="space-y-12">
             {/* Stats — Clean */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+              <div className="bg-card p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] mb-3">Total Orders</p>
-                    <p className="text-4xl font-serif text-slate-900">{userProfile.totalOrders}</p>
+                    <p className="text-4xl font-serif text-foreground">{userProfile.totalOrders}</p>
                   </div>
-                  <div className="w-12 h-12 bg-white border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 bg-card border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
                     <ShoppingBag className="h-5 w-5 text-[#D4AF37]" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+              <div className="bg-card p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] mb-3">Total Spent</p>
-                    <p className="text-4xl font-serif text-slate-900">{formatTHB(userProfile.totalSpent)}</p>
+                    <p className="text-4xl font-serif text-foreground">{formatTHB(userProfile.totalSpent)}</p>
                   </div>
-                  <div className="w-12 h-12 bg-white border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 bg-card border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
                     <CreditCard className="h-5 w-5 text-[#D4AF37]" />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+              <div className="bg-card p-8 border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] mb-3">Member Since</p>
-                    <p className="text-2xl font-serif text-slate-900 mt-2">{new Date(userProfile.joinedAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</p>
+                    <p className="text-2xl font-serif text-foreground mt-2">{new Date(userProfile.joinedAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</p>
                   </div>
-                  <div className="w-12 h-12 bg-white border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 bg-card border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
                     <User className="h-5 w-5 text-[#D4AF37]" />
                   </div>
                 </div>
@@ -169,31 +172,31 @@ export function UserDashboard() {
             </div>
 
             {/* Recent Orders — Clean */}
-            <div className="bg-white border border-[#D4AF37]/20 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+            <div className="bg-card border border-[#D4AF37]/20 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
               <div className="p-8 border-b border-[#D4AF37]/10 flex items-center justify-between">
-                <h3 className="text-2xl font-serif text-slate-900 tracking-tight">Recent Orders</h3>
+                <h3 className="text-2xl font-serif text-foreground tracking-tight">Recent Orders</h3>
                 <button
                   onClick={() => setActiveTab('orders')}
-                  className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-[#AA771C] flex items-center transition-colors group"
+                  className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground hover:text-[#AA771C] flex items-center transition-colors group"
                 >
                   VIEW ALL <ChevronRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
               <div className="divide-y divide-[#D4AF37]/10">
                 {userOrders.slice(0, 3).map((order) => (
-                  <div key={order.id} className="p-8 flex flex-col md:flex-row md:items-center justify-between hover:bg-slate-50/50 transition-colors gap-6">
+                  <div key={order.id} className="p-8 flex flex-col md:flex-row md:items-center justify-between hover:bg-muted/50 transition-colors gap-6">
                     <div className="flex items-center space-x-6">
-                      <div className="w-12 h-12 bg-white border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
+                      <div className="w-12 h-12 bg-card border border-[#D4AF37]/10 flex items-center justify-center shadow-sm">
                         <Box className="h-5 w-5 text-[#AA771C]" />
                       </div>
                       <div>
-                        <p className="font-serif text-lg text-slate-900">{order.id}</p>
-                        <p className="text-xs text-slate-400 mt-1">{formatDate(order.createdAt)}</p>
+                        <p className="font-serif text-lg text-foreground">{order.id}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{formatDate(order.createdAt)}</p>
                       </div>
                     </div>
                     <div className="text-right flex items-center space-x-6 justify-between md:justify-end">
                       <div className="text-left md:text-right">
-                        <p className="font-serif text-xl text-slate-900">{formatTHB(order.total)}</p>
+                        <p className="font-serif text-xl text-foreground">{formatTHB(order.total)}</p>
                         <span className={`inline-flex items-center space-x-1 px-3 py-1 text-[9px] font-bold tracking-[0.2em] uppercase border mt-2 ${order.status === 'delivered' ? 'bg-emerald-50 text-emerald-700 border-emerald-200/50' :
                           order.status === 'shipped' ? 'bg-blue-50 text-blue-700 border-blue-200/50' :
                             'bg-amber-50 text-[#AA771C] border-[#D4AF37]/30'
@@ -204,7 +207,7 @@ export function UserDashboard() {
                       </div>
                       <button
                         onClick={() => setSelectedOrderId(order.id)}
-                        className="p-3 text-slate-400 hover:text-[#AA771C] hover:bg-[#D4AF37]/5 transition-colors border border-transparent hover:border-[#D4AF37]/30"
+                        className="p-3 text-muted-foreground hover:text-[#AA771C] hover:bg-[#D4AF37]/5 transition-colors border border-transparent hover:border-[#D4AF37]/30"
                       >
                         <Eye className="h-5 w-5" />
                       </button>
@@ -214,7 +217,7 @@ export function UserDashboard() {
                 {userOrders.length === 0 && (
                   <div className="p-16 text-center">
                     <ShoppingBag className="h-12 w-12 text-[#D4AF37]/30 mx-auto mb-6" />
-                    <p className="text-sm text-slate-500 mb-6 tracking-wide">No orders yet.</p>
+                    <p className="text-sm text-muted-foreground mb-6 tracking-wide">No orders yet.</p>
                     <Link to="/products" className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] border-b border-[#D4AF37]/30 pb-1 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all">Start shopping</Link>
                   </div>
                 )}
@@ -225,17 +228,17 @@ export function UserDashboard() {
 
         {/* Orders Tab — Clean */}
         {activeTab === 'orders' && (
-          <div className="bg-white border border-[#D4AF37]/20 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+          <div className="bg-card border border-[#D4AF37]/20 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             <div className="p-8 border-b border-[#D4AF37]/10">
-              <h3 className="text-2xl font-serif text-slate-900 tracking-tight">Order History</h3>
+              <h3 className="text-2xl font-serif text-foreground tracking-tight">Order History</h3>
             </div>
             <div className="divide-y divide-[#D4AF37]/10">
               {userOrders.map((order) => (
                 <div key={order.id} className="p-8">
                   <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
                     <div>
-                      <p className="font-serif text-lg text-slate-900">{order.id}</p>
-                      <p className="text-xs text-slate-400 mt-1">{formatDate(order.createdAt)}</p>
+                      <p className="font-serif text-lg text-foreground">{order.id}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{formatDate(order.createdAt)}</p>
                     </div>
                     <span className={`inline-flex items-center space-x-1 px-3 py-1 text-[9px] font-bold tracking-[0.2em] uppercase border ${order.status === 'delivered' ? 'bg-emerald-50 text-emerald-700 border-emerald-200/50' :
                       order.status === 'shipped' ? 'bg-blue-50 text-blue-700 border-blue-200/50' :
@@ -245,11 +248,11 @@ export function UserDashboard() {
                       <span className="ml-1">{order.status}</span>
                     </span>
                   </div>
-                  <div className="space-y-3 bg-slate-50 border border-[#D4AF37]/10 p-6">
+                  <div className="space-y-3 bg-muted border border-[#D4AF37]/10 p-6">
                     {order.items.map((item, idx) => (
                       <div key={idx} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-500 tracking-wide">{item.quantity}x <span className="font-semibold text-slate-900">{item.name}</span></span>
-                        <span className="text-slate-900 font-medium">{formatTHB(item.price * item.quantity)}</span>
+                        <span className="text-muted-foreground tracking-wide">{item.quantity}x <span className="font-semibold text-foreground">{item.name}</span></span>
+                        <span className="text-foreground font-medium">{formatTHB(item.price * item.quantity)}</span>
                       </div>
                     ))}
                   </div>
@@ -260,14 +263,14 @@ export function UserDashboard() {
                     >
                       <Eye className="h-4 w-4 mr-2" /> VIEW DETAILS
                     </button>
-                    <span className="font-serif text-xl text-slate-900">Total: {formatTHB(order.total)}</span>
+                    <span className="font-serif text-xl text-foreground">Total: {formatTHB(order.total)}</span>
                   </div>
                 </div>
               ))}
               {userOrders.length === 0 && (
                 <div className="p-20 text-center">
                   <ShoppingBag className="h-16 w-16 text-[#D4AF37]/30 mx-auto mb-6" />
-                  <p className="text-sm text-slate-500 tracking-wide mb-6">No orders yet.</p>
+                  <p className="text-sm text-muted-foreground tracking-wide mb-6">No orders yet.</p>
                   <Link to="/products" className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] border-b border-[#D4AF37]/30 pb-1 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all">Browse products</Link>
                 </div>
               )}
@@ -277,16 +280,16 @@ export function UserDashboard() {
 
         {/* Addresses Tab */}
         {activeTab === 'addresses' && (
-          <div className="bg-white border border-[#D4AF37]/20 p-8 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+          <div className="bg-card border border-[#D4AF37]/20 p-8 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             <ShippingAddresses />
           </div>
         )}
 
         {/* Profile Tab — Clean */}
         {activeTab === 'profile' && (
-          <div className="bg-white border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
+          <div className="bg-card border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             <div className="p-8 border-b border-[#D4AF37]/10 flex flex-wrap gap-4 items-center justify-between">
-              <h3 className="text-2xl font-serif text-slate-900 tracking-tight">Profile Information</h3>
+              <h3 className="text-2xl font-serif text-foreground tracking-tight">Profile Information</h3>
               {!isEditingProfile ? (
                 <button
                   onClick={() => setIsEditingProfile(true)}
@@ -309,7 +312,7 @@ export function UserDashboard() {
                         country: userProfile.address?.country || '',
                       });
                     }}
-                    className="px-6 py-3 border border-transparent text-slate-400 text-[10px] font-bold tracking-[0.2em] uppercase hover:text-slate-600 transition-colors"
+                    className="px-6 py-3 border border-transparent text-muted-foreground text-[10px] font-bold tracking-[0.2em] uppercase hover:text-muted-foreground transition-colors"
                     disabled={isSaving}
                   >
                     CANCEL
@@ -340,7 +343,7 @@ export function UserDashboard() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     readOnly={!isEditingProfile}
-                    className={`w-full px-4 h-12 transition-all text-sm tracking-wide ${isEditingProfile ? 'bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-slate-900' : 'bg-slate-50 border border-transparent text-slate-500 cursor-not-allowed'}`}
+                    className={`w-full px-4 h-12 transition-all text-sm tracking-wide ${isEditingProfile ? 'bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-foreground' : 'bg-muted border border-transparent text-muted-foreground cursor-not-allowed'}`}
                   />
                 </div>
                 <div>
@@ -349,7 +352,7 @@ export function UserDashboard() {
                     type="email"
                     value={userProfile.email}
                     readOnly
-                    className="w-full px-4 h-12 bg-slate-50 border border-transparent text-sm tracking-wide text-slate-500 cursor-not-allowed"
+                    className="w-full px-4 h-12 bg-muted border border-transparent text-sm tracking-wide text-muted-foreground cursor-not-allowed"
                   />
                 </div>
                 <div>
@@ -359,14 +362,14 @@ export function UserDashboard() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     readOnly={!isEditingProfile}
-                    className={`w-full px-4 h-12 transition-all text-sm tracking-wide ${isEditingProfile ? 'bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-slate-900' : 'bg-slate-50 border border-transparent text-slate-500 cursor-not-allowed'}`}
+                    className={`w-full px-4 h-12 transition-all text-sm tracking-wide ${isEditingProfile ? 'bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-foreground' : 'bg-muted border border-transparent text-muted-foreground cursor-not-allowed'}`}
                     placeholder="e.g., +1 (555) 123-4567"
                   />
                 </div>
               </div>
 
               <div className="border-t border-[#D4AF37]/10 pt-10">
-                <h4 className="text-lg font-serif text-slate-900 mb-8 flex items-center tracking-tight">
+                <h4 className="text-lg font-serif text-foreground mb-8 flex items-center tracking-tight">
                   <MapPin className="h-5 w-5 mr-3 text-[#D4AF37]" />
                   Shipping Address
                 </h4>
@@ -379,7 +382,7 @@ export function UserDashboard() {
                         type="text"
                         value={formData.street}
                         onChange={(e) => setFormData({ ...formData, street: e.target.value })}
-                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-slate-900 transition-all"
+                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-foreground transition-all"
                       />
                     </div>
                     <div>
@@ -388,7 +391,7 @@ export function UserDashboard() {
                         type="text"
                         value={formData.city}
                         onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-slate-900 transition-all"
+                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-foreground transition-all"
                       />
                     </div>
                     <div>
@@ -397,7 +400,7 @@ export function UserDashboard() {
                         type="text"
                         value={formData.state}
                         onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-slate-900 transition-all"
+                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-foreground transition-all"
                       />
                     </div>
                     <div>
@@ -406,7 +409,7 @@ export function UserDashboard() {
                         type="text"
                         value={formData.zip}
                         onChange={(e) => setFormData({ ...formData, zip: e.target.value })}
-                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-slate-900 transition-all"
+                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-foreground transition-all"
                       />
                     </div>
                     <div>
@@ -415,20 +418,20 @@ export function UserDashboard() {
                         type="text"
                         value={formData.country}
                         onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-slate-900 transition-all"
+                        className="w-full px-4 h-12 bg-transparent border border-[#D4AF37]/30 focus:border-[#D4AF37] focus:ring-0 text-sm tracking-wide text-foreground transition-all"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="p-6 bg-slate-50 border border-[#D4AF37]/10 shadow-inner">
+                  <div className="p-6 bg-muted border border-[#D4AF37]/10 shadow-inner">
                     {userProfile.address?.street ? (
-                      <address className="not-italic text-slate-600 leading-relaxed text-sm tracking-wide">
+                      <address className="not-italic text-muted-foreground leading-relaxed text-sm tracking-wide">
                         {userProfile.address.street}<br />
                         {userProfile.address.city}, {userProfile.address.state} {userProfile.address.zip}<br />
                         {userProfile.address.country}
                       </address>
                     ) : (
-                      <p className="text-slate-500 text-sm">No address saved yet. Click 'EDIT PROFILE' to add one.</p>
+                      <p className="text-muted-foreground text-sm">No address saved yet. Click 'EDIT PROFILE' to add one.</p>
                     )}
                   </div>
                 )}

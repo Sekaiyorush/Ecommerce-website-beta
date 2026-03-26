@@ -42,7 +42,7 @@ export function TrustFeatures() {
   };
 
   return (
-    <section className="py-24 bg-white relative">
+    <section className="py-24 bg-card relative">
       <div className="container max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
         <motion.div
@@ -56,11 +56,11 @@ export function TrustFeatures() {
             <span className="text-[10px] font-bold text-[#AA771C] uppercase tracking-[0.3em] mb-4 block">
               Why Choose Us
             </span>
-            <h2 className="text-4xl md:text-5xl font-serif text-slate-900 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-serif text-foreground tracking-tight">
               The Golden Standard
             </h2>
           </div>
-          <p className="max-w-md text-xs text-slate-500 uppercase tracking-widest leading-relaxed">
+          <p className="max-w-md text-xs text-muted-foreground uppercase tracking-widest leading-relaxed">
             Uncompromising quality control and precision manufacturing for the world's leading research institutions.
           </p>
         </motion.div>
@@ -83,16 +83,16 @@ export function TrustFeatures() {
               <div className="absolute -left-6 top-0 w-[1px] h-0 bg-gradient-to-b from-[#D4AF37] to-transparent transition-all duration-700 group-hover:h-full opacity-0 group-hover:opacity-100 hidden md:block" />
 
               {/* Icon */}
-              <div className="w-12 h-12 border border-[#D4AF37]/30 flex items-center justify-center mb-6 group-hover:border-[#D4AF37] transition-colors duration-500 bg-white relative overflow-hidden">
+              <div className="w-12 h-12 border border-[#D4AF37]/30 flex items-center justify-center mb-6 group-hover:border-[#D4AF37] transition-colors duration-500 bg-card relative overflow-hidden">
                 <div className="absolute inset-0 bg-[#D4AF37]/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 <feature.icon className="h-5 w-5 text-[#AA771C] relative z-10" strokeWidth={1.5} />
               </div>
 
               {/* Content */}
-              <h3 className="font-serif text-xl text-slate-900 mb-4 group-hover:text-[#AA771C] transition-colors duration-300">
+              <h3 className="font-serif text-xl text-foreground mb-4 group-hover:text-[#AA771C] transition-colors duration-300">
                 {feature.title}
               </h3>
-              <p className="text-xs text-slate-500 leading-relaxed uppercase tracking-wider">
+              <p className="text-xs text-muted-foreground leading-relaxed uppercase tracking-wider">
                 {feature.description}
               </p>
             </motion.div>

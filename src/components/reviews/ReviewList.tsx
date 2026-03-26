@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
+import { logger } from '@/lib/logger';
 import { useAuth } from '@/context/AuthContext';
 import { ReviewCard, type Review } from './ReviewCard';
 import { ReviewForm } from './ReviewForm';
@@ -57,7 +58,7 @@ export function ReviewList({ productId }: ReviewListProps) {
     const { data, error } = await query;
 
     if (error) {
-      console.error('Error fetching reviews:', error);
+      logger.error('Error fetching reviews:', error);
       setIsLoading(false);
       return;
     }
@@ -181,9 +182,9 @@ export function ReviewList({ productId }: ReviewListProps) {
         {/* Overall Rating */}
         <div className="flex items-center gap-6">
           <div className="text-center">
-            <p className="text-5xl font-serif text-slate-900">{stats.average > 0 ? stats.average.toFixed(1) : '—'}</p>
+            <p className="text-5xl font-serif text-foreground">{stats.average > 0 ? stats.average.toFixed(1) : '—'}</p>
             <StarRating rating={Math.round(stats.average)} size="sm" />
-            <p className="text-xs text-slate-400 mt-1">{stats.total} review{stats.total !== 1 ? 's' : ''}</p>
+            <p className="text-xs text-muted-foreground mt-1">{stats.total} review{stats.total !== 1 ? 's' : ''}</p>
           </div>
 
           {/* Distribution Bars */}
@@ -194,14 +195,14 @@ export function ReviewList({ productId }: ReviewListProps) {
                 const pct = stats.total > 0 ? (count / stats.total) * 100 : 0;
                 return (
                   <div key={star} className="flex items-center gap-2 text-xs">
-                    <span className="w-3 text-slate-400">{star}</span>
-                    <div className="flex-1 h-2 bg-slate-100 overflow-hidden">
+                    <span className="w-3 text-muted-foreground">{star}</span>
+                    <div className="flex-1 h-2 bg-muted overflow-hidden">
                       <div
                         className="h-full bg-[#D4AF37] transition-all duration-500"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
-                    <span className="w-8 text-right text-slate-400">{count}</span>
+                    <span className="w-8 text-right text-muted-foreground">{count}</span>
                   </div>
                 );
               })}
@@ -221,7 +222,7 @@ export function ReviewList({ productId }: ReviewListProps) {
             </button>
           )}
           {hasUserReview && (
-            <span className="text-xs text-slate-400 italic">You&apos;ve already reviewed this product</span>
+            <span className="text-xs text-muted-foreground italic">You&apos;ve already reviewed this product</span>
           )}
         </div>
       </div>
@@ -238,13 +239,13 @@ export function ReviewList({ productId }: ReviewListProps) {
       {/* Sort Controls */}
       {stats.total > 0 && (
         <div className="flex items-center justify-between border-b border-[#D4AF37]/10 pb-4">
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400">
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
             {stats.total} Review{stats.total !== 1 ? 's' : ''}
           </span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-            className="px-3 py-1.5 border border-slate-200 text-xs bg-white focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/50 rounded-none"
+            className="px-3 py-1.5 border border-border text-xs bg-card focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/50 rounded-none"
           >
             <option value="recent">Most Recent</option>
             <option value="helpful">Most Helpful</option>
@@ -258,19 +259,19 @@ export function ReviewList({ productId }: ReviewListProps) {
       {isLoading ? (
         <div className="space-y-6">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="py-6 border-b border-slate-100 animate-pulse">
+            <div key={i} className="py-6 border-b border-border animate-pulse">
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, j) => (
-                    <div key={j} className="w-4 h-4 bg-slate-100 rounded" />
+                    <div key={j} className="w-4 h-4 bg-muted rounded" />
                   ))}
                 </div>
-                <div className="h-4 w-32 bg-slate-100" />
+                <div className="h-4 w-32 bg-muted" />
               </div>
-              <div className="h-3 w-48 bg-slate-100 mb-3" />
+              <div className="h-3 w-48 bg-muted mb-3" />
               <div className="space-y-2">
-                <div className="h-3 w-full bg-slate-100" />
-                <div className="h-3 w-3/4 bg-slate-100" />
+                <div className="h-3 w-full bg-muted" />
+                <div className="h-3 w-3/4 bg-muted" />
               </div>
             </div>
           ))}
@@ -278,8 +279,8 @@ export function ReviewList({ productId }: ReviewListProps) {
       ) : reviews.length === 0 ? (
         <div className="text-center py-12">
           <MessageSquare className="h-10 w-10 text-[#D4AF37]/30 mx-auto mb-4" />
-          <p className="text-sm text-slate-500 mb-2">No reviews yet</p>
-          <p className="text-xs text-slate-400">Be the first to share your experience with this compound.</p>
+          <p className="text-sm text-muted-foreground mb-2">No reviews yet</p>
+          <p className="text-xs text-muted-foreground">Be the first to share your experience with this compound.</p>
         </div>
       ) : (
         <div>

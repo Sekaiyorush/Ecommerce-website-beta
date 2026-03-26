@@ -18,6 +18,7 @@ import {
   XCircle,
   Download
 } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 export function OrdersManagement() {
   const { db, updateOrder: contextUpdateOrder, isLoading } = useDatabase();
@@ -110,7 +111,7 @@ export function OrdersManagement() {
       case 'cancelled':
         return 'bg-red-100 text-red-700';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-gray-100 text-foreground';
     }
   };
 
@@ -120,6 +121,7 @@ export function OrdersManagement() {
 
   return (
     <div className="space-y-6">
+      <SEO title="Orders | Admin" description="View and manage all customer orders." />
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Orders Management</h2>
@@ -213,7 +215,7 @@ export function OrdersManagement() {
                     type="checkbox"
                     checked={filteredOrders.length > 0 && selectedOrders.size === filteredOrders.length}
                     onChange={toggleAllOrders}
-                    className="rounded border-slate-300 text-slate-900 focus:ring-slate-200"
+                    className="rounded border-border text-foreground focus:ring-slate-200"
                   />
                 </th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Order ID</th>
@@ -236,7 +238,7 @@ export function OrdersManagement() {
                         type="checkbox"
                         checked={selectedOrders.has(order.id)}
                         onChange={() => toggleOrderSelection(order.id)}
-                        className="rounded border-slate-300 text-slate-900 focus:ring-slate-200"
+                        className="rounded border-border text-foreground focus:ring-slate-200"
                       />
                     </td>
                     <td className="px-4 py-3">

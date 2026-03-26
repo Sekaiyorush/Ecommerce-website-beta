@@ -65,18 +65,18 @@ export function ReviewForm({ productId, onSubmitted, onCancel }: ReviewFormProps
 
   if (!user) {
     return (
-      <div className="p-6 bg-slate-50 border border-[#D4AF37]/20 text-center">
-        <p className="text-sm text-slate-500">Please sign in to leave a review.</p>
+      <div className="p-6 bg-muted border border-[#D4AF37]/20 text-center">
+        <p className="text-sm text-muted-foreground">Please sign in to leave a review.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 bg-white border border-[#D4AF37]/20">
+    <form onSubmit={handleSubmit} className="p-6 bg-card border border-[#D4AF37]/20">
       <div className="flex items-center justify-between mb-6">
-        <h4 className="text-lg font-serif text-slate-900">Write a Review</h4>
+        <h4 className="text-lg font-serif text-foreground">Write a Review</h4>
         {onCancel && (
-          <button type="button" onClick={onCancel} className="p-2 hover:bg-slate-100 rounded-lg text-slate-400">
+          <button type="button" onClick={onCancel} className="p-2 hover:bg-muted rounded-lg text-muted-foreground">
             <X className="h-4 w-4" />
           </button>
         )}
@@ -92,7 +92,7 @@ export function ReviewForm({ productId, onSubmitted, onCancel }: ReviewFormProps
 
       {/* Title */}
       <div className="mb-5">
-        <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-slate-700 mb-2">
+        <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-foreground mb-2">
           Review Title
         </label>
         <input
@@ -101,13 +101,13 @@ export function ReviewForm({ productId, onSubmitted, onCancel }: ReviewFormProps
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Summarize your experience..."
           maxLength={120}
-          className="w-full px-4 py-2.5 border border-slate-200 text-sm focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/50 rounded-none"
+          className="w-full px-4 py-2.5 border border-border text-sm focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/50 rounded-none"
         />
       </div>
 
       {/* Body */}
       <div className="mb-5">
-        <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-slate-700 mb-2">
+        <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-foreground mb-2">
           Your Review
         </label>
         <textarea
@@ -116,9 +116,9 @@ export function ReviewForm({ productId, onSubmitted, onCancel }: ReviewFormProps
           placeholder="Share your detailed experience with this compound..."
           rows={4}
           maxLength={2000}
-          className="w-full px-4 py-2.5 border border-slate-200 text-sm focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/50 resize-none rounded-none"
+          className="w-full px-4 py-2.5 border border-border text-sm focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/50 resize-none rounded-none"
         />
-        <p className="text-xs text-slate-400 mt-1 text-right">{body.length}/2000</p>
+        <p className="text-xs text-muted-foreground mt-1 text-right">{body.length}/2000</p>
       </div>
 
       {error && (

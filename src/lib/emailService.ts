@@ -1,18 +1,19 @@
 import { formatTHB } from '@/lib/formatPrice';
+import { logger } from '@/lib/logger';
 
 export const emailService = {
-    sendOrderConfirmation: async (email: string, orderId: string, total: number) => {
-        console.log(`[Email Service] Sending confirmation to ${email} for order ${orderId} (${formatTHB(total)})`);
+    sendOrderConfirmation: async (_email: string, orderId: string, total: number) => {
+        logger.warn(`[Email Service] Order confirmation for ${orderId} (${formatTHB(total)}) — email integration not configured`);
         return new Promise(resolve => setTimeout(resolve, 500));
     },
 
-    sendOrderStatusUpdate: async (email: string, orderId: string, status: string) => {
-        console.log(`[Email Service] Sending status update to ${email} for order ${orderId} - Status: ${status}`);
+    sendOrderStatusUpdate: async (_email: string, orderId: string, status: string) => {
+        logger.warn(`[Email Service] Status update for ${orderId} - ${status} — email integration not configured`);
         return new Promise(resolve => setTimeout(resolve, 500));
     },
 
-    sendPayoutRequestNotification: async (adminEmail: string, partnerName: string, amount: number) => {
-        console.log(`[Email Service] Notifying admin ${adminEmail} of a payout request from ${partnerName} for ${formatTHB(amount)}`);
+    sendPayoutRequestNotification: async (_adminEmail: string, partnerName: string, amount: number) => {
+        logger.warn(`[Email Service] Payout request from ${partnerName} for ${formatTHB(amount)} — email integration not configured`);
         return new Promise(resolve => setTimeout(resolve, 500));
     }
 };

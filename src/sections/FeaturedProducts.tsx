@@ -23,7 +23,7 @@ export function FeaturedProducts() {
   const featuredProducts = db.products.slice(0, 3);
 
   return (
-    <section ref={sectionRef} className="py-32 md:py-48 relative overflow-hidden bg-white">
+    <section ref={sectionRef} className="py-32 md:py-48 relative overflow-hidden bg-card">
       {/* Luxury Background Hint - Scroll Linked Parallax */}
       <motion.div
         style={{ y: bgY }}
@@ -44,7 +44,7 @@ export function FeaturedProducts() {
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif tracking-tight text-gold-gradient mb-8 pb-2">
             Signature Compounds
           </h2>
-          <p className="max-w-2xl text-slate-400 text-sm md:text-base leading-relaxed tracking-[0.1em] uppercase font-light">
+          <p className="max-w-2xl text-muted-foreground text-sm md:text-base leading-relaxed tracking-[0.1em] uppercase font-light">
             Our most requested formulations for advanced analytical study. <br className="hidden md:block" /> Absolute purity. Unrivaled precision.
           </p>
           {isPartner && (
@@ -62,11 +62,11 @@ export function FeaturedProducts() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
           {isLoading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="bg-white border border-gold-300/10 h-[600px] animate-pulse rounded-sm" />
+              <div key={i} className="bg-card border border-gold-300/10 h-[600px] animate-pulse rounded-sm" />
             ))
           ) : featuredProducts.length === 0 ? (
             <div className="col-span-3 text-center py-24 border border-dashed border-gold-300/30">
-              <p className="text-slate-400 font-serif text-xl italic tracking-wide">New formulations pending validation...</p>
+              <p className="text-muted-foreground font-serif text-xl italic tracking-wide">New formulations pending validation...</p>
             </div>
           ) : (
             featuredProducts.map((product, index) => (
@@ -83,7 +83,7 @@ export function FeaturedProducts() {
           <Link
             to="/products"
             aria-label="View full product catalog"
-            className="group flex items-center justify-center space-x-3 px-10 py-5 border border-[#D4AF37]/30 text-slate-900 transition-all duration-500 hover:border-[#D4AF37] hover:shadow-[0_10px_30px_rgba(212,175,55,0.1)] bg-white relative overflow-hidden focus:ring-2 focus:ring-[#D4AF37] outline-none"
+            className="group flex items-center justify-center space-x-3 px-10 py-5 border border-[#D4AF37]/30 text-foreground transition-all duration-500 hover:border-[#D4AF37] hover:shadow-[0_10px_30px_rgba(212,175,55,0.1)] bg-card relative overflow-hidden focus:ring-2 focus:ring-[#D4AF37] outline-none"
           >
             <span className="relative z-10 text-[10px] font-bold tracking-[0.3em] uppercase">VIEW FULL CATALOG</span>
             <ArrowRight className="relative z-10 h-4 w-4 text-[#D4AF37] group-hover:translate-x-2 transition-transform duration-300" aria-hidden="true" />

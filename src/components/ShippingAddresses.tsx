@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { logger } from '@/lib/logger';
 import { useAuth } from '@/context/AuthContext';
 import {
   MapPin,
@@ -76,7 +77,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching addresses:', error);
+      logger.error('Error fetching addresses:', error);
     } else {
       setAddresses(data || []);
     }
@@ -145,7 +146,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
         .eq('id', editingAddress.id);
 
       if (error) {
-        console.error('Failed to update address:', error);
+        logger.error('Failed to update address:', error);
         setFormError('Failed to update address. Please try again.');
         setIsSaving(false);
         return;
@@ -167,7 +168,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
         });
 
       if (error) {
-        console.error('Failed to save address:', error);
+        logger.error('Failed to save address:', error);
         setFormError('Failed to save address. Please try again.');
         setIsSaving(false);
         return;
@@ -212,7 +213,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
     <div className="space-y-6">
       {!isSelectMode && (
         <div className="flex items-center justify-between">
-          <h3 className="text-2xl font-serif text-slate-900 tracking-tight">Saved Addresses</h3>
+          <h3 className="text-2xl font-serif text-foreground tracking-tight">Saved Addresses</h3>
           <button
             onClick={() => handleOpenForm()}
             className="flex items-center space-x-2 px-4 py-2 bg-[#111] text-white text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-black transition-colors border border-[#111] shadow-md"
@@ -227,7 +228,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
       {addresses.length === 0 ? (
         <div className="text-center py-12 border border-[#D4AF37]/10">
           <MapPin className="h-10 w-10 text-[#D4AF37]/30 mx-auto mb-4" />
-          <p className="text-sm text-slate-500 mb-4 tracking-wide">No saved addresses yet</p>
+          <p className="text-sm text-muted-foreground mb-4 tracking-wide">No saved addresses yet</p>
           <button
             onClick={() => handleOpenForm()}
             className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#AA771C] border-b border-[#D4AF37]/30 pb-1 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all"
@@ -266,7 +267,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                     {!addr.is_default && (
                       <button
                         onClick={() => handleSetDefault(addr.id)}
-                        className="p-1.5 text-slate-400 hover:text-[#AA771C] transition-colors"
+                        className="p-1.5 text-muted-foreground hover:text-[#AA771C] transition-colors"
                         title="Set as default"
                       >
                         <Star className="h-3.5 w-3.5" />
@@ -274,14 +275,14 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                     )}
                     <button
                       onClick={() => handleOpenForm(addr)}
-                      className="p-1.5 text-slate-400 hover:text-slate-700 transition-colors"
+                      className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
                       title="Edit"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => handleDelete(addr.id)}
-                      className="p-1.5 text-slate-400 hover:text-red-500 transition-colors"
+                      className="p-1.5 text-muted-foreground hover:text-red-500 transition-colors"
                       title="Delete"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -289,12 +290,12 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                   </div>
                 )}
               </div>
-              <address className="not-italic text-sm text-slate-600 leading-relaxed tracking-wide">
-                <p className="font-medium text-slate-900">{addr.full_name}</p>
+              <address className="not-italic text-sm text-muted-foreground leading-relaxed tracking-wide">
+                <p className="font-medium text-foreground">{addr.full_name}</p>
                 <p>{addr.address_line}</p>
                 <p>{addr.city}{addr.state ? `, ${addr.state}` : ''} {addr.zip_code}</p>
                 <p>{addr.country}</p>
-                {addr.phone && <p className="mt-1 text-slate-400">{addr.phone}</p>}
+                {addr.phone && <p className="mt-1 text-muted-foreground">{addr.phone}</p>}
               </address>
             </div>
           ))}
@@ -313,12 +314,12 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
       {/* Add/Edit Form Modal */}
       {isFormOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white max-w-md w-full max-h-[90vh] overflow-auto shadow-2xl">
+          <div className="bg-card max-w-md w-full max-h-[90vh] overflow-auto shadow-2xl">
             <div className="p-6 border-b border-[#D4AF37]/20 flex items-center justify-between">
-              <h3 className="text-lg font-serif text-slate-900">
+              <h3 className="text-lg font-serif text-foreground">
                 {editingAddress ? 'Edit Address' : 'Add New Address'}
               </h3>
-              <button onClick={handleCloseForm} className="p-2 hover:bg-slate-100 rounded-lg">
+              <button onClick={handleCloseForm} className="p-2 hover:bg-muted rounded-lg">
                 <X className="h-4 w-4" />
               </button>
             </div>
@@ -330,11 +331,11 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
               )}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">Label</label>
+                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">Label</label>
                   <select
                     value={formData.label}
                     onChange={(e) => setFormData({ ...formData, label: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                   >
                     <option value="Home">Home</option>
                     <option value="Work">Work</option>
@@ -342,75 +343,75 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">Full Name</label>
+                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">Full Name</label>
                   <input
                     type="text"
                     required
                     value={formData.full_name}
                     onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">Street Address</label>
+                <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">Street Address</label>
                 <input
                   type="text"
                   required
                   value={formData.address_line}
                   onChange={(e) => setFormData({ ...formData, address_line: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">City</label>
+                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">City</label>
                   <input
                     type="text"
                     required
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">State</label>
+                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">State</label>
                   <input
                     type="text"
                     value={formData.state}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">ZIP Code</label>
+                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">ZIP Code</label>
                   <input
                     type="text"
                     value={formData.zip_code}
                     onChange={(e) => setFormData({ ...formData, zip_code: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">Country</label>
+                  <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">Country</label>
                   <input
                     type="text"
                     required
                     value={formData.country}
                     onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-slate-700 mb-1">Phone</label>
+                <label className="block text-[10px] font-bold tracking-[0.15em] uppercase text-foreground mb-1">Phone</label>
                 <input
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
@@ -419,15 +420,15 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                   type="checkbox"
                   checked={formData.is_default}
                   onChange={(e) => setFormData({ ...formData, is_default: e.target.checked })}
-                  className="rounded border-slate-300 text-slate-900 focus:ring-slate-200"
+                  className="rounded border-border text-foreground focus:ring-slate-200"
                 />
-                <span className="text-sm text-slate-600">Set as default address</span>
+                <span className="text-sm text-muted-foreground">Set as default address</span>
               </label>
               <div className="flex justify-end space-x-3 pt-4">
                 <button
                   type="button"
                   onClick={handleCloseForm}
-                  className="px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-sm"
+                  className="px-4 py-2 border border-border rounded-lg hover:bg-muted text-sm"
                 >
                   Cancel
                 </button>

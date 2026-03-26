@@ -20,6 +20,7 @@ import {
   Eye,
   RefreshCw
 } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 export function InvitationCodeManagement() {
   const { user } = useAuth();
@@ -167,17 +168,18 @@ export function InvitationCodeManagement() {
 
   return (
     <div className="space-y-6">
+      <SEO title="Invitation Codes | Admin" description="Create and manage invitation codes for registration." />
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">Invitation Codes</h2>
-          <p className="text-slate-500">Manage invitation codes for users and partners</p>
+          <h2 className="text-2xl font-semibold text-foreground">Invitation Codes</h2>
+          <p className="text-muted-foreground">Manage invitation codes for users and partners</p>
         </div>
         <div className="flex items-center space-x-3">
           <button
             onClick={handleBulkGenerate}
             disabled={bulkGenerateSuccess}
-            className="flex items-center space-x-2 px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-80"
+            className="flex items-center space-x-2 px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors disabled:opacity-80"
           >
             {bulkGenerateSuccess ? <Check className="h-4 w-4 text-emerald-500" /> : <RefreshCw className="h-4 w-4" />}
             <span className={bulkGenerateSuccess ? "text-emerald-600 font-medium" : ""}>{bulkGenerateSuccess ? "Generated & Copied!" : "Bulk Generate"}</span>
@@ -194,42 +196,42 @@ export function InvitationCodeManagement() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-sm text-slate-500 mb-1">Total Codes</p>
-          <p className="text-2xl font-semibold text-slate-900">{stats.total}</p>
+        <div className="bg-card p-4 rounded-xl border border-border">
+          <p className="text-sm text-muted-foreground mb-1">Total Codes</p>
+          <p className="text-2xl font-semibold text-foreground">{stats.total}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-sm text-slate-500 mb-1">Active Codes</p>
+        <div className="bg-card p-4 rounded-xl border border-border">
+          <p className="text-sm text-muted-foreground mb-1">Active Codes</p>
           <p className="text-2xl font-semibold text-emerald-600">{stats.active}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-sm text-slate-500 mb-1">Total Uses</p>
+        <div className="bg-card p-4 rounded-xl border border-border">
+          <p className="text-sm text-muted-foreground mb-1">Total Uses</p>
           <p className="text-2xl font-semibold text-indigo-600">{stats.totalUses}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-sm text-slate-500 mb-1">Partner Codes</p>
+        <div className="bg-card p-4 rounded-xl border border-border">
+          <p className="text-sm text-muted-foreground mb-1">Partner Codes</p>
           <p className="text-2xl font-semibold text-amber-600">{stats.partnerCodes}</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200">
+      <div className="bg-card p-4 rounded-xl border border-border">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search codes, notes, or creator..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200 focus:border-slate-400"
+              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200 focus:border-border"
             />
           </div>
           <div className="flex items-center space-x-3">
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as InvitationCodeType | 'all')}
-              className="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+              className="px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
             >
               <option value="all">All Types</option>
               <option value="admin_user">User Codes</option>
@@ -239,7 +241,7 @@ export function InvitationCodeManagement() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as 'all' | 'active' | 'inactive')}
-              className="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+              className="px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -250,39 +252,39 @@ export function InvitationCodeManagement() {
       </div>
 
       {/* Codes Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-muted border-b border-border">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Code</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Type</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Uses</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Created By</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Created</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Status</th>
-                <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Actions</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Code</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Type</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Uses</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Created By</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Created</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Status</th>
+                <th className="px-4 py-3 text-right text-sm font-medium text-foreground">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border">
               {filteredCodes.map((code) => (
-                <tr key={code.code} className="hover:bg-slate-50">
+                <tr key={code.code} className="hover:bg-muted">
                   <td className="px-4 py-4">
                     <div className="flex items-center space-x-2">
-                      <span className="font-mono font-semibold text-slate-900">{code.code}</span>
+                      <span className="font-mono font-semibold text-foreground">{code.code}</span>
                       <button
                         onClick={() => handleCopyCode(code.code)}
-                        className="p-1 hover:bg-slate-200 rounded transition-colors"
+                        className="p-1 hover:bg-muted rounded transition-colors"
                       >
                         {copiedCode === code.code ? (
                           <Check className="h-3.5 w-3.5 text-emerald-500" />
                         ) : (
-                          <Copy className="h-3.5 w-3.5 text-slate-400" />
+                          <Copy className="h-3.5 w-3.5 text-muted-foreground" />
                         )}
                       </button>
                     </div>
                     {code.notes && (
-                      <p className="text-xs text-slate-400 mt-1">{code.notes}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{code.notes}</p>
                     )}
                   </td>
                   <td className="px-4 py-4">
@@ -294,10 +296,10 @@ export function InvitationCodeManagement() {
                   <td className="px-4 py-4">
                     <div className="flex items-center space-x-2">
                       <span className="font-medium">{code.usedCount}</span>
-                      <span className="text-slate-400">/</span>
-                      <span className="text-slate-500">{code.maxUses}</span>
+                      <span className="text-muted-foreground">/</span>
+                      <span className="text-muted-foreground">{code.maxUses}</span>
                     </div>
-                    <div className="w-20 bg-slate-100 rounded-full h-1.5 mt-1">
+                    <div className="w-20 bg-muted rounded-full h-1.5 mt-1">
                       <div
                         className="bg-slate-900 h-1.5 rounded-full"
                         style={{ width: `${(code.usedCount / code.maxUses) * 100}%` }}
@@ -306,13 +308,13 @@ export function InvitationCodeManagement() {
                   </td>
                   <td className="px-4 py-4">
                     <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 bg-slate-100 rounded-full flex items-center justify-center">
+                      <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center">
                         <span className="text-xs font-medium">{code.createdByName.charAt(0)}</span>
                       </div>
                       <span className="text-sm">{code.createdByName}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-4 text-sm text-slate-500">
+                  <td className="px-4 py-4 text-sm text-muted-foreground">
                     {code.createdAt}
                   </td>
                   <td className="px-4 py-4">
@@ -320,7 +322,7 @@ export function InvitationCodeManagement() {
                       onClick={() => handleToggleStatus(code.code)}
                       className={`px-2 py-1 rounded-full text-xs font-medium transition-colors ${code.isActive
                         ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                        : 'bg-muted text-foreground hover:bg-muted'
                         }`}
                     >
                       {code.isActive ? 'Active' : 'Inactive'}
@@ -330,13 +332,13 @@ export function InvitationCodeManagement() {
                     <div className="flex items-center justify-end space-x-1">
                       <button
                         onClick={() => { setSelectedCode(code); setShowDetailsModal(true); }}
-                        className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600"
+                        className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-slate-600"
                       >
                         <Eye className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteCode(code.code)}
-                        className="p-2 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-600"
+                        className="p-2 hover:bg-red-50 rounded-lg text-muted-foreground hover:text-red-600"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -349,8 +351,8 @@ export function InvitationCodeManagement() {
         </div>
         {filteredCodes.length === 0 && (
           <div className="p-12 text-center">
-            <LinkIcon className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500">No invitation codes found</p>
+            <LinkIcon className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+            <p className="text-muted-foreground">No invitation codes found</p>
           </div>
         )}
       </div>
@@ -358,12 +360,12 @@ export function InvitationCodeManagement() {
       {/* Create Code Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-card rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-slate-900">Create Invitation Code</h3>
+              <h3 className="text-lg font-semibold text-foreground">Create Invitation Code</h3>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg"
+                className="p-2 hover:bg-muted rounded-lg"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -371,18 +373,18 @@ export function InvitationCodeManagement() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Code Type
                 </label>
                 <select
                   value={newCodeType}
                   onChange={(e) => setNewCodeType(e.target.value as InvitationCodeType)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                 >
                   <option value="admin_user">User Registration</option>
                   <option value="admin_partner">Partner Registration</option>
                 </select>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   {newCodeType === 'admin_partner'
                     ? 'Creates a partner account with discount benefits'
                     : 'Creates a regular customer account'}
@@ -391,7 +393,7 @@ export function InvitationCodeManagement() {
 
               {newCodeType === 'admin_partner' && (
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                  <label className="block text-sm font-medium text-foreground mb-1.5">
                     Default Discount Rate (%)
                   </label>
                   <input
@@ -400,13 +402,13 @@ export function InvitationCodeManagement() {
                     max="50"
                     value={newCodeDiscountRate}
                     onChange={(e) => setNewCodeDiscountRate(parseInt(e.target.value) || 15)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Maximum Uses
                 </label>
                 <input
@@ -415,31 +417,31 @@ export function InvitationCodeManagement() {
                   max="1000"
                   value={newCodeMaxUses}
                   onChange={(e) => setNewCodeMaxUses(parseInt(e.target.value) || 1)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Expiration Date (optional)
                 </label>
                 <input
                   type="date"
                   value={newCodeExpiresAt}
                   onChange={(e) => setNewCodeExpiresAt(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Notes (optional)
                 </label>
                 <textarea
                   rows={3}
                   value={newCodeNotes}
                   onChange={(e) => setNewCodeNotes(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                   placeholder="e.g., VIP customers, March promotion..."
                 />
               </div>
@@ -447,7 +449,7 @@ export function InvitationCodeManagement() {
               <div className="flex justify-end space-x-3 pt-4">
                 <button
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50"
+                  className="px-4 py-2 border border-border rounded-lg hover:bg-muted"
                 >
                   Cancel
                 </button>
@@ -466,12 +468,12 @@ export function InvitationCodeManagement() {
       {/* Code Details Modal */}
       {showDetailsModal && selectedCode && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-card rounded-xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-slate-900">Code Details</h3>
+              <h3 className="text-lg font-semibold text-foreground">Code Details</h3>
               <button
                 onClick={() => setShowDetailsModal(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg"
+                className="p-2 hover:bg-muted rounded-lg"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -479,17 +481,17 @@ export function InvitationCodeManagement() {
 
             <div className="space-y-6">
               {/* Code Display */}
-              <div className="bg-slate-50 rounded-lg p-4">
+              <div className="bg-muted rounded-lg p-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-2xl font-bold text-slate-900">{selectedCode.code}</span>
+                  <span className="font-mono text-2xl font-bold text-foreground">{selectedCode.code}</span>
                   <button
                     onClick={() => handleCopyCode(selectedCode.code)}
-                    className="p-2 bg-white rounded-lg hover:bg-slate-100 transition-colors"
+                    className="p-2 bg-card rounded-lg hover:bg-muted transition-colors"
                   >
                     {copiedCode === selectedCode.code ? (
                       <Check className="h-5 w-5 text-emerald-500" />
                     ) : (
-                      <Copy className="h-5 w-5 text-slate-400" />
+                      <Copy className="h-5 w-5 text-muted-foreground" />
                     )}
                   </button>
                 </div>
@@ -498,36 +500,36 @@ export function InvitationCodeManagement() {
               {/* Info Grid */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-slate-500">Type</p>
+                  <p className="text-sm text-muted-foreground">Type</p>
                   <div className="flex items-center space-x-2 mt-1">
                     {getTypeIcon(selectedCode.type)}
                     <span className="font-medium">{getTypeLabel(selectedCode.type)}</span>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500">Status</p>
-                  <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 ${selectedCode.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-700'
+                  <p className="text-sm text-muted-foreground">Status</p>
+                  <span className={`inline-block px-2 py-1 rounded-full text-xs mt-1 ${selectedCode.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-muted text-foreground'
                     }`}>
                     {selectedCode.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500">Uses</p>
+                  <p className="text-sm text-muted-foreground">Uses</p>
                   <p className="font-medium">{selectedCode.usedCount} / {selectedCode.maxUses}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500">Created</p>
+                  <p className="text-sm text-muted-foreground">Created</p>
                   <p className="font-medium">{selectedCode.createdAt}</p>
                 </div>
                 {selectedCode.expiresAt && (
                   <div>
-                    <p className="text-sm text-slate-500">Expires</p>
+                    <p className="text-sm text-muted-foreground">Expires</p>
                     <p className="font-medium">{selectedCode.expiresAt}</p>
                   </div>
                 )}
                 {selectedCode.defaultDiscountRate && (
                   <div>
-                    <p className="text-sm text-slate-500">Discount Rate</p>
+                    <p className="text-sm text-muted-foreground">Discount Rate</p>
                     <p className="font-medium">{selectedCode.defaultDiscountRate}%</p>
                   </div>
                 )}
@@ -536,17 +538,17 @@ export function InvitationCodeManagement() {
               {/* Used By List */}
               {selectedCode.usedBy.length > 0 && (
                 <div>
-                  <h4 className="font-medium text-slate-900 mb-3">Used By</h4>
+                  <h4 className="font-medium text-foreground mb-3">Used By</h4>
                   <div className="space-y-2 max-h-48 overflow-y-auto">
                     {selectedCode.usedBy.map((user, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                      <div key={idx} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                         <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center">
+                          <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
                             <span className="text-sm font-medium">{user.userName.charAt(0)}</span>
                           </div>
                           <span className="font-medium">{user.userName}</span>
                         </div>
-                        <span className="text-sm text-slate-500">{user.usedAt}</span>
+                        <span className="text-sm text-muted-foreground">{user.usedAt}</span>
                       </div>
                     ))}
                   </div>
@@ -555,8 +557,8 @@ export function InvitationCodeManagement() {
 
               {selectedCode.notes && (
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Notes</p>
-                  <p className="text-slate-700">{selectedCode.notes}</p>
+                  <p className="text-sm text-muted-foreground mb-1">Notes</p>
+                  <p className="text-foreground">{selectedCode.notes}</p>
                 </div>
               )}
             </div>

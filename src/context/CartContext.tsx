@@ -86,7 +86,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (result.success) {
           setItems(result.data as unknown as CartItem[]);
         } else {
-          console.error('Invalid cart data in storage:', result.error);
+          // Invalid cart data in storage — reset silently
           setItems([]);
         }
       } catch {
@@ -129,6 +129,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems((prev) => {
       const existing = prev.find((item) => matchesItem(item, product.id, variant?.sku));
       const stockLimit = variant?.stock ?? product.stockQuantity ?? 0;
+      if (stockLimit <= 0) return prev;
       if (existing) {
         return prev.map((item) => {
           if (matchesItem(item, product.id, variant?.sku)) {
@@ -214,9 +215,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [items]
   );
 
+  const discountRate = isPartner ? (user?.discountRate ?? 0) : 0;
   const discountAmount = useMemo(
-    () => (isPartner && user?.discountRate ? cartSubtotal * (user.discountRate / 100) : 0),
-    [cartSubtotal, isPartner, user?.discountRate]
+    () => (discountRate > 0 ? cartSubtotal * (discountRate / 100) : 0),
+    [cartSubtotal, discountRate]
   );
 
   const cartTotal = useMemo(

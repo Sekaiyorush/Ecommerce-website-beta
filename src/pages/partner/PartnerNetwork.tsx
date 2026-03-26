@@ -16,6 +16,7 @@ import {
   Link as LinkIcon,
   Calendar
 } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 interface DownlineMember {
   id: string;
@@ -156,14 +157,15 @@ export function PartnerNetwork() {
 
   return (
     <div className="space-y-6">
+      <SEO title="My Network | Partner" description="View and manage your partner referral network." />
       {/* Header */}
       <div>
-        <h2 className="text-xl font-semibold text-slate-900">My Network</h2>
-        <p className="text-slate-500">Manage your referrals and invitation codes</p>
+        <h2 className="text-xl font-semibold text-foreground">My Network</h2>
+        <p className="text-muted-foreground">Manage your referrals and invitation codes</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-1 bg-white p-1 rounded-lg border border-slate-200 w-fit">
+      <div className="flex flex-wrap gap-1 bg-card p-1 rounded-lg border border-border w-fit">
         {[
           { id: 'overview', label: 'Overview', icon: TrendingUp },
           { id: 'downline', label: 'My Downline', icon: Users },
@@ -174,7 +176,7 @@ export function PartnerNetwork() {
             onClick={() => setActiveTab(tab.id as 'overview' | 'downline' | 'codes')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === tab.id
                 ? 'bg-slate-900 text-white'
-                : 'text-slate-600 hover:bg-slate-100'
+                : 'text-muted-foreground hover:bg-muted'
               }`}
           >
             <tab.icon className="h-4 w-4" />
@@ -188,39 +190,39 @@ export function PartnerNetwork() {
         <div className="space-y-6">
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white p-4 rounded-xl border border-slate-200">
+            <div className="bg-card p-4 rounded-xl border border-border">
               <div className="flex items-center space-x-2 mb-2">
-                <Users className="h-4 w-4 text-slate-400" />
-                <span className="text-sm text-slate-500">Total Downline</span>
+                <Users className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">Total Downline</span>
               </div>
-              <p className="text-2xl font-semibold text-slate-900">{downline.length}</p>
+              <p className="text-2xl font-semibold text-foreground">{downline.length}</p>
             </div>
-            <div className="bg-white p-4 rounded-xl border border-slate-200">
+            <div className="bg-card p-4 rounded-xl border border-border">
               <div className="flex items-center space-x-2 mb-2">
                 <UserPlus className="h-4 w-4 text-indigo-500" />
-                <span className="text-sm text-slate-500">Partners</span>
+                <span className="text-sm text-muted-foreground">Partners</span>
               </div>
               <p className="text-2xl font-semibold text-indigo-600">{directPartners.length}</p>
             </div>
-            <div className="bg-white p-4 rounded-xl border border-slate-200">
+            <div className="bg-card p-4 rounded-xl border border-border">
               <div className="flex items-center space-x-2 mb-2">
                 <DollarSign className="h-4 w-4 text-emerald-500" />
-                <span className="text-sm text-slate-500">Downline Revenue</span>
+                <span className="text-sm text-muted-foreground">Downline Revenue</span>
               </div>
               <p className="text-2xl font-semibold text-emerald-600">{formatTHB(totalDownlineRevenue)}</p>
             </div>
-            <div className="bg-white p-4 rounded-xl border border-slate-200">
+            <div className="bg-card p-4 rounded-xl border border-border">
               <div className="flex items-center space-x-2 mb-2">
                 <LinkIcon className="h-4 w-4 text-amber-500" />
-                <span className="text-sm text-slate-500">Active Codes</span>
+                <span className="text-sm text-muted-foreground">Active Codes</span>
               </div>
               <p className="text-2xl font-semibold text-amber-600">{activeCodes.length}</p>
             </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-xl border border-slate-200 p-5">
-            <h3 className="font-semibold text-slate-900 mb-4">Quick Actions</h3>
+          <div className="bg-card rounded-xl border border-border p-5">
+            <h3 className="font-semibold text-foreground mb-4">Quick Actions</h3>
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setShowCreateCodeModal(true)}
@@ -231,7 +233,7 @@ export function PartnerNetwork() {
               </button>
               <button
                 onClick={() => setActiveTab('downline')}
-                className="flex items-center space-x-2 px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                className="flex items-center space-x-2 px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors"
               >
                 <Users className="h-4 w-4" />
                 <span>View Downline</span>
@@ -240,36 +242,36 @@ export function PartnerNetwork() {
           </div>
 
           {/* Recent Signups */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="p-5 border-b border-slate-100">
-              <h3 className="font-semibold text-slate-900">Recent Signups</h3>
+          <div className="bg-card rounded-xl border border-border overflow-hidden">
+            <div className="p-5 border-b border-border">
+              <h3 className="font-semibold text-foreground">Recent Signups</h3>
             </div>
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-border">
               {downline.slice(0, 5).map((member) => (
-                <div key={member.id} className="p-4 flex items-center justify-between hover:bg-slate-50">
+                <div key={member.id} className="p-4 flex items-center justify-between hover:bg-muted">
                   <div className="flex items-center space-x-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${member.type === 'partner' ? 'bg-indigo-100' : 'bg-slate-100'
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${member.type === 'partner' ? 'bg-indigo-100' : 'bg-muted'
                       }`}>
-                      <span className={`font-medium ${member.type === 'partner' ? 'text-indigo-600' : 'text-slate-600'}`}>
+                      <span className={`font-medium ${member.type === 'partner' ? 'text-indigo-600' : 'text-muted-foreground'}`}>
                         {(member.name || member.email || '?').charAt(0).toUpperCase()}
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">{member.name || member.email}</p>
-                      <p className="text-sm text-slate-500">{member.email}</p>
+                      <p className="font-medium text-foreground">{member.name || member.email}</p>
+                      <p className="text-sm text-muted-foreground">{member.email}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className={`px-2 py-1 rounded-full text-xs ${member.type === 'partner' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-700'
+                    <span className={`px-2 py-1 rounded-full text-xs ${member.type === 'partner' ? 'bg-indigo-100 text-indigo-700' : 'bg-muted text-foreground'
                       }`}>
                       {member.type === 'partner' ? 'Partner' : 'Customer'}
                     </span>
-                    <p className="text-xs text-slate-400 mt-1">{member.joinedAt}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{member.joinedAt}</p>
                   </div>
                 </div>
               ))}
               {downline.length === 0 && (
-                <div className="p-8 text-center text-slate-500">
+                <div className="p-8 text-center text-muted-foreground">
                   No downline members yet. Create invitation codes to start growing your network!
                 </div>
               )}
@@ -280,34 +282,34 @@ export function PartnerNetwork() {
 
       {/* Downline Tab */}
       {activeTab === 'downline' && (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+        <div className="bg-card rounded-xl border border-border overflow-hidden">
+          <div className="p-5 border-b border-border flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-slate-900">My Downline</h3>
-              <p className="text-sm text-slate-500">{directPartners.length} partners, {directCustomers.length} customers</p>
+              <h3 className="font-semibold text-foreground">My Downline</h3>
+              <p className="text-sm text-muted-foreground">{directPartners.length} partners, {directCustomers.length} customers</p>
             </div>
           </div>
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-border">
             {downline.map((member) => (
               <div key={member.id} className="p-5">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${member.type === 'partner' ? 'bg-indigo-100' : 'bg-slate-100'
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${member.type === 'partner' ? 'bg-indigo-100' : 'bg-muted'
                       }`}>
-                      <span className={`font-medium text-lg ${member.type === 'partner' ? 'text-indigo-600' : 'text-slate-600'}`}>
+                      <span className={`font-medium text-lg ${member.type === 'partner' ? 'text-indigo-600' : 'text-muted-foreground'}`}>
                         {(member.name || member.email || '?').charAt(0).toUpperCase()}
                       </span>
                     </div>
                     <div>
                       <div className="flex items-center space-x-2">
-                        <p className="font-semibold text-slate-900">{member.name || member.email}</p>
-                        <span className={`px-2 py-0.5 rounded-full text-xs ${member.type === 'partner' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-700'
+                        <p className="font-semibold text-foreground">{member.name || member.email}</p>
+                        <span className={`px-2 py-0.5 rounded-full text-xs ${member.type === 'partner' ? 'bg-indigo-100 text-indigo-700' : 'bg-muted text-foreground'
                           }`}>
                           {member.type === 'partner' ? 'Partner' : 'Customer'}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-500">{member.email}</p>
-                      <div className="flex items-center space-x-4 mt-2 text-sm text-slate-400">
+                      <p className="text-sm text-muted-foreground">{member.email}</p>
+                      <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
                         <span className="flex items-center space-x-1">
                           <Calendar className="h-3.5 w-3.5" />
                           <span>Joined {member.joinedAt}</span>
@@ -323,7 +325,7 @@ export function PartnerNetwork() {
                   </div>
                   <button
                     onClick={() => handleEditMember(member)}
-                    className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-600"
+                    className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-muted-foreground"
                   >
                     <Edit2 className="h-4 w-4" />
                   </button>
@@ -332,11 +334,11 @@ export function PartnerNetwork() {
             ))}
             {downline.length === 0 && (
               <div className="p-12 text-center">
-                <Users className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-                <p className="text-slate-500">No downline members yet</p>
+                <Users className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+                <p className="text-muted-foreground">No downline members yet</p>
                 <button
                   onClick={() => setActiveTab('codes')}
-                  className="mt-2 text-slate-900 underline"
+                  className="mt-2 text-foreground underline"
                 >
                   Create invitation codes
                 </button>
@@ -351,8 +353,8 @@ export function PartnerNetwork() {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-slate-900">My Invitation Codes</h3>
-              <p className="text-sm text-slate-500">{myCodes.length} codes, {totalCodeUses} total uses</p>
+              <h3 className="font-semibold text-foreground">My Invitation Codes</h3>
+              <p className="text-sm text-muted-foreground">{myCodes.length} codes, {totalCodeUses} total uses</p>
             </div>
             <button
               onClick={() => setShowCreateCodeModal(true)}
@@ -365,42 +367,42 @@ export function PartnerNetwork() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {myCodes.map((code) => (
-              <div key={code.id} className="bg-white rounded-xl border border-slate-200 p-5">
+              <div key={code.id} className="bg-card rounded-xl border border-border p-5">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-mono font-bold text-slate-900">{code.code}</span>
+                      <span className="text-2xl font-mono font-bold text-foreground">{code.code}</span>
                       <button
                         onClick={() => handleCopyCode(code.code)}
-                        className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+                        className="p-1.5 hover:bg-muted rounded-lg transition-colors"
                       >
                         {copiedCode === code.code ? (
                           <Check className="h-4 w-4 text-emerald-500" />
                         ) : (
-                          <Copy className="h-4 w-4 text-slate-400" />
+                          <Copy className="h-4 w-4 text-muted-foreground" />
                         )}
                       </button>
                     </div>
-                    <p className="text-sm text-slate-500 mt-1">{code.notes || 'No notes'}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{code.notes || 'No notes'}</p>
                   </div>
-                  <span className={`px-2 py-1 rounded-full text-xs ${code.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-700'
+                  <span className={`px-2 py-1 rounded-full text-xs ${code.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-muted text-foreground'
                     }`}>
                     {code.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-100">
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
                   <div>
-                    <p className="text-xs text-slate-400">Uses</p>
-                    <p className="font-semibold text-slate-900">{code.usedCount}/{code.maxUses}</p>
+                    <p className="text-xs text-muted-foreground">Uses</p>
+                    <p className="font-semibold text-foreground">{code.usedCount}/{code.maxUses}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400">Created</p>
-                    <p className="font-semibold text-slate-900">{code.createdAt}</p>
+                    <p className="text-xs text-muted-foreground">Created</p>
+                    <p className="font-semibold text-foreground">{code.createdAt}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400">Status</p>
-                    <div className="w-full bg-slate-100 rounded-full h-2 mt-1.5">
+                    <p className="text-xs text-muted-foreground">Status</p>
+                    <div className="w-full bg-muted rounded-full h-2 mt-1.5">
                       <div
                         className="bg-slate-900 h-2 rounded-full transition-all"
                         style={{ width: `${(code.usedCount / code.maxUses) * 100}%` }}
@@ -413,10 +415,10 @@ export function PartnerNetwork() {
           </div>
 
           {myCodes.length === 0 && (
-            <div className="bg-slate-50 rounded-xl border border-slate-200 p-12 text-center">
-              <LinkIcon className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-              <p className="text-slate-500 mb-2">No invitation codes yet</p>
-              <p className="text-sm text-slate-400">Create codes to invite customers to your network</p>
+            <div className="bg-muted rounded-xl border border-border p-12 text-center">
+              <LinkIcon className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+              <p className="text-muted-foreground mb-2">No invitation codes yet</p>
+              <p className="text-sm text-muted-foreground">Create codes to invite customers to your network</p>
             </div>
           )}
         </div>
@@ -425,12 +427,12 @@ export function PartnerNetwork() {
       {/* Create Code Modal */}
       {showCreateCodeModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
+          <div className="bg-card rounded-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-slate-900">Create Invitation Code</h3>
+              <h3 className="text-lg font-semibold text-foreground">Create Invitation Code</h3>
               <button
                 onClick={() => setShowCreateCodeModal(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg"
+                className="p-2 hover:bg-muted rounded-lg"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -438,7 +440,7 @@ export function PartnerNetwork() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Maximum Uses
                 </label>
                 <input
@@ -447,19 +449,19 @@ export function PartnerNetwork() {
                   max="1000"
                   value={newCodeMaxUses}
                   onChange={(e) => setNewCodeMaxUses(parseInt(e.target.value) || 1)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   Notes (optional)
                 </label>
                 <textarea
                   rows={3}
                   value={newCodeNotes}
                   onChange={(e) => setNewCodeNotes(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                   placeholder="e.g., VIP customers, March promotion..."
                 />
               </div>
@@ -467,7 +469,7 @@ export function PartnerNetwork() {
               <div className="flex justify-end space-x-3 pt-4">
                 <button
                   onClick={() => setShowCreateCodeModal(false)}
-                  className="px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50"
+                  className="px-4 py-2 border border-border rounded-lg hover:bg-muted"
                 >
                   Cancel
                 </button>
@@ -486,29 +488,29 @@ export function PartnerNetwork() {
       {/* Edit Member Modal */}
       {showEditModal && editingMember && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
+          <div className="bg-card rounded-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-slate-900">Edit Member</h3>
+              <h3 className="text-lg font-semibold text-foreground">Edit Member</h3>
               <button
                 onClick={() => setShowEditModal(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg"
+                className="p-2 hover:bg-muted rounded-lg"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center space-x-3 p-4 bg-slate-50 rounded-lg">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${editingMember.type === 'partner' ? 'bg-indigo-100' : 'bg-slate-100'
+              <div className="flex items-center space-x-3 p-4 bg-muted rounded-lg">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${editingMember.type === 'partner' ? 'bg-indigo-100' : 'bg-muted'
                   }`}>
-                  <span className={`font-medium ${editingMember.type === 'partner' ? 'text-indigo-600' : 'text-slate-600'}`}>
+                  <span className={`font-medium ${editingMember.type === 'partner' ? 'text-indigo-600' : 'text-muted-foreground'}`}>
                     {(editingMember.name || editingMember.email || '?').charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900">{editingMember.name || editingMember.email}</p>
-                  <p className="text-sm text-slate-500">{editingMember.email}</p>
-                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs mt-1 ${editingMember.type === 'partner' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-700'
+                  <p className="font-medium text-foreground">{editingMember.name || editingMember.email}</p>
+                  <p className="text-sm text-muted-foreground">{editingMember.email}</p>
+                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs mt-1 ${editingMember.type === 'partner' ? 'bg-indigo-100 text-indigo-700' : 'bg-muted text-foreground'
                     }`}>
                     {editingMember.type === 'partner' ? 'Partner' : 'Customer'}
                   </span>
@@ -517,7 +519,7 @@ export function PartnerNetwork() {
 
               {editingMember.type === 'partner' && (
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                  <label className="block text-sm font-medium text-foreground mb-1.5">
                     Discount Rate (%)
                   </label>
                   <input
@@ -526,18 +528,18 @@ export function PartnerNetwork() {
                     max="50"
                     value={editingMember.discountRate || 15}
                     onChange={(e) => setEditingMember({ ...editingMember, discountRate: parseInt(e.target.value) || 15 })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                   />
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     This is the discount rate this partner receives on purchases
                   </p>
                 </div>
               )}
 
-              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
                 <div>
-                  <p className="font-medium text-slate-900">Member Status</p>
-                  <p className="text-sm text-slate-500">
+                  <p className="font-medium text-foreground">Member Status</p>
+                  <p className="text-sm text-muted-foreground">
                     Currently {editingMember.status}
                   </p>
                 </div>
@@ -555,7 +557,7 @@ export function PartnerNetwork() {
               <div className="flex justify-end space-x-3 pt-4">
                 <button
                   onClick={() => setShowEditModal(false)}
-                  className="px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50"
+                  className="px-4 py-2 border border-border rounded-lg hover:bg-muted"
                 >
                   Cancel
                 </button>

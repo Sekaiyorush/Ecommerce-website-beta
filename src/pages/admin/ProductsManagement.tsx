@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { type Product, type ProductVariant } from '@/data/products';
 import { useDatabase } from '@/context/DatabaseContext';
+import { useToast } from '@/components/ui/useToast';
 import { formatTHB } from '@/lib/formatPrice';
 import {
   Plus,
@@ -39,6 +40,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { BulkActionToolbar } from '@/components/admin/BulkActionToolbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SEO } from '@/components/SEO';
 
 interface VariantFormRow {
   sku: string;
@@ -64,6 +66,7 @@ interface ProductFormData {
 
 export function ProductsManagement() {
   const { db, addProduct: contextAddProduct, updateProduct: contextUpdateProduct, deleteProduct: contextDeleteProduct } = useDatabase();
+  const { addToast } = useToast();
   const productList = db.products;
   const dynamicCategories = Array.from(new Set(productList.map(p => p.category))).sort();
   
@@ -244,7 +247,7 @@ export function ProductsManagement() {
     return { label: 'In Stock', variant: 'default' as const, icon: <CheckCircle2 className="h-3 w-3" /> };
   };
 
-  const generateQRData = (product: Product) => {
+  const generateQRData = useCallback((product: Product) => {
     return JSON.stringify({
       id: product.id,
       sku: product.sku,
@@ -253,10 +256,11 @@ export function ProductsManagement() {
       manufactured: new Date().toISOString().split('T')[0],
       purity: product.purity,
     });
-  };
+  }, []);
 
   return (
     <div className="space-y-6">
+      <SEO title="Products | Admin" description="Manage product catalog, pricing, and details." />
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-foreground">Products Management</h2>
@@ -326,7 +330,7 @@ export function ProductsManagement() {
             {
               label: 'Export CSV',
               icon: <ArrowUpDown className="h-4 w-4" />,
-              onClick: () => alert('Export feature coming soon'),
+              onClick: () => addToast({ type: 'info', message: 'Coming Soon: Export feature coming soon' }),
             }
           ]}
         />

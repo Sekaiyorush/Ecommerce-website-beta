@@ -72,6 +72,7 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
             <img
               src={product.imageUrl}
               alt={product.name}
+              loading="lazy"
               className={`w-full h-full object-contain p-12 transition-all duration-1000 ease-out ${isHovered ? 'scale-110 rotate-1' : 'scale-100'}`}
               onLoad={() => setImageLoaded(true)}
             />

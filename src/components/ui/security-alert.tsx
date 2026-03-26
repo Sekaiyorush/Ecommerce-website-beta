@@ -11,7 +11,7 @@ interface SecurityAlertProps {
 }
 
 const variantConfig: Record<AlertVariant, {
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   border: string;
   bg: string;
   iconColor: string;

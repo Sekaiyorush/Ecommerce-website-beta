@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -10,6 +10,19 @@ import { Menu, X, ShoppingCart, User, LogOut, LayoutDashboard, Globe, Sun, Moon 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close user dropdown on outside click
+  useEffect(() => {
+    if (!isUserMenuOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [isUserMenuOpen]);
   const { toggleCart, cartCount } = useCart();
   const { language, toggleLanguage } = useLanguage();
   const { isAuthenticated, isAdmin, isPartner, logout } = useAuth();
@@ -28,7 +41,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-[#D4AF37]/10 transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full bg-card/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-[#D4AF37]/10 transition-all duration-300">
       <div className="container mx-auto flex h-24 items-center justify-between px-6 md:px-12">
         {/* Logo */}
         <Link to="/" className="flex items-center group relative">
@@ -46,7 +59,7 @@ export function Header() {
             <Link
               key={item}
               to={`/${item.toLowerCase()}`}
-              className="relative text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 hover:text-[#D4AF37] transition-all duration-500 group"
+              className="relative text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground hover:text-[#D4AF37] transition-all duration-500 group"
             >
               <span>{item}</span>
               <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-[#D4AF37] transition-all duration-500 group-hover:w-full" />
@@ -62,7 +75,8 @@ export function Header() {
         <div className="flex items-center space-x-6">
           <button
             onClick={toggleLanguage}
-            className="hidden sm:flex items-center space-x-2 text-[10px] font-bold tracking-[0.2em] text-slate-400 hover:text-gold-500 transition-colors duration-500 uppercase"
+            aria-label="Switch language"
+            className="hidden sm:flex items-center space-x-2 text-[10px] font-bold tracking-[0.2em] text-muted-foreground hover:text-gold-500 transition-colors duration-500 uppercase"
             title="Switch language"
           >
             <Globe className="h-3.5 w-3.5" />
@@ -72,7 +86,7 @@ export function Header() {
           <button
             onClick={toggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="p-2 text-slate-400 hover:text-[#D4AF37] transition-colors duration-300"
+            className="p-2 text-muted-foreground hover:text-[#D4AF37] transition-colors duration-300"
           >
             {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
@@ -81,7 +95,7 @@ export function Header() {
             <button
               onClick={toggleCart}
               aria-label={`Shopping cart with ${cartCount} items`}
-              className="relative p-2.5 text-slate-400 hover:text-gold-500 transition-all duration-300 hover:scale-110"
+              className="relative p-2.5 text-muted-foreground hover:text-gold-500 transition-all duration-300 hover:scale-110"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
@@ -95,7 +109,7 @@ export function Header() {
           {isAuthenticated ? (
             <div className="flex items-center space-x-6">
               {/* User Menu */}
-              <div className="relative">
+              <div className="relative" ref={userMenuRef}>
                 <button
                   aria-label="User account menu"
                   aria-expanded={isUserMenuOpen}
@@ -112,19 +126,19 @@ export function Header() {
                     <div className="absolute top-0 left-0 w-full h-[2px] bg-gold-gradient" />
                     <Link
                       to={getDashboardLink()}
-                      className="flex items-center space-x-3 px-4 py-4 text-[10px] font-bold tracking-widest text-slate-600 dark:text-slate-300 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all uppercase"
+                      className="flex items-center space-x-3 px-4 py-4 text-[10px] font-bold tracking-widest text-muted-foreground dark:text-slate-300 hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-all uppercase"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <LayoutDashboard className="h-4 w-4 opacity-70" />
                       <span>{getDashboardLabel()}</span>
                     </Link>
-                    <div className="h-[1px] bg-slate-100 dark:bg-slate-700 mx-2" />
+                    <div className="h-[1px] bg-muted dark:bg-slate-700 mx-2" />
                     <button
                       onClick={() => {
                         logout();
                         setIsUserMenuOpen(false);
                       }}
-                      className="flex items-center space-x-3 w-full px-4 py-4 text-[10px] font-bold tracking-widest text-[#111] dark:text-slate-200 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all uppercase group relative"
+                      className="flex items-center space-x-3 w-full px-4 py-4 text-[10px] font-bold tracking-widest text-[#111] dark:text-slate-200 hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-all uppercase group relative"
                     >
                       <LogOut className="h-4 w-4 opacity-70" />
                       <span>Logout</span>
@@ -147,7 +161,7 @@ export function Header() {
         <button
           aria-label="Toggle mobile menu"
           aria-expanded={isMenuOpen}
-          className="md:hidden p-2 text-slate-600 hover:text-slate-900"
+          className="md:hidden p-2 text-muted-foreground hover:text-foreground"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -163,28 +177,28 @@ export function Header() {
           <nav aria-label="Mobile Navigation" className="flex flex-col py-4">
             <Link
               to="/products"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               Catalog
             </Link>
             <Link
               to="/about"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               About
             </Link>
             <Link
               to="/research"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               Research
             </Link>
             <Link
               to="/contact"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-slate-500 dark:text-slate-400 hover:text-[#D4AF37] hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
@@ -205,7 +219,7 @@ export function Header() {
                     logout();
                     setIsMenuOpen(false);
                   }}
-                  className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.3em] uppercase text-slate-900 dark:text-slate-200 border-t border-[#D4AF37]/5"
+                  className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.3em] uppercase text-foreground dark:text-slate-200 border-t border-[#D4AF37]/5"
                 >
                   Sign Out
                 </button>
@@ -214,7 +228,7 @@ export function Header() {
               <div className="p-6">
                 <Link
                   to="/login"
-                  className="block w-full py-4 bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 text-center text-[10px] font-bold tracking-[0.3em] uppercase"
+                  className="block w-full py-4 bg-[#111] dark:bg-gold-500 text-white dark:text-foreground text-center text-[10px] font-bold tracking-[0.3em] uppercase"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Sign In

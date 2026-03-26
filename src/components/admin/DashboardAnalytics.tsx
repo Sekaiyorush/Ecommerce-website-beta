@@ -163,7 +163,7 @@ export function DashboardAnalytics() {
       case 'inventory': return <AlertCircle className="h-4 w-4 text-amber-500" />;
       case 'user': return <Users className="h-4 w-4 text-blue-500" />;
       case 'partner': return <CheckCircle className="h-4 w-4 text-purple-500" />;
-      default: return <Clock className="h-4 w-4 text-slate-400" />;
+      default: return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
@@ -187,10 +187,10 @@ export function DashboardAnalytics() {
       {/* Header with notifications */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">Dashboard Overview</h2>
-          <p className="text-slate-500">Real-time business insights</p>
+          <h2 className="text-xl font-semibold text-foreground">Dashboard Overview</h2>
+          <p className="text-muted-foreground">Real-time business insights</p>
         </div>
-        <button className="relative p-2 text-slate-600 hover:text-gold-600 hover:bg-gold-50 rounded-xl transition-colors">
+        <button className="relative p-2 text-muted-foreground hover:text-gold-600 hover:bg-gold-50 rounded-xl transition-colors">
           <Bell className="h-6 w-6" />
           {unreadCount > 0 && (
             <span className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
@@ -203,11 +203,11 @@ export function DashboardAnalytics() {
       {/* Stats Grid — Clean */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Revenue */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-500 mb-1">30-Day Revenue</p>
-              <p className="text-2xl font-semibold text-slate-900">{formatTHB(stats.totalRevenue)}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">30-Day Revenue</p>
+              <p className="text-2xl font-semibold text-foreground">{formatTHB(stats.totalRevenue)}</p>
             </div>
             <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
               <DollarSign className="h-5 w-5 text-emerald-600" />
@@ -216,23 +216,23 @@ export function DashboardAnalytics() {
           {stats.revenueChange === 0 && stats.totalRevenue > 0 ? (
             <div className="flex items-center text-sm text-blue-600">
               <span className="px-2 py-0.5 bg-blue-100 rounded-full text-xs font-medium">New</span>
-              <span className="text-slate-400 ml-2">first month</span>
+              <span className="text-muted-foreground ml-2">first month</span>
             </div>
           ) : (
             <div className={`flex items-center text-sm ${stats.revenueChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
               {stats.revenueChange >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
               <span className="font-medium">{Math.abs(stats.revenueChange).toFixed(1)}%</span>
-              <span className="text-slate-400 ml-1">vs last month</span>
+              <span className="text-muted-foreground ml-1">vs last month</span>
             </div>
           )}
         </div>
 
         {/* Orders */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-500 mb-1">Orders</p>
-              <p className="text-2xl font-semibold text-slate-900">{stats.totalOrders}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Orders</p>
+              <p className="text-2xl font-semibold text-foreground">{stats.totalOrders}</p>
             </div>
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
               <Package className="h-5 w-5 text-blue-600" />
@@ -241,23 +241,23 @@ export function DashboardAnalytics() {
           {stats.ordersChange === 0 && stats.totalOrders > 0 ? (
             <div className="flex items-center text-sm text-blue-600">
               <span className="px-2 py-0.5 bg-blue-100 rounded-full text-xs font-medium">New</span>
-              <span className="text-slate-400 ml-2">first month</span>
+              <span className="text-muted-foreground ml-2">first month</span>
             </div>
           ) : (
             <div className={`flex items-center text-sm ${stats.ordersChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
               {stats.ordersChange >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
               <span className="font-medium">{Math.abs(stats.ordersChange).toFixed(1)}%</span>
-              <span className="text-slate-400 ml-1">vs last month</span>
+              <span className="text-muted-foreground ml-1">vs last month</span>
             </div>
           )}
         </div>
 
         {/* New Customers */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200">
+        <div className="bg-card p-6 rounded-xl border border-border">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-500 mb-1">New Customers</p>
-              <p className="text-2xl font-semibold text-slate-900">{stats.newCustomers}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">New Customers</p>
+              <p className="text-2xl font-semibold text-foreground">{stats.newCustomers}</p>
             </div>
             <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
               <Users className="h-5 w-5 text-purple-600" />
@@ -266,29 +266,29 @@ export function DashboardAnalytics() {
           {stats.customersChange === 0 && stats.newCustomers > 0 ? (
             <div className="flex items-center text-sm text-blue-600">
               <span className="px-2 py-0.5 bg-blue-100 rounded-full text-xs font-medium">New</span>
-              <span className="text-slate-400 ml-2">first month</span>
+              <span className="text-muted-foreground ml-2">first month</span>
             </div>
           ) : (
             <div className={`flex items-center text-sm ${stats.customersChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
               {stats.customersChange >= 0 ? <TrendingUp className="h-4 w-4 mr-1" /> : <TrendingDown className="h-4 w-4 mr-1" />}
               <span className="font-medium">{Math.abs(stats.customersChange).toFixed(1)}%</span>
-              <span className="text-slate-400 ml-1">vs last month</span>
+              <span className="text-muted-foreground ml-1">vs last month</span>
             </div>
           )}
         </div>
 
         {/* Low Stock Alert */}
-        <div className={`p-6 rounded-xl border ${stats.lowStockCount > 0 ? 'bg-amber-50 border-amber-200' : 'bg-white border-slate-200'}`}>
+        <div className={`p-6 rounded-xl border ${stats.lowStockCount > 0 ? 'bg-amber-50 border-amber-200' : 'bg-card border-border'}`}>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-sm font-medium text-slate-500 mb-1">Low Stock Alerts</p>
-              <p className={`text-2xl font-semibold ${stats.lowStockCount > 0 ? 'text-amber-600' : 'text-slate-900'}`}>{stats.lowStockCount}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-1">Low Stock Alerts</p>
+              <p className={`text-2xl font-semibold ${stats.lowStockCount > 0 ? 'text-amber-600' : 'text-foreground'}`}>{stats.lowStockCount}</p>
             </div>
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${stats.lowStockCount > 0 ? 'bg-amber-100' : 'bg-slate-100'}`}>
-              <AlertCircle className={`h-5 w-5 ${stats.lowStockCount > 0 ? 'text-amber-600' : 'text-slate-600'}`} />
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${stats.lowStockCount > 0 ? 'bg-amber-100' : 'bg-muted'}`}>
+              <AlertCircle className={`h-5 w-5 ${stats.lowStockCount > 0 ? 'text-amber-600' : 'text-muted-foreground'}`} />
             </div>
           </div>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-muted-foreground">
             {stats.lowStockCount > 0 ? 'Products need attention' : 'All stock levels healthy'}
           </p>
         </div>
@@ -297,23 +297,23 @@ export function DashboardAnalytics() {
       {/* Activity Feed & Quick Actions — Clean */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6">
+        <div className="lg:col-span-2 bg-card rounded-xl border border-border p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-slate-900">Recent Activity</h3>
-            <Link to="/admin/orders" className="text-sm text-slate-600 hover:text-slate-900">
+            <h3 className="text-lg font-semibold text-foreground">Recent Activity</h3>
+            <Link to="/admin/orders" className="text-sm text-muted-foreground hover:text-foreground">
               View all →
             </Link>
           </div>
           <div className="space-y-2">
             {activities.length > 0 ? activities.map((activity) => (
-              <div key={activity.id} className={`flex items-center justify-between p-3 rounded-lg ${activity.read ? 'bg-slate-50' : 'bg-slate-100'}`}>
+              <div key={activity.id} className={`flex items-center justify-between p-3 rounded-lg ${activity.read ? 'bg-muted' : 'bg-muted'}`}>
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center border border-slate-200">
+                  <div className="w-8 h-8 bg-card rounded-lg flex items-center justify-center border border-border">
                     {getActivityIcon(activity.type)}
                   </div>
                   <div>
-                    <p className="font-medium text-slate-900 text-sm">{activity.message}</p>
-                    <p className="text-sm text-slate-500">{formatTimeAgo(activity.timestamp)}</p>
+                    <p className="font-medium text-foreground text-sm">{activity.message}</p>
+                    <p className="text-sm text-muted-foreground">{formatTimeAgo(activity.timestamp)}</p>
                   </div>
                 </div>
                 {!activity.read && (
@@ -321,32 +321,32 @@ export function DashboardAnalytics() {
                 )}
               </div>
             )) : (
-              <p className="text-slate-500 text-center py-8">No recent activity</p>
+              <p className="text-muted-foreground text-center py-8">No recent activity</p>
             )}
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-6">Quick Actions</h3>
+        <div className="bg-card rounded-xl border border-border p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-6">Quick Actions</h3>
           <div className="space-y-2">
-            <Link to="/admin/products/new" className="flex items-center space-x-3 p-3 hover:bg-slate-50 rounded-lg transition-colors">
-              <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
-                <Package className="h-4 w-4 text-slate-600" />
+            <Link to="/admin/products/new" className="flex items-center space-x-3 p-3 hover:bg-muted rounded-lg transition-colors">
+              <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                <Package className="h-4 w-4 text-muted-foreground" />
               </div>
-              <span className="font-medium text-slate-700">Add New Product</span>
+              <span className="font-medium text-foreground">Add New Product</span>
             </Link>
-            <Link to="/admin/orders" className="flex items-center space-x-3 p-3 hover:bg-slate-50 rounded-lg transition-colors">
-              <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
-                <DollarSign className="h-4 w-4 text-slate-600" />
+            <Link to="/admin/orders" className="flex items-center space-x-3 p-3 hover:bg-muted rounded-lg transition-colors">
+              <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
               </div>
-              <span className="font-medium text-slate-700">View Orders</span>
+              <span className="font-medium text-foreground">View Orders</span>
             </Link>
-            <Link to="/admin/invitation-codes" className="flex items-center space-x-3 p-3 hover:bg-slate-50 rounded-lg transition-colors">
-              <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
-                <Users className="h-4 w-4 text-slate-600" />
+            <Link to="/admin/invitation-codes" className="flex items-center space-x-3 p-3 hover:bg-muted rounded-lg transition-colors">
+              <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                <Users className="h-4 w-4 text-muted-foreground" />
               </div>
-              <span className="font-medium text-slate-700">Generate Invite Code</span>
+              <span className="font-medium text-foreground">Generate Invite Code</span>
             </Link>
             {stats.lowStockCount > 0 && (
               <Link to="/admin/inventory" className="flex items-center space-x-3 p-3 bg-amber-50 hover:bg-amber-100 rounded-lg transition-colors">

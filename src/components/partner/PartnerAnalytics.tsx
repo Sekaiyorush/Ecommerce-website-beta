@@ -135,7 +135,7 @@ export function PartnerAnalytics() {
       case 'commission': return <DollarSign className="h-4 w-4 text-gold-500" />;
       case 'network': return <Users className="h-4 w-4 text-blue-500" />;
       case 'system': return <AlertCircle className="h-4 w-4 text-amber-500" />;
-      default: return <Clock className="h-4 w-4 text-slate-400" />;
+      default: return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
@@ -155,11 +155,11 @@ export function PartnerAnalytics() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">Performance Analytics</h2>
-          <p className="text-slate-500">Track your growth and purchases</p>
+          <h2 className="text-xl font-semibold text-foreground">Performance Analytics</h2>
+          <p className="text-muted-foreground">Track your growth and purchases</p>
         </div>
         <div className="flex items-center space-x-3">
-          <button className="relative p-2 text-slate-600 hover:text-gold-600 hover:bg-gold-50 rounded-xl transition-colors">
+          <button className="relative p-2 text-muted-foreground hover:text-gold-600 hover:bg-gold-50 rounded-xl transition-colors">
             <Bell className="h-6 w-6" />
             {unreadCount > 0 && (
               <span className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
@@ -182,8 +182,8 @@ export function PartnerAnalytics() {
         <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Total Purchases</p>
-              <p className="text-3xl font-serif text-slate-900">{formatTHB(stats.purchaseVolume)}</p>
+              <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Total Purchases</p>
+              <p className="text-3xl font-serif text-foreground">{formatTHB(stats.purchaseVolume)}</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
               <ShoppingBag className="h-6 w-6 text-white" />
@@ -192,7 +192,7 @@ export function PartnerAnalytics() {
           <div className={`flex items-center text-sm ${stats.purchaseChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             <TrendingUp className={`h-4 w-4 mr-1 ${stats.purchaseChange < 0 && 'rotate-180'}`} />
             <span className="font-medium">{Math.abs(stats.purchaseChange).toFixed(1)}%</span>
-            <span className="text-slate-400 ml-1">vs last month</span>
+            <span className="text-muted-foreground ml-1">vs last month</span>
           </div>
         </div>
 
@@ -200,8 +200,8 @@ export function PartnerAnalytics() {
         <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Network Size</p>
-              <p className="text-3xl font-serif text-slate-900">{stats.networkSize}</p>
+              <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Network Size</p>
+              <p className="text-3xl font-serif text-foreground">{stats.networkSize}</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
               <Users className="h-6 w-6 text-white" />
@@ -210,7 +210,7 @@ export function PartnerAnalytics() {
           <div className={`flex items-center text-sm ${stats.networkGrowth >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             <TrendingUp className={`h-4 w-4 mr-1 ${stats.networkGrowth < 0 && 'rotate-180'}`} />
             <span className="font-medium">{Math.abs(stats.networkGrowth).toFixed(1)}%</span>
-            <span className="text-slate-400 ml-1">growth</span>
+            <span className="text-muted-foreground ml-1">growth</span>
           </div>
         </div>
 
@@ -218,8 +218,8 @@ export function PartnerAnalytics() {
         <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Monthly Orders</p>
-              <p className="text-3xl font-serif text-slate-900">{stats.monthlyOrders}</p>
+              <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Monthly Orders</p>
+              <p className="text-3xl font-serif text-foreground">{stats.monthlyOrders}</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/20">
               <ShoppingBag className="h-6 w-6 text-white" />
@@ -228,7 +228,7 @@ export function PartnerAnalytics() {
           <div className={`flex items-center text-sm ${stats.ordersChange >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
             <TrendingUp className={`h-4 w-4 mr-1 ${stats.ordersChange < 0 && 'rotate-180'}`} />
             <span className="font-medium">{Math.abs(stats.ordersChange).toFixed(1)}%</span>
-            <span className="text-slate-400 ml-1">vs last month</span>
+            <span className="text-muted-foreground ml-1">vs last month</span>
           </div>
         </div>
 
@@ -236,14 +236,14 @@ export function PartnerAnalytics() {
         <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Active Rate</p>
-              <p className="text-3xl font-serif text-slate-900">{stats.conversionRate.toFixed(1)}%</p>
+              <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Active Rate</p>
+              <p className="text-3xl font-serif text-foreground">{stats.conversionRate.toFixed(1)}%</p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl flex items-center justify-center shadow-lg shadow-gold-500/20">
               <CheckCircle2 className="h-6 w-6 text-white" />
             </div>
           </div>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-muted-foreground">
             {stats.conversionRate >= 50 ? 'Excellent performance!' : 'Keep recruiting!'}
           </p>
         </div>
@@ -252,7 +252,7 @@ export function PartnerAnalytics() {
       {/* Recent Notifications */}
       <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-gold-200/50 p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-serif text-xl tracking-tight text-slate-900">Recent Updates</h3>
+          <h3 className="font-serif text-xl tracking-tight text-foreground">Recent Updates</h3>
           <button className="text-sm text-gold-600 hover:text-gold-700 font-medium">
             Mark all read
           </button>
@@ -261,15 +261,15 @@ export function PartnerAnalytics() {
           {notifications.length > 0 ? notifications.map((notification) => (
             <div 
               key={notification.id} 
-              className={`flex items-center justify-between p-4 rounded-xl transition-colors ${notification.read ? 'bg-slate-50' : 'bg-gold-50/50 border border-gold-100/50'}`}
+              className={`flex items-center justify-between p-4 rounded-xl transition-colors ${notification.read ? 'bg-muted' : 'bg-gold-50/50 border border-gold-100/50'}`}
             >
               <div className="flex items-center space-x-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${notification.read ? 'bg-white' : 'bg-white shadow-sm'}`}>
                   {getNotificationIcon(notification.type)}
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900">{notification.message}</p>
-                  <p className="text-sm text-slate-500">{formatTimeAgo(notification.timestamp)}</p>
+                  <p className="font-medium text-foreground">{notification.message}</p>
+                  <p className="text-sm text-muted-foreground">{formatTimeAgo(notification.timestamp)}</p>
                 </div>
               </div>
               {!notification.read && (
@@ -277,7 +277,7 @@ export function PartnerAnalytics() {
               )}
             </div>
           )) : (
-            <p className="text-slate-500 text-center py-8">No new notifications</p>
+            <p className="text-muted-foreground text-center py-8">No new notifications</p>
           )}
         </div>
       </div>

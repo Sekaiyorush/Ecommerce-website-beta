@@ -1,15 +1,18 @@
+import { SEO } from '@/components/SEO';
+
 export function Terms() {
     return (
-        <div className="min-h-screen bg-white py-16 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_80%)] pointer-events-none z-0" />
+        <div className="min-h-screen bg-background py-16 relative overflow-hidden">
+            <SEO title="Terms of Service" description="Read the terms and conditions governing your use of Golden Tier Peptide products and services." />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.03)_0%,_transparent_80%)] pointer-events-none z-0" />
 
             <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
                 <div className="text-center mb-16">
                     <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C] mb-4 block">Legal</span>
-                    <h1 className="text-4xl md:text-5xl font-serif text-slate-900 tracking-tight">Terms of Service</h1>
+                    <h1 className="text-4xl md:text-5xl font-serif text-foreground tracking-tight">Terms of Service</h1>
                 </div>
 
-                <div className="bg-white border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)] prose prose-slate max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h3:text-2xl prose-h3:text-slate-900 prose-h3:mb-6 prose-p:text-slate-500 prose-p:font-light prose-p:leading-relaxed prose-p:tracking-wide prose-strong:text-slate-800 prose-strong:font-semibold">
+                <div className="bg-card border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)] prose prose-slate max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h3:text-2xl prose-h3:text-foreground prose-h3:mb-6 prose-p:text-slate-500 prose-p:font-light prose-p:leading-relaxed prose-p:tracking-wide prose-strong:text-slate-800 prose-strong:font-semibold">
                     <h3 className="flex items-center gap-4">
                         <span className="w-10 h-px bg-[#D4AF37] inline-block" />
                         1. Exclusive Research Applications

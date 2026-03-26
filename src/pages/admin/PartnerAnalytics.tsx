@@ -14,6 +14,7 @@ import {
   Target,
   UserPlus
 } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 interface PartnerPerformance {
   id: string;
@@ -123,24 +124,25 @@ export function PartnerAnalytics() {
 
   return (
     <div className="space-y-6">
+      <SEO title="Partner Analytics | Admin" description="View partner performance metrics and analytics." />
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">Partner Analytics</h2>
-          <p className="text-slate-500">Performance metrics and insights for your partner network</p>
+          <h2 className="text-2xl font-semibold text-foreground">Partner Analytics</h2>
+          <p className="text-muted-foreground">Performance metrics and insights for your partner network</p>
         </div>
         <div className="flex items-center space-x-3">
           <select
             value={timeRange}
             onChange={(e) => setTimeRange(e.target.value as '7d' | '30d' | '90d' | 'all')}
-            className="px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+            className="px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
           >
             <option value="7d">Last 7 days</option>
             <option value="30d">Last 30 days</option>
             <option value="90d">Last 90 days</option>
             <option value="all">All time</option>
           </select>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50">
+          <button className="flex items-center space-x-2 px-4 py-2 border border-border rounded-lg hover:bg-muted">
             <Download className="h-4 w-4" />
             <span>Export</span>
           </button>
@@ -149,34 +151,34 @@ export function PartnerAnalytics() {
 
       {/* Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
             <DollarSign className="h-4 w-4 text-emerald-500" />
-            <span className="text-sm text-slate-500">Partner Revenue</span>
+            <span className="text-sm text-muted-foreground">Partner Revenue</span>
           </div>
-          <p className="text-2xl font-semibold text-slate-900">{formatTHB(totalPartnerRevenue)}</p>
+          <p className="text-2xl font-semibold text-foreground">{formatTHB(totalPartnerRevenue)}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
             <Users className="h-4 w-4 text-indigo-500" />
-            <span className="text-sm text-slate-500">Network Size</span>
+            <span className="text-sm text-muted-foreground">Network Size</span>
           </div>
-          <p className="text-2xl font-semibold text-slate-900">{totalNetworkSize}</p>
+          <p className="text-2xl font-semibold text-foreground">{totalNetworkSize}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
             <UserPlus className="h-4 w-4 text-amber-500" />
-            <span className="text-sm text-slate-500">Customer Signups</span>
+            <span className="text-sm text-muted-foreground">Customer Signups</span>
           </div>
-          <p className="text-2xl font-semibold text-slate-900">{totalCustomerSignups}</p>
+          <p className="text-2xl font-semibold text-foreground">{totalCustomerSignups}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
             <Target className="h-4 w-4 text-blue-500" />
-            <span className="text-sm text-slate-500">Avg Conversion</span>
+            <span className="text-sm text-muted-foreground">Avg Conversion</span>
           </div>
-          <p className="text-2xl font-semibold text-slate-900">{avgConversionRate}%</p>
-          <p className="text-xs text-slate-400 mt-1">Industry avg: 15%</p>
+          <p className="text-2xl font-semibold text-foreground">{avgConversionRate}%</p>
+          <p className="text-xs text-muted-foreground mt-1">Industry avg: 15%</p>
         </div>
       </div>
 
@@ -220,17 +222,17 @@ export function PartnerAnalytics() {
       </div>
 
       {/* Top Performers */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="p-5 border-b border-slate-100">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <div className="p-5 border-b border-border">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Award className="h-5 w-5 text-amber-500" />
-              <h3 className="font-semibold text-slate-900">Top Performers</h3>
+              <h3 className="font-semibold text-foreground">Top Performers</h3>
             </div>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'revenue' | 'network' | 'growth')}
-              className="text-sm px-3 py-1.5 border border-slate-200 rounded-lg"
+              className="text-sm px-3 py-1.5 border border-border rounded-lg"
             >
               <option value="revenue">By Revenue</option>
               <option value="network">By Network Size</option>
@@ -238,14 +240,14 @@ export function PartnerAnalytics() {
             </select>
           </div>
         </div>
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-border">
           {topPerformers.map((partner, index) => (
-            <div key={partner.id} className="p-5 flex items-center justify-between hover:bg-slate-50">
+            <div key={partner.id} className="p-5 flex items-center justify-between hover:bg-muted">
               <div className="flex items-center space-x-4">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${index === 0 ? 'bg-amber-100 text-amber-700' :
-                  index === 1 ? 'bg-slate-200 text-slate-700' :
+                  index === 1 ? 'bg-muted text-foreground' :
                     index === 2 ? 'bg-orange-100 text-orange-700' :
-                      'bg-slate-100 text-slate-600'
+                      'bg-muted text-muted-foreground'
                   }`}>
                   {index + 1}
                 </div>
@@ -253,21 +255,21 @@ export function PartnerAnalytics() {
                   <span className="text-indigo-600 font-medium">{(partner.name || partner.email || '?').charAt(0).toUpperCase()}</span>
                 </div>
                 <div>
-                  <p className="font-medium text-slate-900">{partner.name || partner.email}</p>
-                  <p className="text-sm text-slate-500">{partner.company || ''}</p>
+                  <p className="font-medium text-foreground">{partner.name || partner.email}</p>
+                  <p className="text-sm text-muted-foreground">{partner.company || ''}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-8">
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Revenue</p>
-                  <p className="font-semibold text-slate-900">{formatTHB(partner.totalPurchases)}</p>
+                  <p className="text-sm text-muted-foreground">Revenue</p>
+                  <p className="font-semibold text-foreground">{formatTHB(partner.totalPurchases)}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Network</p>
-                  <p className="font-semibold text-slate-900">{partner.networkSize}</p>
+                  <p className="text-sm text-muted-foreground">Network</p>
+                  <p className="font-semibold text-foreground">{partner.networkSize}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Growth</p>
+                  <p className="text-sm text-muted-foreground">Growth</p>
                   <div className={`flex items-center justify-end space-x-1 ${partner.growth >= 0 ? 'text-emerald-600' : 'text-red-600'
                     }`}>
                     {partner.growth >= 0 ? (
@@ -285,34 +287,34 @@ export function PartnerAnalytics() {
       </div>
 
       {/* Performance Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="p-5 border-b border-slate-100">
-          <h3 className="font-semibold text-slate-900">All Partners Performance</h3>
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <div className="p-5 border-b border-border">
+          <h3 className="font-semibold text-foreground">All Partners Performance</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-muted border-b border-border">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Partner</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-slate-700">Discount</th>
-                <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Purchases</th>
-                <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Network</th>
-                <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Signups</th>
-                <th className="px-4 py-3 text-right text-sm font-medium text-slate-700">Conversion</th>
-                <th className="px-4 py-3 text-center text-sm font-medium text-slate-700">Status</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Partner</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Discount</th>
+                <th className="px-4 py-3 text-right text-sm font-medium text-foreground">Purchases</th>
+                <th className="px-4 py-3 text-right text-sm font-medium text-foreground">Network</th>
+                <th className="px-4 py-3 text-right text-sm font-medium text-foreground">Signups</th>
+                <th className="px-4 py-3 text-right text-sm font-medium text-foreground">Conversion</th>
+                <th className="px-4 py-3 text-center text-sm font-medium text-foreground">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border">
               {sortedData.map((partner) => (
-                <tr key={partner.id} className="hover:bg-slate-50">
+                <tr key={partner.id} className="hover:bg-muted">
                   <td className="px-4 py-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center">
+                      <div className="w-9 h-9 bg-muted rounded-full flex items-center justify-center">
                         <span className="font-medium text-sm">{(partner.name || partner.email || '?').charAt(0).toUpperCase()}</span>
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900">{partner.name || partner.email}</p>
-                        <p className="text-xs text-slate-500">{partner.company || ''}</p>
+                        <p className="font-medium text-foreground">{partner.name || partner.email}</p>
+                        <p className="text-xs text-muted-foreground">{partner.company || ''}</p>
                       </div>
                     </div>
                   </td>
@@ -332,7 +334,7 @@ export function PartnerAnalytics() {
                   </td>
                   <td className="px-4 py-4 text-right">
                     <div className="flex items-center justify-end space-x-2">
-                      <div className="w-16 bg-slate-100 rounded-full h-2">
+                      <div className="w-16 bg-muted rounded-full h-2">
                         <div
                           className="bg-emerald-500 h-2 rounded-full"
                           style={{ width: `${partner.conversionRate}%` }}
@@ -344,7 +346,7 @@ export function PartnerAnalytics() {
                   <td className="px-4 py-4 text-center">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${partner.status === 'active' ? 'bg-emerald-100 text-emerald-700' :
                       partner.status === 'pending' ? 'bg-amber-100 text-amber-700' :
-                        'bg-slate-100 text-slate-700'
+                        'bg-muted text-foreground'
                       }`}>
                       {partner.status}
                     </span>

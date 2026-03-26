@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDatabase } from '@/context/DatabaseContext';
 import { Save, AlertCircle } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 export function SettingsManagement() {
     const { db, updateSiteSettings } = useDatabase();
@@ -18,7 +19,7 @@ export function SettingsManagement() {
     });
 
     // Sync form data when external settings are loaded/changed
-    /* eslint-disable react-hooks/set-state-in-effect */
+     
     useEffect(() => {
         if (db.siteSettings) {
             setFormData({
@@ -32,7 +33,7 @@ export function SettingsManagement() {
             });
         }
     }, [db.siteSettings]);
-    /* eslint-enable react-hooks/set-state-in-effect */
+     
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,6 +51,7 @@ export function SettingsManagement() {
 
     return (
         <div className="space-y-6 max-w-4xl">
+            <SEO title="Settings | Admin" description="Configure site settings and business information." />
             <div className="flex items-center justify-between">
                 <div>
                     <h2 className="text-2xl font-bold text-foreground">Global Site Settings</h2>

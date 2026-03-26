@@ -4,7 +4,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 export function About() {
     return (
-        <div className="min-h-screen bg-white relative overflow-hidden">
+        <div className="min-h-screen bg-card relative overflow-hidden">
             {/* Luxury Background Hint */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_80%)] pointer-events-none z-0" />
 
@@ -23,7 +23,7 @@ export function About() {
                     <div className="max-w-3xl">
                         <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4AF37] mb-6 block">Our Purpose</span>
                         <h1 className="text-5xl md:text-7xl font-serif mb-8 tracking-tight leading-tight">Elevating Scientific Discovery</h1>
-                        <p className="text-lg md:text-xl text-slate-400 leading-relaxed font-light tracking-wide">
+                        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light tracking-wide">
                             We are an ultra-premium research compound supplier committed to absolute purity, rigorous analytical testing, and exceptional quality for the global scientific community.
                         </p>
                     </div>
@@ -38,22 +38,22 @@ export function About() {
                         { icon: Microscope, title: 'Dedicated Research', desc: 'Our compounds are synthesized exclusively for legitimate scientific research, analytical progression, and laboratory applications.' },
                         { icon: Users, title: 'Global Network', desc: 'We collaborate with distinguished researchers and leading institutions worldwide through our vetted, exclusive partner program.' },
                     ].map((item) => (
-                        <div key={item.title} className="bg-white border border-[#D4AF37]/20 p-10 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.08)] transition-all duration-500 hover:-translate-y-1 group">
-                            <div className="w-14 h-14 bg-white border border-[#D4AF37]/10 flex items-center justify-center mb-8 shadow-sm">
+                        <div key={item.title} className="bg-card border border-[#D4AF37]/20 p-10 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.08)] transition-all duration-500 hover:-translate-y-1 group">
+                            <div className="w-14 h-14 bg-card border border-[#D4AF37]/10 flex items-center justify-center mb-8 shadow-sm">
                                 <item.icon className="h-6 w-6 text-[#AA771C] group-hover:scale-110 transition-transform duration-300" />
                             </div>
-                            <h3 className="text-2xl font-serif text-slate-900 mb-4 tracking-tight">{item.title}</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed tracking-wide">{item.desc}</p>
+                            <h3 className="text-2xl font-serif text-foreground mb-4 tracking-tight">{item.title}</h3>
+                            <p className="text-muted-foreground text-sm leading-relaxed tracking-wide">{item.desc}</p>
                         </div>
                     ))}
                 </div>
 
-                <div className="relative bg-white border border-[#D4AF37]/20 p-12 md:p-20 shadow-[0_8px_30px_rgba(0,0,0,0.02)] text-center overflow-hidden">
+                <div className="relative bg-card border border-[#D4AF37]/20 p-12 md:p-20 shadow-[0_8px_30px_rgba(0,0,0,0.02)] text-center overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.03)_0%,_transparent_70%)] pointer-events-none" />
                     <div className="relative z-10">
                         <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C] mb-4 block">The Vision</span>
                         <h2 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37] mb-6 tracking-tight">Our Philosophy</h2>
-                        <p className="text-slate-500 leading-relaxed max-w-2xl mx-auto tracking-wide text-base">
+                        <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto tracking-wide text-base">
                             Golden Tier exists to arm elite researchers with the highest-quality compounds attainable. We believe that absolute analytical purity is the non-negotiable foundation of meaningful scientific discovery. Every formulation we provide is backed by transparent, verifiable data and handled with precise care.
                         </p>
                     </div>

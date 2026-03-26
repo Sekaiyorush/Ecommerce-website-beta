@@ -1,13 +1,15 @@
+import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
-import { GoldenMoleculeCanvas } from '../components/GoldenMolecule';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+
+const GoldenMoleculeCanvas = lazy(() => import('../components/GoldenMolecule').then(m => ({ default: m.GoldenMoleculeCanvas })));
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white mt-12 md:mt-24 mb-16 px-6 md:px-12 font-sans">
+    <section className="relative overflow-hidden bg-background mt-12 md:mt-24 mb-16 px-6 md:px-12 font-sans">
       {/* Subtle Glow */}
-      <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.05)_0%,_rgba(255,255,255,1)_70%)]" />
+      <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.05)_0%,_transparent_70%)]" />
 
       <div className="container relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
 
@@ -19,7 +21,7 @@ export function Hero() {
             <span className="text-[10px] text-[#AA771C] font-bold tracking-[0.3em] uppercase">Premium Research Grade</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-serif tracking-tight text-slate-900 leading-[1.1]">
+          <h1 className="text-5xl md:text-7xl font-serif tracking-tight text-foreground leading-[1.1]">
             Unlock the <br />
             Future of{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37]">Research</span>
@@ -27,7 +29,7 @@ export function Hero() {
 
           <div className="w-12 h-[1px] bg-[#D4AF37] opacity-50" />
 
-          <p className="max-w-md text-sm text-slate-500 leading-relaxed tracking-wide uppercase">
+          <p className="max-w-md text-sm text-muted-foreground leading-relaxed tracking-wide uppercase">
             Premium grade compounds for laboratory use. Validated purity, consistent quality, and uncompromising precision.
           </p>
 
@@ -50,7 +52,9 @@ export function Hero() {
           {/* 3D Canvas Container */}
           <div className="absolute inset-0 w-full h-full mix-blend-multiply opacity-90 max-w-[500px] right-0 ml-auto">
             <ErrorBoundary>
-              <GoldenMoleculeCanvas />
+              <Suspense fallback={<div className="w-full h-full" />}>
+                <GoldenMoleculeCanvas />
+              </Suspense>
             </ErrorBoundary>
           </div>
 
@@ -65,19 +69,19 @@ export function Hero() {
 
               <div className="flex justify-between items-start opacity-70">
                 <div className="space-y-1">
-                  <p className="text-3xl font-serif text-slate-900 transition-colors duration-500">99%<span className="text-[#D4AF37]">+</span></p>
-                  <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-slate-400">Purity</p>
+                  <p className="text-3xl font-serif text-foreground transition-colors duration-500">99%<span className="text-[#D4AF37]">+</span></p>
+                  <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-muted-foreground">Purity</p>
                 </div>
                 <div className="text-right space-y-1">
-                  <p className="text-3xl font-serif text-slate-900 transition-colors duration-500">3D<span className="text-[#D4AF37]">+</span></p>
-                  <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-slate-400">Model</p>
+                  <p className="text-3xl font-serif text-foreground transition-colors duration-500">3D<span className="text-[#D4AF37]">+</span></p>
+                  <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-muted-foreground">Model</p>
                 </div>
               </div>
 
               <div className="flex justify-center text-center opacity-70">
                 <div className="space-y-1">
-                  <p className="text-3xl font-serif text-slate-900 transition-colors duration-500">24<span className="text-xl">h</span></p>
-                  <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-slate-400">Shipping</p>
+                  <p className="text-3xl font-serif text-foreground transition-colors duration-500">24<span className="text-xl">h</span></p>
+                  <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-muted-foreground">Shipping</p>
                 </div>
               </div>
             </div>

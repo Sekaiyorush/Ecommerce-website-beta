@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   Printer
 } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 interface QRCodeData {
   id: string;
@@ -126,6 +127,7 @@ export function QRCodeManager() {
 
   return (
     <div className="space-y-6">
+      <SEO title="QR Codes | Admin" description="Generate and manage product QR codes." />
       <div>
         <h2 className="text-2xl font-bold text-foreground">QR Code Generator</h2>
         <p className="text-muted-foreground">Generate QR codes for product tracking and inventory management</p>

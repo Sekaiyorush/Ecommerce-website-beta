@@ -4,7 +4,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 export function Research() {
     return (
-        <div className="min-h-screen bg-white py-14 relative overflow-hidden">
+        <div className="min-h-screen bg-card py-14 relative overflow-hidden">
             {/* Luxury Background Hint */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(212,175,55,0.03)_0%,_rgba(255,255,255,1)_80%)] pointer-events-none z-0" />
 
@@ -16,8 +16,8 @@ export function Research() {
                 <Breadcrumbs />
                 <div className="text-center mb-16 mt-8">
                     <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#AA771C] mb-4 block">Protocols</span>
-                    <h1 className="text-4xl md:text-6xl font-serif text-slate-900 mb-6 tracking-tight">Analytical Excellence</h1>
-                    <p className="text-lg text-slate-500 font-light max-w-2xl mx-auto leading-relaxed tracking-wide">
+                    <h1 className="text-4xl md:text-6xl font-serif text-foreground mb-6 tracking-tight">Analytical Excellence</h1>
+                    <p className="text-lg text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed tracking-wide">
                         Our dedication to absolute scientific integrity dictates every step of our synthesis, analysis, and fulfillment processes.
                     </p>
                 </div>
@@ -45,7 +45,7 @@ export function Research() {
                             content: 'All compounds distributed by Golden Tier are synthesized exclusively for advanced in-vitro research and highly regulated laboratory environments. They are legally restricted from human or veterinary consumption and are supplied strictly to qualified research bodies.',
                         },
                     ].map((item, index) => (
-                        <div key={item.title} className="bg-white border border-[#D4AF37]/20 p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.08)] transition-all duration-500 group relative overflow-hidden">
+                        <div key={item.title} className="bg-card border border-[#D4AF37]/20 p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(212,175,55,0.08)] transition-all duration-500 group relative overflow-hidden">
                             {/* Subtle hover gradient */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none -translate-x-full group-hover:translate-x-full" />
 
@@ -57,9 +57,9 @@ export function Research() {
                                 <div>
                                     <div className="flex items-center gap-4 mb-3">
                                         <span className="text-[10px] font-bold text-[#AA771C] font-mono">0{index + 1}</span>
-                                        <h3 className="text-2xl font-serif text-slate-900 tracking-tight">{item.title}</h3>
+                                        <h3 className="text-2xl font-serif text-foreground tracking-tight">{item.title}</h3>
                                     </div>
-                                    <p className="text-slate-500 leading-relaxed font-light mt-4 tracking-wide">{item.content}</p>
+                                    <p className="text-muted-foreground leading-relaxed font-light mt-4 tracking-wide">{item.content}</p>
                                 </div>
                             </div>
                         </div>

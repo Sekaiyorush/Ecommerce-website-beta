@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { translations, type Language } from '@/data/locales';
 
 interface LanguageContextType {
@@ -12,6 +12,11 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('th'); // Default to Thai
+
+  // Sync HTML lang attribute with current language
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const t = (path: string, params: Record<string, string> = {}): string => {
     const keys = path.split('.');

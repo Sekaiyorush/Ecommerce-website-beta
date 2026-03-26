@@ -21,11 +21,11 @@ export function SearchBar() {
   return (
     <div className="relative w-full">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <Search className="w-4 h-4 text-slate-400" />
+        <Search className="w-4 h-4 text-muted-foreground" />
       </div>
       <input
         type="search"
-        className="block w-full py-2.5 pl-10 pr-4 text-[10px] font-bold tracking-[0.2em] uppercase text-slate-900 bg-transparent border-b border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 focus:outline-none transition-all placeholder:text-slate-300"
+        className="block w-full py-2.5 pl-10 pr-4 text-[10px] font-bold tracking-[0.2em] uppercase text-foreground bg-transparent border-b border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 focus:outline-none transition-all placeholder:text-muted-foreground/50"
         placeholder="SEARCH COMPOUNDS..."
         value={text}
         onChange={(e) => setText(e.target.value)}

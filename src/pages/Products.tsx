@@ -5,9 +5,11 @@ import { SEO } from '@/components/SEO';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ProductCard } from '@/components/ProductCard';
 import { ProductCardSkeleton } from '@/components/skeletons/ProductCardSkeleton';
-import { Search, Filter, ChevronDown, Lock, Tag, Zap, ShieldCheck } from 'lucide-react';
+import { Search, Filter, ChevronDown, Lock, Tag, Zap, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
+
+const PRODUCTS_PER_PAGE = 18;
 
 export function Products() {
   const { db, isLoading } = useDatabase();
@@ -23,6 +25,7 @@ export function Products() {
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('name');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (debounceTimer.current) clearTimeout(debounceTimer.current);
@@ -65,6 +68,17 @@ export function Products() {
 
     return result;
   }, [debouncedSearchTerm, selectedCategory, sortBy, products]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm, selectedCategory, sortBy]);
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
 
   return (
     <div className="min-h-screen bg-background py-12 relative overflow-hidden">
@@ -208,12 +222,60 @@ export function Products() {
               <ProductCardSkeleton key={i} />
             ))}
           </div>
-        ) : filteredProducts.length > 0 ? (
+        ) : paginatedProducts.length > 0 ? (
+          <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredProducts.map((product, index) => (
+            {paginatedProducts.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />
             ))}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-3 mt-16 pt-12 border-t border-[#D4AF37]/10">
+              <button
+                onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                disabled={currentPage === 1}
+                className="flex items-center justify-center w-10 h-10 border border-[#D4AF37]/20 text-muted-foreground hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all disabled:opacity-30 disabled:pointer-events-none"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1)
+                .reduce<(number | 'ellipsis')[]>((acc, p, i, arr) => {
+                  if (i > 0 && p - (arr[i - 1]) > 1) acc.push('ellipsis');
+                  acc.push(p);
+                  return acc;
+                }, [])
+                .map((item, i) =>
+                  item === 'ellipsis' ? (
+                    <span key={`e${i}`} className="px-1 text-muted-foreground text-xs tracking-widest">...</span>
+                  ) : (
+                    <button
+                      key={item}
+                      onClick={() => { setCurrentPage(item); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                      className={`flex items-center justify-center w-10 h-10 text-[10px] font-bold tracking-widest transition-all ${
+                        currentPage === item
+                          ? 'bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 border border-[#111] dark:border-gold-500'
+                          : 'border border-[#D4AF37]/20 text-muted-foreground hover:text-[#D4AF37] hover:border-[#D4AF37]'
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  )
+                )}
+
+              <button
+                onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                disabled={currentPage === totalPages}
+                className="flex items-center justify-center w-10 h-10 border border-[#D4AF37]/20 text-muted-foreground hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all disabled:opacity-30 disabled:pointer-events-none"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+          </>
         ) : (
           <div className="text-center py-32 bg-card border border-[#D4AF37]/20 relative">
             <div className="w-16 h-16 bg-[#D4AF37]/5 border border-[#D4AF37]/20 flex items-center justify-center mx-auto mb-6">

@@ -13,7 +13,7 @@ BEGIN
     new.id, 
     new.email, 
     new.raw_user_meta_data->>'full_name',
-    COALESCE(new.raw_user_meta_data->>'role', 'customer'), -- Safely handle role if passed
+    'customer', -- Hardcoded to prevent role escalation via user metadata
     'active'
   );
   RETURN new;

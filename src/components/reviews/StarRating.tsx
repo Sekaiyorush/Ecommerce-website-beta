@@ -47,7 +47,7 @@ export function StarRating({
                 className={`${sizeClasses[size]} transition-colors ${
                   isFilled
                     ? 'fill-[#D4AF37] text-[#D4AF37]'
-                    : 'fill-transparent text-slate-300 hover:text-[#D4AF37]/50'
+                    : 'fill-transparent text-muted-foreground/50 hover:text-[#D4AF37]/50'
                 }`}
               />
             </button>
@@ -60,7 +60,7 @@ export function StarRating({
             className={`${sizeClasses[size]} ${
               isFilled
                 ? 'fill-[#D4AF37] text-[#D4AF37]'
-                : 'fill-transparent text-slate-200'
+                : 'fill-transparent text-muted-foreground/50'
             }`}
           />
         );

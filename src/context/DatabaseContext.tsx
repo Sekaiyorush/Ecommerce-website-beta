@@ -97,8 +97,14 @@ interface DatabaseContextType {
   // Inventory
   addInventoryLog: (log: Omit<InventoryLog, 'id' | 'createdAt' | 'performedByName'>, updateVariantStock?: boolean) => Promise<void>;
 
+  // Audit
+  logAudit: (action: string, entityType: string, entityId: string, details?: Record<string, unknown>) => Promise<void>;
+
   // Site Settings
   updateSiteSettings: (updates: Partial<SiteSettings>) => Promise<boolean>;
+
+  // Contact
+  submitContactForm: (data: { fullName: string; email: string; subject: string; message: string }) => Promise<{ success: boolean; error?: string }>;
 }
 
 const DatabaseContext = createContext<DatabaseContextType | undefined>(undefined);
@@ -139,7 +145,7 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
         p_entity_id: entityId,
         p_details: details || null,
       });
-    } catch (err) {
+    } catch {
       // Error handled silently
     }
   };
@@ -545,7 +551,7 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
       delivered: [],
       cancelled: [],
     };
-    if (updates.status && !VALID_ORDER_STATUSES.includes(updates.status as any)) {
+    if (updates.status && !(VALID_ORDER_STATUSES as readonly string[]).includes(updates.status)) {
       return { success: false, error: 'Invalid order status' };
     }
 
@@ -608,6 +614,11 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     name: string; email: string; password: string; company: string;
     phone: string; discountRate: number; status: string; referredBy?: string; notes?: string;
   }): Promise<{ success: boolean; error?: string }> => {
+    // Validate discount rate bounds
+    if (data.discountRate < 0 || data.discountRate > 100) {
+      return { success: false, error: 'Discount rate must be between 0 and 100' };
+    }
+
     try {
       // Use a temporary client so it doesn't log out the currently active admin
       const tempAuthClient = createClient(
@@ -658,7 +669,10 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     }));
     const dbUpdates: DbRecord = {};
     if (updates.status !== undefined) dbUpdates.status = updates.status;
-    if (updates.discountRate !== undefined) dbUpdates.discount_rate = updates.discountRate;
+    if (updates.discountRate !== undefined) {
+      if (updates.discountRate < 0 || updates.discountRate > 100) return;
+      dbUpdates.discount_rate = updates.discountRate;
+    }
     if (updates.name !== undefined) dbUpdates.full_name = updates.name;
     if (updates.email !== undefined) dbUpdates.email = updates.email;
     if (updates.company !== undefined) dbUpdates.company_name = updates.company;
@@ -798,6 +812,23 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
     await loadData();
   };
 
+  // ─── Contact Form ──────────────────────────────────────────────
+  const submitContactForm = async (data: { fullName: string; email: string; subject: string; message: string }): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const { error } = await supabase.from('contact_submissions').insert({
+        full_name: data.fullName,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+      });
+      if (error) return { success: false, error: error.message };
+      return { success: true };
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      return { success: false, error: message };
+    }
+  };
+
   // ─── Site Settings ──────────────────────────────────────────────
   const updateSiteSettings = async (updates: Partial<SiteSettings>): Promise<boolean> => {
     setDb(prev => ({
@@ -832,7 +863,9 @@ export function DatabaseProvider({ children }: { children: ReactNode }) {
       updateCustomer,
       addInvitationCode, updateInvitationCode, deleteInvitationCode,
       addInventoryLog,
+      logAudit,
       updateSiteSettings,
+      submitContactForm,
     }}>
       {children}
     </DatabaseContext.Provider>

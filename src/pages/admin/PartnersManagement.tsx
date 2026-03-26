@@ -23,6 +23,7 @@ import {
   Check,
   Trash2
 } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 interface PartnerFormData {
   name: string;
@@ -104,14 +105,12 @@ export function PartnersManagement() {
       if (!result.success) {
         addToast({
           type: 'error',
-          title: 'Delete Failed',
-          message: result.error || 'Failed to delete partner account',
+          message: result.error || 'Delete Failed: Failed to delete partner account',
         });
       } else {
         addToast({
           type: 'success',
-          title: 'Partner Deleted',
-          message: `${partner.name}'s account has been deleted successfully.`,
+          message: `Partner Deleted: ${partner.name}'s account has been deleted successfully.`,
         });
       }
     }
@@ -190,20 +189,21 @@ export function PartnersManagement() {
       case 'active':
         return 'bg-emerald-100 text-emerald-700';
       case 'inactive':
-        return 'bg-slate-100 text-slate-700';
+        return 'bg-muted text-foreground';
       case 'pending':
         return 'bg-amber-100 text-amber-700';
       default:
-        return 'bg-slate-100 text-slate-700';
+        return 'bg-muted text-foreground';
     }
   };
 
   return (
     <div className="space-y-6">
+      <SEO title="Partners | Admin" description="Manage partner accounts and discount rates." />
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900">Partners</h2>
-          <p className="text-slate-500">Manage your partner network and discount rates</p>
+          <h2 className="text-xl font-semibold text-foreground">Partners</h2>
+          <p className="text-muted-foreground">Manage your partner network and discount rates</p>
         </div>
         <button
           onClick={handleAddPartner}
@@ -216,37 +216,37 @@ export function PartnersManagement() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
-            <Users className="h-4 w-4 text-slate-400" />
-            <span className="text-sm text-slate-500">Total Partners</span>
+            <Users className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">Total Partners</span>
           </div>
-          <p className="text-2xl font-semibold text-slate-900">{partnerList.length}</p>
+          <p className="text-2xl font-semibold text-foreground">{partnerList.length}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
             <Percent className="h-4 w-4 text-emerald-500" />
-            <span className="text-sm text-slate-500">Active</span>
+            <span className="text-sm text-muted-foreground">Active</span>
           </div>
           <p className="text-2xl font-semibold text-emerald-600">
             {partnerList.filter((p) => p.status === 'active').length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
             <ShoppingBag className="h-4 w-4 text-indigo-500" />
-            <span className="text-sm text-slate-500">Total Purchases</span>
+            <span className="text-sm text-muted-foreground">Total Purchases</span>
           </div>
-          <p className="text-2xl font-semibold text-slate-900">
+          <p className="text-2xl font-semibold text-foreground">
             {formatTHB(partnerList.reduce((sum, p) => sum + p.totalPurchases, 0))}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
+        <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center space-x-2 mb-2">
             <TrendingUp className="h-4 w-4 text-amber-500" />
-            <span className="text-sm text-slate-500">Total Resold</span>
+            <span className="text-sm text-muted-foreground">Total Resold</span>
           </div>
-          <p className="text-2xl font-semibold text-slate-900">
+          <p className="text-2xl font-semibold text-foreground">
             {formatTHB(partnerList.reduce((sum, p) => sum + p.totalResold, 0))}
           </p>
         </div>
@@ -254,13 +254,13 @@ export function PartnersManagement() {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <input
           type="text"
           placeholder="Search partners by name, email, or company..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg bg-white focus:ring-2 focus:ring-slate-200"
+          className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-card focus:ring-2 focus:ring-slate-200"
         />
       </div>
 
@@ -268,15 +268,15 @@ export function PartnersManagement() {
       {filteredPartners.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredPartners.map((partner) => (
-            <div key={partner.id} className="bg-white rounded-xl border border-slate-200 p-5">
+            <div key={partner.id} className="bg-card rounded-xl border border-border p-5">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
-                    <User className="h-6 w-6 text-slate-500" />
+                  <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                    <User className="h-6 w-6 text-muted-foreground" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900">{partner.name || partner.email}</h3>
-                    <p className="text-sm text-slate-500">{partner.company}</p>
+                    <h3 className="font-semibold text-foreground">{partner.name || partner.email}</h3>
+                    <p className="text-sm text-muted-foreground">{partner.company}</p>
                   </div>
                 </div>
                 <span className={`px-2 py-1 rounded-full text-xs capitalize ${getStatusColor(partner.status)}`}>
@@ -286,45 +286,45 @@ export function PartnersManagement() {
 
               <div className="space-y-2 mb-4">
                 <div className="flex items-center space-x-2 text-sm">
-                  <Mail className="h-4 w-4 text-slate-400 flex-shrink-0" />
-                  <span className="text-slate-600 truncate">{partner.email}</span>
+                  <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <span className="text-muted-foreground truncate">{partner.email}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm">
-                  <Phone className="h-4 w-4 text-slate-400 flex-shrink-0" />
-                  <span className="text-slate-600">{partner.phone}</span>
+                  <Phone className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <span className="text-muted-foreground">{partner.phone}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm">
-                  <Building2 className="h-4 w-4 text-slate-400 flex-shrink-0" />
-                  <span className="text-slate-600">Joined {formatDate(partner.joinedAt)}</span>
+                  <Building2 className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <span className="text-muted-foreground">Joined {formatDate(partner.joinedAt)}</span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 pt-4 border-t border-slate-100">
+              <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
                 <div className="text-center">
-                  <p className="text-xs text-slate-400">Discount</p>
+                  <p className="text-xs text-muted-foreground">Discount</p>
                   <p className="font-semibold text-indigo-600">{partner.discountRate}%</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-slate-400">Purchases</p>
-                  <p className="font-semibold text-slate-900">{formatTHB(partner.totalPurchases)}</p>
+                  <p className="text-xs text-muted-foreground">Purchases</p>
+                  <p className="font-semibold text-foreground">{formatTHB(partner.totalPurchases)}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-slate-400">Resold</p>
+                  <p className="text-xs text-muted-foreground">Resold</p>
                   <p className="font-semibold text-emerald-600">{formatTHB(partner.totalResold)}</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-end space-x-1 mt-4 pt-4 border-t border-slate-100">
+              <div className="flex items-center justify-end space-x-1 mt-4 pt-4 border-t border-border">
                 <button
                   onClick={() => handleEditPartner(partner)}
-                  className="p-2 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-slate-900 transition-colors"
+                  className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors"
                   title="Edit partner"
                 >
                   <Edit2 className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => handleDeletePartner(partner)}
-                  className="p-2 rounded-lg transition-colors hover:bg-red-50 text-slate-500 hover:text-red-600"
+                  className="p-2 rounded-lg transition-colors hover:bg-red-50 text-muted-foreground hover:text-red-600"
                   title="Delete partner permanently"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -334,15 +334,15 @@ export function PartnersManagement() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
-          <User className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-          <p className="text-slate-500">
+        <div className="text-center py-12 bg-card rounded-xl border border-border">
+          <User className="h-12 w-12 text-muted-foreground/50 mx-auto mb-4" />
+          <p className="text-muted-foreground">
             {searchTerm ? 'No partners found matching your search' : 'No partners yet'}
           </p>
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="mt-2 text-slate-900 underline"
+              className="mt-2 text-foreground underline"
             >
               Clear search
             </button>
@@ -353,14 +353,14 @@ export function PartnersManagement() {
       {/* Add/Edit Partner Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-auto">
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-slate-900">
+          <div className="bg-card rounded-xl max-w-md w-full max-h-[90vh] overflow-auto">
+            <div className="p-5 border-b border-border flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-foreground">
                 {createdCredentials ? 'Partner Created!' : editingPartner ? 'Edit Partner' : 'Create Partner Account'}
               </h3>
               <button
                 onClick={handleCloseModal}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-muted rounded-lg transition-colors"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -374,30 +374,30 @@ export function PartnersManagement() {
                   <p className="text-emerald-700 text-sm">Share these credentials with the partner so they can log in.</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Email</label>
                   <div className="flex items-center space-x-2">
                     <input
                       type="text"
                       readOnly
                       value={createdCredentials.email}
-                      className="flex-1 px-3 py-2 border border-slate-200 rounded-lg bg-slate-50"
+                      className="flex-1 px-3 py-2 border border-border rounded-lg bg-muted"
                     />
-                    <button onClick={() => handleCopy(createdCredentials.email, 'email')} className="p-2 hover:bg-slate-100 rounded-lg">
-                      {copiedField === 'email' ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-slate-400" />}
+                    <button onClick={() => handleCopy(createdCredentials.email, 'email')} className="p-2 hover:bg-muted rounded-lg">
+                      {copiedField === 'email' ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
                     </button>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Password</label>
                   <div className="flex items-center space-x-2">
                     <input
                       type="text"
                       readOnly
                       value={createdCredentials.password}
-                      className="flex-1 px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 font-mono"
+                      className="flex-1 px-3 py-2 border border-border rounded-lg bg-muted font-mono"
                     />
-                    <button onClick={() => handleCopy(createdCredentials.password, 'password')} className="p-2 hover:bg-slate-100 rounded-lg">
-                      {copiedField === 'password' ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-slate-400" />}
+                    <button onClick={() => handleCopy(createdCredentials.password, 'password')} className="p-2 hover:bg-muted rounded-lg">
+                      {copiedField === 'password' ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4 text-muted-foreground" />}
                     </button>
                   </div>
                 </div>
@@ -411,7 +411,7 @@ export function PartnersManagement() {
                 </button>
                 <button
                   onClick={handleCloseModal}
-                  className="w-full py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                  className="w-full py-2 border border-border rounded-lg hover:bg-muted transition-colors"
                 >
                   Done
                 </button>
@@ -425,7 +425,7 @@ export function PartnersManagement() {
                   </div>
                 )}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -433,13 +433,13 @@ export function PartnersManagement() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                     placeholder="Enter partner name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Email <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -447,7 +447,7 @@ export function PartnersManagement() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                     placeholder="partner@company.com"
                     disabled={!!editingPartner}
                   />
@@ -455,7 +455,7 @@ export function PartnersManagement() {
 
                 {!editingPartner && (
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label className="block text-sm font-medium text-foreground mb-1">
                       Password <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
@@ -464,23 +464,23 @@ export function PartnersManagement() {
                         required
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                        className="w-full px-3 py-2 pr-10 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                        className="w-full px-3 py-2 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                         placeholder="Auto-generated password"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-100 rounded"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded"
                       >
-                        {showPassword ? <EyeOff className="h-4 w-4 text-slate-400" /> : <Eye className="h-4 w-4 text-slate-400" />}
+                        {showPassword ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
                       </button>
                     </div>
-                    <p className="text-xs text-slate-400 mt-1">This password will be shown after creation for you to share with the partner</p>
+                    <p className="text-xs text-muted-foreground mt-1">This password will be shown after creation for you to share with the partner</p>
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Company <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -488,13 +488,13 @@ export function PartnersManagement() {
                     required
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                     placeholder="Company name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Phone <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -502,29 +502,29 @@ export function PartnersManagement() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                     placeholder="+1 (555) 123-4567"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Discount Rate (%)</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">Discount Rate (%)</label>
                     <input
                       type="number"
                       min="0"
                       max="50"
                       value={formData.discountRate}
                       onChange={(e) => setFormData({ ...formData, discountRate: e.target.value })}
-                      className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                      className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Status</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">Status</label>
                     <select
                       value={formData.status}
                       onChange={(e) => setFormData({ ...formData, status: e.target.value as Partner['status'] })}
-                      className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                      className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                     >
                       <option value="active">Active</option>
                       <option value="inactive">Inactive</option>
@@ -534,11 +534,11 @@ export function PartnersManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Referred By (Partner)</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Referred By (Partner)</label>
                   <select
                     value={formData.referredBy}
                     onChange={(e) => setFormData({ ...formData, referredBy: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                   >
                     <option value="">None (Top Level)</option>
                     {partnerList.filter(p => p.id !== editingPartner?.id).map((p) => (
@@ -550,12 +550,12 @@ export function PartnersManagement() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Notes</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Notes</label>
                   <textarea
                     rows={3}
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
                     placeholder="Add notes about this partner..."
                   />
                 </div>
@@ -564,7 +564,7 @@ export function PartnersManagement() {
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                    className="px-4 py-2 border border-border rounded-lg hover:bg-muted transition-colors"
                   >
                     Cancel
                   </button>

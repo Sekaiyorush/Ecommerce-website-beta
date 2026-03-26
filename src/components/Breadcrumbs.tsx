@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { ChevronRight, Home } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
-export function Breadcrumbs() {
+export const Breadcrumbs = memo(function Breadcrumbs() {
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((x) => x);
 
@@ -9,9 +10,9 @@ export function Breadcrumbs() {
 
     return (
         <nav aria-label="breadcrumb" className="py-4">
-            <ol className="flex items-center space-x-2 text-sm text-slate-500">
+            <ol className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <li>
-                    <Link to="/" className="hover:text-slate-900 transition-colors flex items-center">
+                    <Link to="/" className="hover:text-foreground transition-colors flex items-center">
                         <Home className="h-4 w-4" />
                     </Link>
                 </li>
@@ -22,13 +23,13 @@ export function Breadcrumbs() {
 
                     return (
                         <li key={to} className="flex items-center space-x-2">
-                            <ChevronRight className="h-4 w-4 text-slate-300" />
+                            <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
                             {isLast ? (
-                                <span className="text-slate-900 font-medium capitalize" aria-current="page">
+                                <span className="text-foreground font-medium capitalize" aria-current="page">
                                     {label}
                                 </span>
                             ) : (
-                                <Link to={to} className="hover:text-slate-900 transition-colors capitalize">
+                                <Link to={to} className="hover:text-foreground transition-colors capitalize">
                                     {label}
                                 </Link>
                             )}
@@ -38,4 +39,4 @@ export function Breadcrumbs() {
             </ol>
         </nav>
     );
-}
+});

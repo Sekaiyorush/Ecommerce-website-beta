@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { logger } from '@/lib/logger';
 import { useAuth } from '@/context/AuthContext';
 import { useDatabase } from '@/context/DatabaseContext';
 import { formatDateTime } from '@/lib/formatDate';
@@ -42,7 +43,7 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
       .order('created_at', { ascending: true });
 
     if (error) {
-      console.error('Error fetching order notes:', error);
+      logger.error('Error fetching order notes:', error);
       setIsLoading(false);
       return;
     }
@@ -92,7 +93,7 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
     });
 
     if (error) {
-      console.error('Error adding note:', error);
+      logger.error('Error adding note:', error);
       setIsSending(false);
       return;
     }
@@ -108,28 +109,28 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-2">
-        <MessageSquare className="h-4 w-4 text-slate-500" />
-        <h4 className="font-medium text-sm text-slate-700">Order Notes</h4>
-        <span className="text-xs text-slate-400">({notes.length})</span>
+        <MessageSquare className="h-4 w-4 text-muted-foreground" />
+        <h4 className="font-medium text-sm text-foreground">Order Notes</h4>
+        <span className="text-xs text-muted-foreground">({notes.length})</span>
       </div>
 
       {/* Notes List */}
       <div className="space-y-3 max-h-60 overflow-y-auto">
         {isLoading ? (
           <div className="flex items-center justify-center py-6">
-            <div className="w-5 h-5 border border-slate-200 border-t-slate-500 rounded-full animate-spin" />
+            <div className="w-5 h-5 border border-border border-t-slate-500 rounded-full animate-spin" />
           </div>
         ) : notes.length === 0 ? (
-          <p className="text-xs text-slate-400 text-center py-4">No notes yet</p>
+          <p className="text-xs text-muted-foreground text-center py-4">No notes yet</p>
         ) : (
           notes.map((note) => (
             <div key={note.id} className={`p-3 rounded-lg text-sm ${note.user_id === user?.id
                 ? 'bg-blue-50 border border-blue-100 ml-4'
-                : 'bg-slate-50 border border-slate-100 mr-4'
+                : 'bg-muted border border-border mr-4'
               }`}>
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center space-x-2">
-                  <span className="font-medium text-slate-700 text-xs">
+                  <span className="font-medium text-foreground text-xs">
                     {note.user_name || note.user_email || 'Unknown'}
                   </span>
                   {note.is_internal && (
@@ -139,9 +140,9 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
                     </span>
                   )}
                 </div>
-                <span className="text-[10px] text-slate-400">{formatDateTime(note.created_at)}</span>
+                <span className="text-[10px] text-muted-foreground">{formatDateTime(note.created_at)}</span>
               </div>
-              <p className="text-slate-600 whitespace-pre-wrap">{note.note}</p>
+              <p className="text-muted-foreground whitespace-pre-wrap">{note.note}</p>
             </div>
           ))
         )}
@@ -154,15 +155,15 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
           onChange={(e) => setNewNote(e.target.value)}
           placeholder="Add a note..."
           rows={2}
-          className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-slate-200 focus:border-slate-300 resize-none"
+          className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200 focus:border-border resize-none"
         />
         <div className="flex items-center justify-between">
-          <label className="flex items-center space-x-2 text-xs text-slate-500 cursor-pointer">
+          <label className="flex items-center space-x-2 text-xs text-muted-foreground cursor-pointer">
             <input
               type="checkbox"
               checked={isInternal}
               onChange={(e) => setIsInternal(e.target.checked)}
-              className="rounded border-slate-300 text-slate-900 focus:ring-slate-200"
+              className="rounded border-border text-foreground focus:ring-slate-200"
             />
             <span className="flex items-center space-x-1">
               <Lock className="h-3 w-3" />

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
 import { SecurityAlert } from '@/components/ui/security-alert';
+import { SEO } from '@/components/SEO';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -48,6 +49,7 @@ export function Login() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col relative overflow-hidden font-sans">
+      <SEO title="Sign In" description="Sign in to your Golden Tier Peptide account to access premium research compounds, order tracking, and partner features." />
       {/* Subtle background glow */}
       <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.03)_0%,_transparent_60%)] dark:bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.06)_0%,_transparent_60%)]" />
 
@@ -79,12 +81,14 @@ export function Login() {
                   <input
                     type="email"
                     {...register('email')}
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? 'error-email' : undefined}
                     className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
                     placeholder="ENTER YOUR EMAIL"
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-xs text-red-600 mt-1.5">{errors.email.message}</p>
+                  <p id="error-email" className="text-xs text-red-600 mt-1.5">{errors.email.message}</p>
                 )}
               </div>
 
@@ -95,19 +99,22 @@ export function Login() {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     {...register('password')}
+                    aria-invalid={!!errors.password}
+                    aria-describedby={errors.password ? 'error-password' : undefined}
                     className="w-full h-12 pl-12 pr-12 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
                     placeholder="ENTER YOUR PASSWORD"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-[#D4AF37] transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-xs text-red-600 mt-1.5">{errors.password.message}</p>
+                  <p id="error-password" className="text-xs text-red-600 mt-1.5">{errors.password.message}</p>
                 )}
               </div>
 
