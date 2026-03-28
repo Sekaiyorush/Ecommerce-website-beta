@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -7,7 +7,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { SearchBar } from './SearchBar';
 import { Menu, X, ShoppingCart, User, LogOut, LayoutDashboard, Globe, Sun, Moon } from 'lucide-react';
 
-export function Header() {
+function HeaderInner() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -241,3 +241,4 @@ export function Header() {
     </header>
   );
 }
+export const Header = memo(HeaderInner);

@@ -41,7 +41,7 @@ export function ForgotPassword() {
                         <div className="w-16 h-16 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
                             <Mail className="h-6 w-6 text-[#AA771C]" />
                         </div>
-                        <h2 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37] mb-3 tracking-tight">Check your email</h2>
+                        <h1 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-[#AA771C] via-[#F3E5AB] to-[#D4AF37] mb-3 tracking-tight">Check your email</h1>
                         <p className="text-muted-foreground mb-8 text-sm leading-relaxed">
                             We've sent a password reset link to <strong className="text-[#D4AF37]">{email}</strong>.
                         </p>

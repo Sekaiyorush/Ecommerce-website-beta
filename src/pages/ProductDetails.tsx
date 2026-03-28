@@ -280,7 +280,7 @@ export function ProductDetails() {
 
                 {/* Extended Description */}
                 <div className="mt-16 bg-card border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_40px_rgba(0,0,0,0.02)]">
-                    <h3 className="text-3xl font-serif text-foreground mb-10 tracking-tight">Compound Specifications</h3>
+                    <h2 className="text-3xl font-serif text-foreground mb-10 tracking-tight">Compound Specifications</h2>
                     <div className="text-muted-foreground space-y-10 tracking-wide leading-relaxed text-sm md:text-base">
                         <p className="whitespace-pre-wrap">{product.fullDescription || product.description}</p>
                         {product.benefits && product.benefits.length > 0 && (
@@ -306,7 +306,7 @@ export function ProductDetails() {
 
                 {/* Reviews Section */}
                 <div className="mt-16 bg-card border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_40px_rgba(0,0,0,0.02)]">
-                    <h3 className="text-3xl font-serif text-foreground mb-10 tracking-tight">Customer Reviews</h3>
+                    <h2 className="text-3xl font-serif text-foreground mb-10 tracking-tight">Customer Reviews</h2>
                     <ReviewList productId={product.id} />
                 </div>
             </div>

@@ -281,7 +281,7 @@ export function Products() {
             <div className="w-16 h-16 bg-[#D4AF37]/5 border border-[#D4AF37]/20 flex items-center justify-center mx-auto mb-6">
               <Search className="h-6 w-6 text-gold-primary" />
             </div>
-            <h3 className="text-3xl font-serif text-foreground mb-3 tracking-tight">No products found</h3>
+            <h2 className="text-3xl font-serif text-foreground mb-3 tracking-tight">No products found</h2>
             <p className="text-sm text-muted-foreground mb-10 max-w-md mx-auto leading-relaxed uppercase tracking-widest">
               We couldn't find any products matching your search. Try adjusting your filters.
             </p>

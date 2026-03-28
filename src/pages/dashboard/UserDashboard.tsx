@@ -174,7 +174,7 @@ export function UserDashboard() {
             {/* Recent Orders — Clean */}
             <div className="bg-card border border-[#D4AF37]/20 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
               <div className="p-8 border-b border-[#D4AF37]/10 flex items-center justify-between">
-                <h3 className="text-2xl font-serif text-foreground tracking-tight">Recent Orders</h3>
+                <h2 className="text-2xl font-serif text-foreground tracking-tight">Recent Orders</h2>
                 <button
                   onClick={() => setActiveTab('orders')}
                   className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground hover:text-[#AA771C] flex items-center transition-colors group"
@@ -230,7 +230,7 @@ export function UserDashboard() {
         {activeTab === 'orders' && (
           <div className="bg-card border border-[#D4AF37]/20 overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             <div className="p-8 border-b border-[#D4AF37]/10">
-              <h3 className="text-2xl font-serif text-foreground tracking-tight">Order History</h3>
+              <h2 className="text-2xl font-serif text-foreground tracking-tight">Order History</h2>
             </div>
             <div className="divide-y divide-[#D4AF37]/10">
               {userOrders.map((order) => (
@@ -289,7 +289,7 @@ export function UserDashboard() {
         {activeTab === 'profile' && (
           <div className="bg-card border border-[#D4AF37]/20 shadow-[0_8px_30px_rgba(0,0,0,0.02)]">
             <div className="p-8 border-b border-[#D4AF37]/10 flex flex-wrap gap-4 items-center justify-between">
-              <h3 className="text-2xl font-serif text-foreground tracking-tight">Profile Information</h3>
+              <h2 className="text-2xl font-serif text-foreground tracking-tight">Profile Information</h2>
               {!isEditingProfile ? (
                 <button
                   onClick={() => setIsEditingProfile(true)}

@@ -373,7 +373,7 @@ export function ProductsManagement() {
                     <div className="flex items-center space-x-3">
                       <div className="h-10 w-10 rounded-lg border border-border bg-muted flex items-center justify-center overflow-hidden shrink-0 group-hover:border-[#D4AF37]/50 transition-colors">
                         {product.imageUrl ? (
-                          <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+                          <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" loading="lazy" />
                         ) : (
                           <Package className="h-5 w-5 text-muted-foreground" />
                         )}
@@ -717,7 +717,7 @@ export function ProductsManagement() {
                       <div className="mt-4 p-4 border border-border rounded-xl bg-surface-alt/20 flex flex-col items-center">
                         <p className="text-xs font-bold text-muted-foreground uppercase mb-2">Preview</p>
                         <div className="h-48 w-48 rounded-xl border border-[#D4AF37]/30 overflow-hidden bg-card shadow-inner">
-                          <img src={formData.imageUrl} alt="Preview" className="h-full w-full object-contain" />
+                          <img src={formData.imageUrl} alt="Preview" className="h-full w-full object-contain" loading="lazy" />
                         </div>
                       </div>
                     )}

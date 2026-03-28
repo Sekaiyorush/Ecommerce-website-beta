@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { useCart, getItemPrice } from '@/context/CartContext';
 import { formatTHB } from '@/lib/formatPrice';
 import { X, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 
-export function CartSidebar() {
+function CartSidebarInner() {
   const { items, isOpen, setIsOpen, removeFromCart, updateQuantity, cartSubtotal, discountAmount, cartTotal } = useCart();
   const location = useLocation();
   const trapRef = useFocusTrap<HTMLDivElement>(isOpen);
@@ -166,3 +166,4 @@ export function CartSidebar() {
     </>
   );
 }
+export const CartSidebar = memo(CartSidebarInner);

@@ -289,7 +289,7 @@ export function PartnerDashboard() {
                   <div className="aspect-[4/3] bg-card flex items-center justify-center p-8 overflow-hidden relative">
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.05)_0%,_rgba(255,255,255,0)_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     {product.imageUrl ? (
-                      <img src={product.imageUrl} alt={product.name} className="w-full h-full object-contain filter contrast-125" />
+                      <img src={product.imageUrl} alt={product.name} className="w-full h-full object-contain filter contrast-125" loading="lazy" />
                     ) : (
                       <div className="w-20 h-20 bg-muted border border-[#D4AF37]/10 flex items-center justify-center shadow-inner">
                         <span className="text-muted-foreground font-serif">{product.name.split('-')[0]}</span>
