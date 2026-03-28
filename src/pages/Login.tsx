@@ -75,15 +75,16 @@ export function Login() {
 
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Email</label>
+                <label htmlFor="login-email" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Email</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                   <input
+                    id="login-email"
                     type="email"
                     {...register('email')}
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? 'error-email' : undefined}
-                    className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                    className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground"
                     placeholder="ENTER YOUR EMAIL"
                   />
                 </div>
@@ -93,22 +94,23 @@ export function Login() {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Password</label>
+                <label htmlFor="login-password" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Password</label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                   <input
+                    id="login-password"
                     type={showPassword ? 'text' : 'password'}
                     {...register('password')}
                     aria-invalid={!!errors.password}
                     aria-describedby={errors.password ? 'error-password' : undefined}
-                    className="w-full h-12 pl-12 pr-12 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                    className="w-full h-12 pl-12 pr-12 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground"
                     placeholder="ENTER YOUR PASSWORD"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-[#D4AF37] transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-[#D4AF37] transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>

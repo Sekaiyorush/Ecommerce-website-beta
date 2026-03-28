@@ -131,7 +131,7 @@ export function ProductDetails() {
                                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-foreground tracking-tighter leading-[0.9] mb-8">{product.name}</h1>
                                 <div className="flex items-center space-x-4">
                                     <p className="text-[10px] font-bold tracking-[0.2em] text-muted-foreground uppercase">REFERENCE: {selectedVariant?.sku || product.sku}</p>
-                                    <div className="h-4 w-[1px] bg-slate-200" />
+                                    <div className="h-4 w-[1px] bg-border" />
                                     <div className="flex items-center space-x-2">
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                         <p className="text-[10px] font-bold tracking-[0.2em] text-emerald-600 uppercase">Validated Purity</p>
@@ -162,7 +162,7 @@ export function ProductDetails() {
                                                             ? 'border-border bg-muted/50 text-muted-foreground line-through cursor-not-allowed opacity-50'
                                                             : isSelected
                                                                 ? 'border-gold-500 bg-[#111] text-white shadow-xl scale-105 z-10'
-                                                                : 'border-gold-300/20 bg-card text-slate-600 hover:border-gold-500/50 hover:bg-gold-500/5'
+                                                                : 'border-gold-300/20 bg-card text-muted-foreground hover:border-gold-500/50 hover:bg-gold-500/5'
                                                     }`}
                                                 >
                                                     <span>{v.label}</span>

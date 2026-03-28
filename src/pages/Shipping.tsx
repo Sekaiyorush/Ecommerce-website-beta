@@ -12,7 +12,7 @@ export function Shipping() {
                     <h1 className="text-4xl md:text-5xl font-serif text-foreground tracking-tight">Shipping & Returns</h1>
                 </div>
 
-                <div className="bg-card border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)] prose prose-slate max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h3:text-2xl prose-h3:text-foreground prose-h3:mb-6 prose-h4:text-lg prose-h4:text-slate-800 prose-p:text-slate-500 prose-p:font-light prose-p:tracking-wide prose-p:leading-relaxed prose-li:text-slate-500 prose-li:font-light prose-li:tracking-wide prose-strong:text-slate-800 prose-strong:font-semibold">
+                <div className="bg-card border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)] prose prose-slate max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h3:text-2xl prose-h3:text-foreground prose-h3:mb-6 prose-h4:text-lg prose-h4:text-foreground prose-p:text-muted-foreground prose-p:font-light prose-p:tracking-wide prose-p:leading-relaxed prose-li:text-muted-foreground prose-li:font-light prose-li:tracking-wide prose-strong:text-foreground prose-strong:font-semibold">
                     <h3 className="flex items-center gap-4">
                         <span className="w-10 h-px bg-[#D4AF37] inline-block" />
                         Logistics Policy
@@ -50,7 +50,7 @@ export function Shipping() {
                         <li><strong>Tracking Absences:</strong> If standard tracking reflects null updates for 14 days (domestic) or 30 days (international), a formal investigation triggers, yielding a replacement or refund based on resolution.</li>
                     </ul>
 
-                    <div className="mt-12 p-8 border border-[#D4AF37]/10 bg-muted tracking-wide text-sm text-slate-500 text-center">
+                    <div className="mt-12 p-8 border border-[#D4AF37]/10 bg-muted tracking-wide text-sm text-muted-foreground text-center">
                         For any logistical anomalies or integrity inquiries, direct correspondence to <a href="mailto:support@goldentierpeptide.com" className="text-[#AA771C] hover:text-[#D4AF37] font-semibold transition-colors">support@goldentierpeptide.com</a> citing your Authorization ID.
                     </div>
                 </div>

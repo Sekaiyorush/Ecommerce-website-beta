@@ -63,9 +63,9 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
         )}
 
         {/* Image Container */}
-        <div className="relative aspect-[4/5] overflow-hidden bg-slate-50/50 dark:bg-slate-800/50 border-b border-[#D4AF37]/5">
+        <div className="relative aspect-[4/5] overflow-hidden bg-muted/50 border-b border-[#D4AF37]/5">
           {!imageLoaded && (
-            <div className="absolute inset-0 bg-slate-100 dark:bg-slate-800 animate-pulse" />
+            <div className="absolute inset-0 bg-muted animate-pulse" />
           )}
 
           {product.imageUrl ? (
@@ -86,9 +86,10 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
             </div>
           )}
 
-          <div className={`absolute inset-0 bg-background/60 dark:bg-slate-950/60 backdrop-blur-[2px] transition-all duration-500 flex items-center justify-center gap-4 ${isHovered ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          <div className={`absolute inset-0 bg-background/60 backdrop-blur-[2px] transition-all duration-500 flex items-center justify-center gap-4 ${isHovered ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
               <Link
                 to={`/product/${product.sku}`}
+                aria-label={`View ${product.name} details`}
                 className="flex items-center justify-center w-14 h-14 bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 hover:text-[#D4AF37] dark:hover:text-slate-800 border border-[#111] dark:border-gold-500 transition-all duration-500 shadow-xl"
               >
                 <Eye className="h-5 w-5" />
@@ -96,6 +97,7 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
 
               <button
                 onClick={() => setIsWishlisted(!isWishlisted)}
+                aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
                 className={`flex items-center justify-center w-14 h-14 transition-all duration-500 border shadow-xl ${isWishlisted ? 'bg-[#D4AF37] border-[#D4AF37] text-white' : 'bg-card border-[#D4AF37]/20 text-[#AA771C] hover:text-[#D4AF37] hover:border-[#D4AF37]'}`}
               >
                 <Heart className={`h-5 w-5 ${isWishlisted && 'fill-current'}`} />
@@ -126,7 +128,7 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 <div className="flex flex-col">
                   {hasDiscount ? (
                     <>
-                      <span className="text-[10px] font-bold text-slate-300 dark:text-slate-500 line-through mb-1 tracking-widest uppercase">
+                      <span className="text-[10px] font-bold text-muted-foreground line-through mb-1 tracking-widest uppercase">
                         {hasVariants ? 'from ' : ''}{formatTHB(displayPrice)}
                       </span>
                       <div className="flex items-center space-x-2">
@@ -145,7 +147,7 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 <Link
                   to={`/product/${product.sku}`}
                   className={`relative flex items-center justify-center w-14 h-14 overflow-hidden transition-all duration-500 ${allOutOfStock
-                    ? 'bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-300 cursor-not-allowed pointer-events-none'
+                    ? 'bg-muted border border-muted text-muted-foreground cursor-not-allowed pointer-events-none'
                     : 'bg-[#111] dark:bg-gold-500 text-white dark:text-slate-900 hover:text-[#D4AF37] dark:hover:text-slate-800 group/btn border border-[#111] dark:border-gold-500 shadow-lg'
                     }`}
                 >
@@ -160,10 +162,10 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                 {/* Blurred price ghost */}
                 <div className="flex items-end justify-between mb-3 select-none pointer-events-none" aria-hidden="true">
                   <div className="flex flex-col gap-1">
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-slate-300 dark:text-slate-600 blur-[5px]">฿ — — —</span>
-                    <span className="text-3xl font-serif text-slate-300 dark:text-slate-600 blur-[7px]">฿ ——</span>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground blur-[5px]">฿ — — —</span>
+                    <span className="text-3xl font-serif text-muted-foreground blur-[7px]">฿ ——</span>
                   </div>
-                  <div className="w-14 h-14 bg-slate-100 dark:bg-slate-700 blur-[4px]" />
+                  <div className="w-14 h-14 bg-muted blur-[4px]" />
                 </div>
 
                 {/* Lock overlay */}
@@ -173,7 +175,7 @@ export const ProductCard = memo(function ProductCard({ product, index = 0 }: Pro
                     <div className="w-6 h-6 border border-[#D4AF37]/40 bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
                       <Lock className="h-3 w-3 text-[#D4AF37]" />
                     </div>
-                    <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-slate-300">Unlock Partner Pricing</span>
+                    <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-muted-foreground">Unlock Partner Pricing</span>
                   </div>
                   <Link
                     to="/contact"

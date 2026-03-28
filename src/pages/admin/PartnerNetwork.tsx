@@ -97,10 +97,10 @@ export function PartnerNetwork() {
 
         {hasChildren && (
           <div className="ml-6 mt-2 space-y-2 relative">
-            <div className="absolute left-0 top-0 bottom-4 w-px bg-slate-200" />
+            <div className="absolute left-0 top-0 bottom-4 w-px bg-border" />
             {node.children.map((child) => (
               <div key={child.partner.id} className="relative">
-                <div className="absolute -left-6 top-5 w-4 h-px bg-slate-200" />
+                <div className="absolute -left-6 top-5 w-4 h-px bg-border" />
                 <NetworkTreeNode node={child} />
               </div>
             ))}
@@ -156,7 +156,7 @@ export function PartnerNetwork() {
                   placeholder="Search partners..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-9 pr-4 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                  className="pl-9 pr-4 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                 />
               </div>
             </div>

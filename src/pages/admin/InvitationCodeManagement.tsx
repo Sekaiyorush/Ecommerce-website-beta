@@ -224,14 +224,14 @@ export function InvitationCodeManagement() {
               placeholder="Search codes, notes, or creator..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200 focus:border-border"
+              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border focus:border-border"
             />
           </div>
           <div className="flex items-center space-x-3">
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as InvitationCodeType | 'all')}
-              className="px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+              className="px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
             >
               <option value="all">All Types</option>
               <option value="admin_user">User Codes</option>
@@ -241,7 +241,7 @@ export function InvitationCodeManagement() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as 'all' | 'active' | 'inactive')}
-              className="px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+              className="px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -332,7 +332,7 @@ export function InvitationCodeManagement() {
                     <div className="flex items-center justify-end space-x-1">
                       <button
                         onClick={() => { setSelectedCode(code); setShowDetailsModal(true); }}
-                        className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-slate-600"
+                        className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground"
                       >
                         <Eye className="h-4 w-4" />
                       </button>
@@ -379,7 +379,7 @@ export function InvitationCodeManagement() {
                 <select
                   value={newCodeType}
                   onChange={(e) => setNewCodeType(e.target.value as InvitationCodeType)}
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                 >
                   <option value="admin_user">User Registration</option>
                   <option value="admin_partner">Partner Registration</option>
@@ -402,7 +402,7 @@ export function InvitationCodeManagement() {
                     max="50"
                     value={newCodeDiscountRate}
                     onChange={(e) => setNewCodeDiscountRate(parseInt(e.target.value) || 15)}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                   />
                 </div>
               )}
@@ -417,7 +417,7 @@ export function InvitationCodeManagement() {
                   max="1000"
                   value={newCodeMaxUses}
                   onChange={(e) => setNewCodeMaxUses(parseInt(e.target.value) || 1)}
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                 />
               </div>
 
@@ -429,7 +429,7 @@ export function InvitationCodeManagement() {
                   type="date"
                   value={newCodeExpiresAt}
                   onChange={(e) => setNewCodeExpiresAt(e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                 />
               </div>
 
@@ -441,7 +441,7 @@ export function InvitationCodeManagement() {
                   rows={3}
                   value={newCodeNotes}
                   onChange={(e) => setNewCodeNotes(e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                   placeholder="e.g., VIP customers, March promotion..."
                 />
               </div>

@@ -43,7 +43,7 @@ export function OrderDetailsModal({ order, onClose }: OrderDetailsModalProps) {
     ];
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm z-[100]" role="dialog" aria-modal="true" aria-label="Order details">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm z-[100]" role="dialog" aria-modal="true" aria-label="Order details">
             <div ref={trapRef} className="bg-card rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-border">
@@ -87,7 +87,7 @@ export function OrderDetailsModal({ order, onClose }: OrderDetailsModalProps) {
                                     {trackingSteps.map((step, idx) => (
                                         <div key={idx} className="relative flex items-center space-x-4">
                                             <div className={`w-7 h-7 rounded-full flex items-center justify-center relative z-10 ${step.completed ? 'bg-indigo-600 text-white' : 'bg-border text-muted-foreground'}`}>
-                                                {step.completed ? <CheckCircle2 className="h-4 w-4" /> : <div className="w-2 h-2 rounded-full bg-slate-400" />}
+                                                {step.completed ? <CheckCircle2 className="h-4 w-4" /> : <div className="w-2 h-2 rounded-full bg-muted-foreground/40" />}
                                             </div>
                                             <div>
                                                 <p className={`font-medium ${step.completed ? 'text-foreground' : 'text-muted-foreground'}`}>{step.label}</p>
@@ -141,7 +141,7 @@ export function OrderDetailsModal({ order, onClose }: OrderDetailsModalProps) {
                     <div>
                         <h3 className="font-semibold text-foreground mb-4">Items Summary</h3>
                         <div className="bg-card border text-sm border-border rounded-xl overflow-hidden">
-                            <div className="divide-y divide-slate-100">
+                            <div className="divide-y divide-border">
                                 {order.items.map((item, idx) => (
                                     <div key={idx} className="p-4 flex items-center justify-between">
                                         <div className="flex items-center space-x-3">

@@ -12,7 +12,7 @@ export function Privacy() {
                     <h1 className="text-4xl md:text-5xl font-serif text-foreground tracking-tight">Privacy Policy</h1>
                 </div>
 
-                <div className="bg-card border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)] prose prose-slate max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h3:text-2xl prose-h3:text-foreground prose-h3:mb-6 prose-h4:text-lg prose-h4:text-slate-800 prose-p:text-slate-500 prose-p:font-light prose-p:leading-relaxed prose-p:tracking-wide prose-li:text-slate-500 prose-li:font-light prose-li:tracking-wide prose-strong:text-slate-800 prose-strong:font-semibold">
+                <div className="bg-card border border-[#D4AF37]/20 p-10 md:p-16 shadow-[0_8px_30px_rgba(0,0,0,0.02)] prose prose-slate max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:tracking-tight prose-h3:text-2xl prose-h3:text-foreground prose-h3:mb-6 prose-h4:text-lg prose-h4:text-foreground prose-p:text-muted-foreground prose-p:font-light prose-p:leading-relaxed prose-p:tracking-wide prose-li:text-muted-foreground prose-li:font-light prose-li:tracking-wide prose-strong:text-foreground prose-strong:font-semibold">
                     <h3 className="flex items-center gap-4">
                         <span className="w-10 h-px bg-[#D4AF37] inline-block" />
                         1. Information We Collect

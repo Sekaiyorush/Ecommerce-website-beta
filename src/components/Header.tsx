@@ -41,7 +41,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-card/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-[#D4AF37]/10 transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full bg-card/80 backdrop-blur-md border-b border-[#D4AF37]/10 transition-all duration-300">
       <div className="container mx-auto flex h-24 items-center justify-between px-6 md:px-12">
         {/* Logo */}
         <Link to="/" className="flex items-center group relative">
@@ -126,19 +126,19 @@ export function Header() {
                     <div className="absolute top-0 left-0 w-full h-[2px] bg-gold-gradient" />
                     <Link
                       to={getDashboardLink()}
-                      className="flex items-center space-x-3 px-4 py-4 text-[10px] font-bold tracking-widest text-muted-foreground dark:text-slate-300 hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-all uppercase"
+                      className="flex items-center space-x-3 px-4 py-4 text-[10px] font-bold tracking-widest text-muted-foreground hover:text-[#D4AF37] hover:bg-muted transition-all uppercase"
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <LayoutDashboard className="h-4 w-4 opacity-70" />
                       <span>{getDashboardLabel()}</span>
                     </Link>
-                    <div className="h-[1px] bg-muted dark:bg-slate-700 mx-2" />
+                    <div className="h-[1px] bg-muted mx-2" />
                     <button
                       onClick={() => {
                         logout();
                         setIsUserMenuOpen(false);
                       }}
-                      className="flex items-center space-x-3 w-full px-4 py-4 text-[10px] font-bold tracking-widest text-[#111] dark:text-slate-200 hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-all uppercase group relative"
+                      className="flex items-center space-x-3 w-full px-4 py-4 text-[10px] font-bold tracking-widest text-foreground hover:text-[#D4AF37] hover:bg-muted transition-all uppercase group relative"
                     >
                       <LogOut className="h-4 w-4 opacity-70" />
                       <span>Logout</span>
@@ -177,28 +177,28 @@ export function Header() {
           <nav aria-label="Mobile Navigation" className="flex flex-col py-4">
             <Link
               to="/products"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground hover:text-[#D4AF37] hover:bg-muted transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               Catalog
             </Link>
             <Link
               to="/about"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground hover:text-[#D4AF37] hover:bg-muted transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               About
             </Link>
             <Link
               to="/research"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors border-b border-[#D4AF37]/5"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground hover:text-[#D4AF37] hover:bg-muted transition-colors border-b border-[#D4AF37]/5"
               onClick={() => setIsMenuOpen(false)}
             >
               Research
             </Link>
             <Link
               to="/contact"
-              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground dark:text-muted-foreground hover:text-[#D4AF37] hover:bg-muted dark:hover:bg-slate-800/50 transition-colors"
+              className="px-6 py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground hover:text-[#D4AF37] hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
@@ -219,7 +219,7 @@ export function Header() {
                     logout();
                     setIsMenuOpen(false);
                   }}
-                  className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.3em] uppercase text-foreground dark:text-slate-200 border-t border-[#D4AF37]/5"
+                  className="px-6 py-4 text-left text-[10px] font-bold tracking-[0.3em] uppercase text-foreground border-t border-[#D4AF37]/5"
                 >
                   Sign Out
                 </button>

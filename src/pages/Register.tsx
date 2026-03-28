@@ -131,18 +131,19 @@ export function Register() {
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               {/* Invitation Code - First and most important */}
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">
+                <label htmlFor="register-code" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">
                   Invitation Code <span className="text-[#D4AF37]">*</span>
                 </label>
                 <div className="relative">
                   <Ticket className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                   <input
+                    id="register-code"
                     type="text"
                     {...register('invitationCode')}
                     onChange={(e) => handleCodeChange(e.target.value)}
                     aria-invalid={!!errors.invitationCode}
                     aria-describedby={errors.invitationCode ? 'error-invitationCode' : undefined}
-                    className={`w-full h-12 pl-12 pr-12 bg-transparent border focus:ring-0 transition-all uppercase text-sm text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600 ${codeValidation?.valid
+                    className={`w-full h-12 pl-12 pr-12 bg-transparent border focus:ring-0 transition-all uppercase text-sm text-foreground placeholder:text-muted-foreground ${codeValidation?.valid
                       ? 'border-[#D4AF37] bg-[#D4AF37]/5'
                       : codeValidation && !codeValidation.valid
                         ? 'border-red-300 bg-red-50/50 dark:bg-red-900/20'
@@ -152,7 +153,7 @@ export function Register() {
                   />
                   {codeValidating && (
                     <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
                     </div>
                   )}
                   {!codeValidating && codeValidation && (
@@ -180,14 +181,15 @@ export function Register() {
 
               <div className="border-t border-[#D4AF37]/20 pt-6">
                 <div>
-                  <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Full Name</label>
+                  <label htmlFor="register-name" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Full Name</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                     <input
+                      id="register-name"
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                      className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground"
                       placeholder="ENTER FULL NAME"
                       required
                     />
@@ -196,15 +198,16 @@ export function Register() {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Email</label>
+                <label htmlFor="register-email" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Email</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                   <input
+                    id="register-email"
                     type="email"
                     {...register('email')}
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? 'error-email' : undefined}
-                    className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                    className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground"
                     placeholder="ENTER YOUR EMAIL"
                   />
                 </div>
@@ -214,24 +217,25 @@ export function Register() {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Password</label>
+                <label htmlFor="register-password" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Password</label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                   <input
+                    id="register-password"
                     type={showPassword ? 'text' : 'password'}
                     {...register('password', {
                       onChange: (e) => setPasswordValue(e.target.value),
                     })}
                     aria-invalid={!!errors.password}
                     aria-describedby={errors.password ? 'error-password' : undefined}
-                    className="w-full h-12 pl-12 pr-12 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                    className="w-full h-12 pl-12 pr-12 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground"
                     placeholder="CREATE PASSWORD"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-[#D4AF37] transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-[#D4AF37] transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -243,15 +247,16 @@ export function Register() {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Confirm Password</label>
+                <label htmlFor="register-confirm" className="block text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-2">Confirm Password</label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4AF37]/50" />
                   <input
+                    id="register-confirm"
                     type={showPassword ? 'text' : 'password'}
                     {...register('confirmPassword')}
                     aria-invalid={!!errors.confirmPassword}
                     aria-describedby={errors.confirmPassword ? 'error-confirmPassword' : undefined}
-                    className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                    className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground"
                     placeholder="CONFIRM PASSWORD"
                   />
                 </div>

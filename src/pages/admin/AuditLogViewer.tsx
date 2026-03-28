@@ -224,13 +224,13 @@ export function AuditLogViewer() {
       <div className="flex items-center justify-between text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
         <div className="flex items-center space-x-4">
           <span>{totalCount} Total Events</span>
-          <span className="h-1 w-1 bg-slate-200 rounded-full" />
+          <span className="h-1 w-1 bg-border rounded-full" />
           <span>Page {page + 1} of {totalPages || 1}</span>
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-2xl border border-border shadow-xl shadow-slate-200/50 overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border shadow-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -272,7 +272,7 @@ export function AuditLogViewer() {
                       </td>
                       <td className="px-6 py-5">
                         <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center border border-white shadow-sm">
+                          <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center border border-background shadow-sm">
                             <User className="h-4 w-4 text-muted-foreground" />
                           </div>
                           <div>

@@ -335,7 +335,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                   <select
                     value={formData.label}
                     onChange={(e) => setFormData({ ...formData, label: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                   >
                     <option value="Home">Home</option>
                     <option value="Work">Work</option>
@@ -349,7 +349,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                     required
                     value={formData.full_name}
                     onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                   />
                 </div>
               </div>
@@ -360,7 +360,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                   required
                   value={formData.address_line}
                   onChange={(e) => setFormData({ ...formData, address_line: e.target.value })}
-                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -371,7 +371,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                     required
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                   />
                 </div>
                 <div>
@@ -380,7 +380,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                     type="text"
                     value={formData.state}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                   />
                 </div>
               </div>
@@ -391,7 +391,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                     type="text"
                     value={formData.zip_code}
                     onChange={(e) => setFormData({ ...formData, zip_code: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                   />
                 </div>
                 <div>
@@ -401,7 +401,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                     required
                     value={formData.country}
                     onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                   />
                 </div>
               </div>
@@ -411,7 +411,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                   placeholder="+1 (555) 123-4567"
                 />
               </div>
@@ -420,7 +420,7 @@ export function ShippingAddresses({ onSelect, selectedId }: ShippingAddressesPro
                   type="checkbox"
                   checked={formData.is_default}
                   onChange={(e) => setFormData({ ...formData, is_default: e.target.checked })}
-                  className="rounded border-border text-foreground focus:ring-slate-200"
+                  className="rounded border-border text-foreground focus:ring-border"
                 />
                 <span className="text-sm text-muted-foreground">Set as default address</span>
               </label>

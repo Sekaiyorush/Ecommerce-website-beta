@@ -257,7 +257,7 @@ export function QRCodeManager() {
               <div key={qrData.id} className="text-center">
                 <div
                   ref={qrRef}
-                  className="bg-white p-3 rounded-lg border border-border inline-block"
+                  className="bg-card p-3 rounded-lg border border-border inline-block"
                 >
                   <QRCodeSVG
                     id={`qr-${index}`}

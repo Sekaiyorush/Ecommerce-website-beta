@@ -25,6 +25,7 @@ export function SearchBar() {
       </div>
       <input
         type="search"
+        aria-label="Search products"
         className="block w-full py-2.5 pl-10 pr-4 text-[10px] font-bold tracking-[0.2em] uppercase text-foreground bg-transparent border-b border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 focus:outline-none transition-all placeholder:text-muted-foreground/50"
         placeholder="SEARCH COMPOUNDS..."
         value={text}

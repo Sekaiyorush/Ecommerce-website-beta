@@ -449,7 +449,7 @@ export function PartnerNetwork() {
                   max="1000"
                   value={newCodeMaxUses}
                   onChange={(e) => setNewCodeMaxUses(parseInt(e.target.value) || 1)}
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                 />
               </div>
 
@@ -461,7 +461,7 @@ export function PartnerNetwork() {
                   rows={3}
                   value={newCodeNotes}
                   onChange={(e) => setNewCodeNotes(e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                  className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                   placeholder="e.g., VIP customers, March promotion..."
                 />
               </div>
@@ -528,7 +528,7 @@ export function PartnerNetwork() {
                     max="50"
                     value={editingMember.discountRate || 15}
                     onChange={(e) => setEditingMember({ ...editingMember, discountRate: parseInt(e.target.value) || 15 })}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                   />
                   <p className="text-xs text-muted-foreground mt-1">
                     This is the discount rate this partner receives on purchases

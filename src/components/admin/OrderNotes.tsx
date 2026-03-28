@@ -118,7 +118,7 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
       <div className="space-y-3 max-h-60 overflow-y-auto">
         {isLoading ? (
           <div className="flex items-center justify-center py-6">
-            <div className="w-5 h-5 border border-border border-t-slate-500 rounded-full animate-spin" />
+            <div className="w-5 h-5 border border-border border-t-border rounded-full animate-spin" />
           </div>
         ) : notes.length === 0 ? (
           <p className="text-xs text-muted-foreground text-center py-4">No notes yet</p>
@@ -155,7 +155,7 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
           onChange={(e) => setNewNote(e.target.value)}
           placeholder="Add a note..."
           rows={2}
-          className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200 focus:border-border resize-none"
+          className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border focus:border-border resize-none"
         />
         <div className="flex items-center justify-between">
           <label className="flex items-center space-x-2 text-xs text-muted-foreground cursor-pointer">
@@ -163,7 +163,7 @@ export function OrderNotes({ orderId }: OrderNotesProps) {
               type="checkbox"
               checked={isInternal}
               onChange={(e) => setIsInternal(e.target.checked)}
-              className="rounded border-border text-foreground focus:ring-slate-200"
+              className="rounded border-border text-foreground focus:ring-border"
             />
             <span className="flex items-center space-x-1">
               <Lock className="h-3 w-3" />

@@ -180,7 +180,7 @@ export function Products() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4AF37]">Partner Exclusive</p>
-                  <p className="text-[10px] tracking-[0.15em] text-slate-400 uppercase mt-0.5">Pricing & purchasing locked</p>
+                  <p className="text-[10px] tracking-[0.15em] text-muted-foreground uppercase mt-0.5">Pricing & purchasing locked</p>
                 </div>
               </div>
 
@@ -191,15 +191,15 @@ export function Products() {
               <div className="flex flex-wrap gap-x-8 gap-y-3 flex-1">
                 <div className="flex items-center gap-2">
                   <Tag className="h-3.5 w-3.5 text-[#D4AF37]/70 shrink-0" />
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-300">Exclusive Partner Pricing</span>
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">Exclusive Partner Pricing</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Zap className="h-3.5 w-3.5 text-[#D4AF37]/70 shrink-0" />
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-300">Priority Order Processing</span>
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">Priority Order Processing</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-3.5 w-3.5 text-[#D4AF37]/70 shrink-0" />
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-300">Verified Research Access</span>
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">Verified Research Access</span>
                 </div>
               </div>
 

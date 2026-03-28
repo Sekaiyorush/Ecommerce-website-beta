@@ -111,7 +111,7 @@ export function OrdersManagement() {
       case 'cancelled':
         return 'bg-red-100 text-red-700';
       default:
-        return 'bg-gray-100 text-foreground';
+        return 'bg-muted text-foreground';
     }
   };
 
@@ -215,7 +215,7 @@ export function OrdersManagement() {
                     type="checkbox"
                     checked={filteredOrders.length > 0 && selectedOrders.size === filteredOrders.length}
                     onChange={toggleAllOrders}
-                    className="rounded border-border text-foreground focus:ring-slate-200"
+                    className="rounded border-border text-foreground focus:ring-border"
                   />
                 </th>
                 <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Order ID</th>
@@ -238,7 +238,7 @@ export function OrdersManagement() {
                         type="checkbox"
                         checked={selectedOrders.has(order.id)}
                         onChange={() => toggleOrderSelection(order.id)}
-                        className="rounded border-border text-foreground focus:ring-slate-200"
+                        className="rounded border-border text-foreground focus:ring-border"
                       />
                     </td>
                     <td className="px-4 py-3">

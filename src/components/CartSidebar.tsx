@@ -23,7 +23,7 @@ export function CartSidebar() {
         onClick={() => setIsOpen(false)}
       />
 
-      <div ref={trapRef} role="dialog" aria-label="Shopping cart" className="fixed right-0 top-0 h-full w-full max-w-lg bg-background z-[60] shadow-[0_0_100px_rgba(0,0,0,0.2)] flex flex-col font-sans animate-reveal border-l border-gold-300/10">
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Shopping cart" className="fixed right-0 top-0 h-full w-full max-w-lg bg-background z-[60] shadow-[0_0_100px_rgba(0,0,0,0.2)] flex flex-col font-sans animate-reveal border-l border-gold-300/10">
         <div className="flex items-center justify-between p-10 border-b border-border">
           <div>
             <h2 className="text-3xl font-serif text-foreground leading-none tracking-tight">Your Selection</h2>

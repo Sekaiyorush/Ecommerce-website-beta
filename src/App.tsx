@@ -147,13 +147,16 @@ function AppContent() {
                 ) : (
                   // Authenticated users see the full site
                   <div className="min-h-screen bg-background text-foreground font-sans selection:bg-amber-200 flex flex-col relative overflow-hidden">
+                    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:ring-2 focus:ring-ring focus:rounded-md">
+                      Skip to main content
+                    </a>
                     <PremiumEffects />
                     {/* Dynamic Background Elements */}
-                    <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-50/50 via-white to-white pointer-events-none -z-10" />
+                    <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-50/50 via-background to-background pointer-events-none -z-10" />
 
                     <Header />
                     {isPartner && <CartSidebar />}
-                    <main className="flex-1 relative z-10">
+                    <main id="main-content" className="flex-1 relative z-10">
                       <ErrorBoundary>
                         <Routes>
                           {/* Admin Routes */}

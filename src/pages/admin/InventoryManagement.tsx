@@ -148,7 +148,7 @@ export function InventoryManagement() {
                                 placeholder="Search..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-9 pr-4 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-slate-200"
+                                className="w-full pl-9 pr-4 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-border"
                             />
                         </div>
                     </div>
@@ -239,7 +239,7 @@ export function InventoryManagement() {
                                                                         e.stopPropagation();
                                                                         openAdjustModal(p.id, v.sku, v.label);
                                                                     }}
-                                                                    className="px-2 py-0.5 bg-muted text-muted-foreground rounded hover:bg-slate-300 transition-colors text-xs font-medium"
+                                                                    className="px-2 py-0.5 bg-muted text-muted-foreground rounded hover:bg-muted transition-colors text-xs font-medium"
                                                                 >
                                                                     Adjust
                                                                 </button>

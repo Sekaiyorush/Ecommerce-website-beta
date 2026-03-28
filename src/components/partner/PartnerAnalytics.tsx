@@ -179,7 +179,7 @@ export function PartnerAnalytics() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Purchases */}
-        <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+        <div className="bg-card/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Total Purchases</p>
@@ -197,7 +197,7 @@ export function PartnerAnalytics() {
         </div>
 
         {/* Network Size */}
-        <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+        <div className="bg-card/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Network Size</p>
@@ -215,7 +215,7 @@ export function PartnerAnalytics() {
         </div>
 
         {/* Monthly Orders */}
-        <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+        <div className="bg-card/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Monthly Orders</p>
@@ -233,7 +233,7 @@ export function PartnerAnalytics() {
         </div>
 
         {/* Conversion Rate */}
-        <div className="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+        <div className="bg-card/60 backdrop-blur-xl p-6 rounded-[2rem] border border-gold-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-1">Active Rate</p>
@@ -250,7 +250,7 @@ export function PartnerAnalytics() {
       </div>
 
       {/* Recent Notifications */}
-      <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-gold-200/50 p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+      <div className="bg-card/60 backdrop-blur-xl rounded-[2rem] border border-gold-200/50 p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-serif text-xl tracking-tight text-foreground">Recent Updates</h3>
           <button className="text-sm text-gold-600 hover:text-gold-700 font-medium">
@@ -264,7 +264,7 @@ export function PartnerAnalytics() {
               className={`flex items-center justify-between p-4 rounded-xl transition-colors ${notification.read ? 'bg-muted' : 'bg-gold-50/50 border border-gold-100/50'}`}
             >
               <div className="flex items-center space-x-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${notification.read ? 'bg-white' : 'bg-white shadow-sm'}`}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${notification.read ? 'bg-card' : 'bg-card shadow-sm'}`}>
                   {getNotificationIcon(notification.type)}
                 </div>
                 <div>

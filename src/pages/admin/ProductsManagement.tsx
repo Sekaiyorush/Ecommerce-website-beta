@@ -716,7 +716,7 @@ export function ProductsManagement() {
                     {formData.imageUrl && (
                       <div className="mt-4 p-4 border border-border rounded-xl bg-surface-alt/20 flex flex-col items-center">
                         <p className="text-xs font-bold text-muted-foreground uppercase mb-2">Preview</p>
-                        <div className="h-48 w-48 rounded-xl border border-[#D4AF37]/30 overflow-hidden bg-white shadow-inner">
+                        <div className="h-48 w-48 rounded-xl border border-[#D4AF37]/30 overflow-hidden bg-card shadow-inner">
                           <img src={formData.imageUrl} alt="Preview" className="h-full w-full object-contain" />
                         </div>
                       </div>
@@ -758,7 +758,7 @@ export function ProductsManagement() {
               <p className="text-xs text-muted-foreground font-mono mt-1">{showQRCode.sku}</p>
             </div>
             
-            <div className="bg-white p-4 rounded-2xl shadow-inner inline-block border border-border">
+            <div className="bg-card p-4 rounded-2xl shadow-inner inline-block border border-border">
               <QRCodeSVG
                 value={generateQRData(showQRCode)}
                 size={220}

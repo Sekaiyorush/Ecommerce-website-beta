@@ -260,7 +260,7 @@ export function PartnersManagement() {
           placeholder="Search partners by name, email, or company..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-card focus:ring-2 focus:ring-slate-200"
+          className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-card focus:ring-2 focus:ring-border"
         />
       </div>
 
@@ -433,7 +433,7 @@ export function PartnersManagement() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                     placeholder="Enter partner name"
                   />
                 </div>
@@ -447,7 +447,7 @@ export function PartnersManagement() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                     placeholder="partner@company.com"
                     disabled={!!editingPartner}
                   />
@@ -464,7 +464,7 @@ export function PartnersManagement() {
                         required
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                        className="w-full px-3 py-2 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                        className="w-full px-3 py-2 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-border"
                         placeholder="Auto-generated password"
                       />
                       <button
@@ -488,7 +488,7 @@ export function PartnersManagement() {
                     required
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                     placeholder="Company name"
                   />
                 </div>
@@ -502,7 +502,7 @@ export function PartnersManagement() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                     placeholder="+1 (555) 123-4567"
                   />
                 </div>
@@ -516,7 +516,7 @@ export function PartnersManagement() {
                       max="50"
                       value={formData.discountRate}
                       onChange={(e) => setFormData({ ...formData, discountRate: e.target.value })}
-                      className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                      className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                     />
                   </div>
                   <div>
@@ -524,7 +524,7 @@ export function PartnersManagement() {
                     <select
                       value={formData.status}
                       onChange={(e) => setFormData({ ...formData, status: e.target.value as Partner['status'] })}
-                      className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                      className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                     >
                       <option value="active">Active</option>
                       <option value="inactive">Inactive</option>
@@ -538,7 +538,7 @@ export function PartnersManagement() {
                   <select
                     value={formData.referredBy}
                     onChange={(e) => setFormData({ ...formData, referredBy: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                   >
                     <option value="">None (Top Level)</option>
                     {partnerList.filter(p => p.id !== editingPartner?.id).map((p) => (
@@ -555,7 +555,7 @@ export function PartnersManagement() {
                     rows={3}
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-slate-200"
+                    className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-border"
                     placeholder="Add notes about this partner..."
                   />
                 </div>

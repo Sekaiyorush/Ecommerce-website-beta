@@ -51,7 +51,7 @@ const variantConfig: Record<AlertVariant, {
     border: 'border-[#D4AF37]/30',
     bg: 'bg-[#D4AF37]/5',
     iconColor: 'text-[#AA771C]',
-    textColor: 'text-slate-700',
+    textColor: 'text-foreground',
     labelColor: 'text-[#AA771C]',
     label: 'Info',
   },

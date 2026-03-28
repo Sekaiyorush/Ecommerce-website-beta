@@ -25,7 +25,7 @@ export function BulkActionToolbar({
   if (selectedCount === 0) return null;
 
   return (
-    <div className="sticky top-16 z-30 bg-slate-900 text-white rounded-lg shadow-xl p-3 flex items-center justify-between animate-in slide-in-from-bottom-2">
+    <div className="sticky top-16 z-30 bg-foreground text-background rounded-lg shadow-xl p-3 flex items-center justify-between animate-in slide-in-from-bottom-2">
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">
           <CheckSquare className="h-4 w-4 text-[#D4AF37]" />

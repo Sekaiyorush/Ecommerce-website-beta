@@ -280,7 +280,7 @@ export function CheckoutPage() {
                         <div key={s.num} className="flex items-center">
                             <div className="relative">
                                 <div className={`flex items-center justify-center w-8 h-8 border text-[10px] font-bold tracking-widest transition-all
-                                    ${step >= s.num ? 'border-[#D4AF37] bg-card text-gold-primary' : 'border-border dark:border-slate-700 text-muted-foreground'}`}>
+                                    ${step >= s.num ? 'border-[#D4AF37] bg-card text-gold-primary' : 'border-border text-muted-foreground'}`}>
                                     {step > s.num ? <CheckCircle2 className="h-3 w-3" /> : s.num}
                                 </div>
                                 {step === s.num && (
@@ -290,7 +290,7 @@ export function CheckoutPage() {
                             <span className={`ml-3 text-[10px] font-bold tracking-[0.2em] hidden sm:inline transition-colors ${step >= s.num ? 'text-foreground' : 'text-muted-foreground'}`}>
                                 {s.label}
                             </span>
-                            {i < 2 && <div className={`w-8 sm:w-16 h-[1px] mx-4 transition-colors ${step > s.num ? 'bg-[#D4AF37]' : 'bg-slate-200 dark:bg-slate-700'}`} />}
+                            {i < 2 && <div className={`w-8 sm:w-16 h-[1px] mx-4 transition-colors ${step > s.num ? 'bg-[#D4AF37]' : 'bg-border'}`} />}
                         </div>
                     ))}
                 </div>
@@ -302,7 +302,7 @@ export function CheckoutPage() {
 
                         {/* Step 1: Shipping */}
                         {step === 1 && (
-                            <div className="bg-card border border-border dark:border-slate-700 p-8 md:p-10 relative">
+                            <div className="bg-card border border-border p-8 md:p-10 relative">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#AA771C] to-[#D4AF37] opacity-20" />
                                 
                                 <div className="flex items-center gap-4 mb-10">
@@ -318,19 +318,19 @@ export function CheckoutPage() {
                                 <div className="space-y-6">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Full Name *</label>
-                                            <input type="text" value={shipping.fullName}
+                                            <label htmlFor="checkout-name" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Full Name *</label>
+                                            <input id="checkout-name" type="text" value={shipping.fullName}
                                                 onChange={e => updateShipping('fullName', e.target.value)}
-                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.fullName && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.fullName}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Email *</label>
-                                            <input type="email" value={shipping.email}
+                                            <label htmlFor="checkout-email" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Email *</label>
+                                            <input id="checkout-email" type="email" value={shipping.email}
                                                 onChange={e => updateShipping('email', e.target.value)}
-                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.email && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.email}</p>
                                             )}
@@ -338,10 +338,10 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Phone Number *</label>
-                                        <input type="tel" value={shipping.phone}
+                                        <label htmlFor="checkout-phone" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Phone Number *</label>
+                                        <input id="checkout-phone" type="tel" value={shipping.phone}
                                             onChange={e => updateShipping('phone', e.target.value)}
-                                            className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
+                                            className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                             placeholder="+1 (555) 000-0000" />
                                         {shippingErrors.phone && (
                                             <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.phone}</p>
@@ -349,10 +349,10 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Street Address *</label>
-                                        <input type="text" value={shipping.address}
+                                        <label htmlFor="checkout-address" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Street Address *</label>
+                                        <input id="checkout-address" type="text" value={shipping.address}
                                             onChange={e => updateShipping('address', e.target.value)}
-                                            className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
+                                            className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                             placeholder="123 Main St, Apt 4" />
                                         {shippingErrors.address && (
                                             <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.address}</p>
@@ -361,34 +361,34 @@ export function CheckoutPage() {
 
                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                                         <div className="col-span-2 sm:col-span-1 space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">City *</label>
-                                            <input type="text" value={shipping.city}
+                                            <label htmlFor="checkout-city" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">City *</label>
+                                            <input id="checkout-city" type="text" value={shipping.city}
                                                 onChange={e => updateShipping('city', e.target.value)}
-                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.city && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.city}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">State</label>
-                                            <input type="text" value={shipping.state}
+                                            <label htmlFor="checkout-state" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">State</label>
+                                            <input id="checkout-state" type="text" value={shipping.state}
                                                 onChange={e => updateShipping('state', e.target.value)}
-                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">ZIP</label>
-                                            <input type="text" value={shipping.zip}
+                                            <label htmlFor="checkout-zip" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">ZIP</label>
+                                            <input id="checkout-zip" type="text" value={shipping.zip}
                                                 onChange={e => updateShipping('zip', e.target.value)}
-                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
+                                                className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors" />
                                             {shippingErrors.zip && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.zip}</p>
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Country *</label>
-                                            <input type="text" value={shipping.country}
+                                            <label htmlFor="checkout-country" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Country *</label>
+                                            <input id="checkout-country" type="text" value={shipping.country}
                                                 onChange={e => updateShipping('country', e.target.value)}
-                                                className="w-full h-12 px-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
+                                                className="w-full h-12 px-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors"
                                                 placeholder="US" />
                                             {shippingErrors.country && (
                                                 <p className="text-[10px] text-red-600 font-bold tracking-tight mt-1 uppercase italic">{shippingErrors.country}</p>
@@ -397,10 +397,10 @@ export function CheckoutPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="block text-[10px] font-bold tracking-widest text-muted-foreground dark:text-muted-foreground uppercase">Order Notes (optional)</label>
-                                        <textarea rows={3} value={shipping.notes}
+                                        <label htmlFor="checkout-notes" className="block text-[10px] font-bold tracking-widest text-muted-foreground uppercase">Order Notes (optional)</label>
+                                        <textarea id="checkout-notes" rows={3} value={shipping.notes}
                                             onChange={e => updateShipping('notes', e.target.value)}
-                                            className="w-full px-4 py-4 border border-border dark:border-slate-700 bg-transparent focus:border-[#D4AF37] outline-none transition-colors resize-none"
+                                            className="w-full px-4 py-4 border border-border bg-transparent focus:border-[#D4AF37] outline-none transition-colors resize-none"
                                             placeholder="Special delivery instructions..." />
                                     </div>
                                 </div>
