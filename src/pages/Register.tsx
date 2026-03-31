@@ -189,6 +189,7 @@ export function Register() {
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      aria-invalid={false}
                       className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground"
                       placeholder="ENTER FULL NAME"
                       required

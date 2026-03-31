@@ -2,7 +2,6 @@ import { vi, describe, it, expect, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Products } from '../Products';
-import React from 'react';
 
 // Supabase is mocked globally in setup.ts
 
@@ -77,34 +76,6 @@ afterEach(() => {
   document.title = originalTitle;
 });
 
-function renderProducts({ isLoading = true, products = [] } = {}) {
-  // Re-mock with custom values per test
-  vi.mocked(
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require('@/context/DatabaseContext').useDatabase
-  ).mockReturnValue({
-    db: {
-      products,
-      partners: [],
-      customers: [],
-      orders: [],
-      invitationCodes: [],
-      users: [],
-      inventoryLogs: [],
-      siteSettings: {},
-    },
-    isLoading,
-    dbError: null,
-    refreshData: vi.fn(),
-    logAudit: vi.fn(),
-  });
-
-  return render(
-    <MemoryRouter initialEntries={['/products']}>
-      <Products />
-    </MemoryRouter>
-  );
-}
 
 describe('Products page', () => {
   it('renders without crashing while loading', () => {

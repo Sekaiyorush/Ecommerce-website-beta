@@ -100,12 +100,14 @@ export function ResetPassword() {
 
                     <div className="bg-background/80 backdrop-blur-md border border-[#D4AF37]/20 p-10 shadow-[0_8px_40px_rgba(0,0,0,0.04)] relative">
                         {error && (
-                            <SecurityAlert
-                              variant="error"
-                              message={error}
-                              onDismiss={() => setError('')}
-                              className="mb-6"
-                            />
+                            <div id="reset-password-error">
+                                <SecurityAlert
+                                  variant="error"
+                                  message={error}
+                                  onDismiss={() => setError('')}
+                                  className="mb-6"
+                                />
+                            </div>
                         )}
 
                         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -118,6 +120,8 @@ export function ResetPassword() {
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
+                                        aria-invalid={!!error}
+                                        aria-describedby={error ? 'reset-password-error' : undefined}
                                         className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground/50"
                                         placeholder="YOUR NEW PASSWORD"
                                         required
@@ -135,6 +139,8 @@ export function ResetPassword() {
                                         type="password"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
+                                        aria-invalid={!!error}
+                                        aria-describedby={error ? 'reset-password-error' : undefined}
                                         className="w-full h-12 pl-12 pr-4 bg-transparent border border-[#D4AF37]/20 focus:border-[#D4AF37] focus:ring-0 text-sm transition-all text-foreground placeholder:text-muted-foreground/50"
                                         placeholder="CONFIRM NEW PASSWORD"
                                         required
